@@ -1,0 +1,180 @@
+@import "mixins";
+@import "variables";
+.column{
+    margin-top: 5%;
+    
+
+    .card{
+        box-shadow: $shadow;
+        padding: 20px;
+        width: 90%;
+        border-collapse: collapse;
+        height: auto;
+        margin-left: auto;
+        margin-right: auto;
+        .float{
+            margin-bottom: 8px;
+        }
+        .float1{
+            @extend .float;
+            float: right;
+        }
+        .float2{
+            @extend .float;
+            float: left;
+        }
+        .link{
+            color: $color2;
+            float: right;
+        }
+        .row{
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 14px;
+            h4{
+                margin-top: 8px;
+            }
+            a{
+                margin-right: 2%;
+            }
+           
+        }
+       
+        @include border-radius(10px);
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            border:none;
+           @include border-radius(10px);
+            width: 100%;
+           
+            td, th {
+                border: none;
+                padding: 13px;
+              }
+              
+              tr:nth-child(even) {
+                background-color: #dddddd;
+              }
+               tr:last-child {
+                border-bottom: $color2 2px solid;
+              }
+              .thbottom{
+                border-bottom: #BBB2B2 1px solid;
+                text-align: center;
+              }
+              thead{
+                  color: $color2;
+                  border-bottom: $color2 2px solid;
+                  tr th{
+                      font-weight: bold;
+                  }
+                 
+              }
+              .action{
+                  display: flex;
+                  form{
+                      margin-left: 1%;
+                  }
+              }
+             
+              
+        }
+          
+         .btn{
+            background-color: $color2; /* Green */
+            border: none;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            padding: 10px;
+            cursor: pointer;
+            @include border-radius(5px);
+              
+         }
+         .btn2{
+
+            &:hover{
+                background-color: $color2;
+            }
+         }
+         .btnUpdate{
+             @extend .btn;
+             background-color: $colorYellow;
+         }
+         .btnajout{
+             @extend .btn;
+             &hover{
+                background-color: $color2;
+            }
+         }
+         .btnajout{
+             @extend .btn;
+            &hover{
+                background-color: $color2;
+            }
+         }
+         .btnArchive{
+             @extend .btn;
+             background-color: $colorRed;
+             margin-left: 2%;
+            // display: flex;
+             
+         }
+         .btnSuccess{
+             @extend .btn;
+             width: 70px;
+             background-color: $succes;
+         }
+         .btnRed{
+            @extend .btn;
+            width: 70px;
+            background-color: $error;
+        }
+      
+     
+    }
+  
+
+}
+@media screen and (max-width: 600px) {
+    table{
+        font-size: 15px;
+        .dn{
+            display: none;
+        }
+        .d-none{
+            display: block;
+        }
+    }
+
+    .btn-valide{
+        margin-top: 40%;
+    }
+    .form-inline{
+        font-size: 15px;
+        margin-right: 2%;
+    }
+    .selectCheck{
+        margin-left: 2%;
+        select{
+            margin-top: 5%;
+        }
+      
+    }
+}
+/* table{
+    border: #152032 2px solid ;
+    thead{
+
+        tr{
+            border-color: #152032;
+        }
+    }
+    .thbottom{
+        border-bottom: #BBB2B2;
+    }
+} */
+

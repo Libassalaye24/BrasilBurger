@@ -1,0 +1,44 @@
+// @import "variables";
+// .card {
+//     box-shadow: $shadow;
+//     background-color: #fff;
+//     color: $colorPrimary;
+//     width: 16%;
+//     height: 200px;
+//     display: block;
+//     &:hover{
+//         background-color: $colorPrimary;
+//         color: #fff;
+//         .btn-primary{
+//             background-color: #fff;
+//             color: $colorPrimary
+//         }
+//     }
+//     @include border-radius(5px);
+//     .card-body{
+//         padding: 5px;
+//         .card-text-price{
+//             color: rgb(183, 181, 181);
+//         }
+       
+//     }
+// }
+// .card-active{
+//     @extend .card;
+//         background-color: $colorPrimary;
+//         color: #fff;
+//         .btn-primary{
+//             background-color: #fff;
+//             color: $colorPrimary
+//         }
+    
+// }
+// .card-img{
+//     padding: 5px;
+//     display: flex;
+//     img{
+//         width: 70%;
+//         margin-left: auto;
+//         margin-right: auto;
+//     }
+// }

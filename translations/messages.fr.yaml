@@ -1,0 +1,8 @@
+burger :
+  blank  : Ce champ est obligatoire
+  unique : Ce champ doit etre unique
+
+inscription :
+  email   :
+     blank :  Ce champ est obligatoire
+     unique : L’email doit etre unique

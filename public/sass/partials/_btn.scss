@@ -1,0 +1,63 @@
+@import "variables";
+@import "mixins";
+.btn{
+    background-color: $colorPrimary; /* Green */
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    padding: 10px;
+    cursor: pointer;
+    @include border-radius(5px);   
+}
+  .inline{
+     display: flex;
+     justify-content: space-between;
+     margin-bottom: 14px;
+     h4{
+         margin-top: 10px;
+         margin-left: 4%;
+     }
+     a{
+         margin-right: 4%;
+     }
+ }
+  .btn2{
+     &:hover{
+         background-color: $color2;
+     }
+  }
+  .btnUpdate{
+      @extend .btn;
+      background-color: $colorYellow;
+  }
+  .btn-ajout{
+      @extend .btn;
+      &hover{
+         background-color: $color2;
+     }
+  }
+  .btnajout{
+      @extend .btn;
+     &hover{
+         background-color: $color2;
+     }
+  }
+  .btnArchive{
+      @extend .btn;
+      background-color: $colorRed;
+      margin-left: 2%;
+     // display: flex;   
+  }
+  .btnSuccess{
+      @extend .btn;
+      width: 70px;
+      background-color: $succes;
+  }
+  .btnRed{
+     @extend .btn;
+     width: 70px;
+     background-color: $error;
+ }

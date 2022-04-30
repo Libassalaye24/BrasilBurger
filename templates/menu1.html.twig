@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Welcome!
+			{% endblock %}
+		</title>
+		<link
+		rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+		{% block stylesheets %}
+ 			<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+			<link rel="stylesheet" href="{{ asset('stylesheets/screen.css') }}"/>
+		{% endblock %}
+
+
+	</head>
+	<body>
+		{% block body %}
+
+			<div class="topnav" id="myTopnav">
+				 <a class="burger active" href="{{path('catalogue')}}">Burgers.</a>
+			     <a class="" href="{{path('catalogue')}}">Acceuil</a>
+			     <a class="" href="{{path('list_burger')}}">Burger</a>
+			     <a class="" href="{{path('list_menu')}}">Menu</a>
+			     <a class="" href="{{path('list_complement')}}">Complement</a>
+			     <a class="" href="{{path('list_commande')}}">Mes Commandes</a>
+				<div class="dropdown logOut">
+					<button class="dropbtn">Utilisateur
+						<i class="fa fa-caret-down"></i>
+					</button>
+					<div class="dropdown-content">
+						<a href="{{ path('login') }}">Se connecter</a>
+						<a href="#">S'inscrire</a>
+						<a href="{{ path('logout') }}">Se deconnecter</a>
+					</div>
+				</div>
+				
+				<a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
+			</div>
+		{% endblock %}
+		{% block javascripts %}
+			<script>
+            function myFunction() {
+                var x = document.getElementById("myTopnav");
+                if (x.className === "topnav") {
+                    x.className += " responsive";
+                } else {
+                    x.className = "topnav";
+                }
+            }
+			</script>
+			
+		{% endblock %}
+
+	</body>
+</html>

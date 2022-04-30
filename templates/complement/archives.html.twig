@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ComplementController!
+{% endblock %}
+
+{% block body %}
+
+
+	<div class="container">
+		<div class="column">
+			<div class="card">
+				<div class="row">
+                    <h2>
+                        Liste des archives
+                    </h2>
+					<a href="{{path('list_complement')}}" style="margin-left:auto" class="link">
+						Liste des complements
+						<i class="fas fa-arrow-right "></i>
+					</a>
+				</div>
+				<div style="overflow-x:auto;">
+					<table>
+						<thead class=" ">
+							<tr class="">
+								<th>#</th>
+								<th>Nom</th>
+								<th>Prix</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						{% for complement in complements %}
+
+							<tr>
+								<td><img src="{{ asset('img/uploads/' ~ complement.image.nom) }}" class="  rounded-circle" style="width: 38px;height:38px;" alt=""></td>
+								<td>{{ complement.nom }}</td>
+								<td>{{ complement.prix }}</td>
+								<td>
+									<a name="" id="" class="btnUpdate" href="{{ path('edit_complement',{'id':complement.id}) }}" role="button">
+										<i class="fa fa-edit" aria-hidden="true"></i>
+									</a>
+									{% if complement.etat == false %}
+										<a name="" id="" class=" btnArchive " href="{{ path('change_etat',{'id':complement.id}) }}" role="button">
+											<i class="fa fa-archive" aria-hidden="true"></i>
+										</a>
+									{% else %}
+										<a name="" id="" class=" btnArchive" href="{{ path('change_etat',{'id':complement.id}) }}" role="button">
+											<i class="fa fa-file" aria-hidden="true"></i>
+										</a>
+									{% endif %}
+
+								</td>
+							</tr>
+						{% endfor %}
+
+					</table>
+				</div>
+				<div class="p ">
+					<div
+						class="pagination">{#  {{ knp_pagination_render(complements,'./pagination.twig') }} #}
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+{% endblock %}

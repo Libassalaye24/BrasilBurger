@@ -1,0 +1,45 @@
+
+{% if pageCount > 1 %}
+
+   
+
+    {% if startPage > 1 %}
+            <a class="a" href="{{ path(route, query|merge({(pageParameterName): 1})) }}">1</a>
+        {% if startPage == 3 %}
+            <a class="a" href="{{ path(route, query|merge({(pageParameterName): 2})) }}">2</a>
+        {% elseif startPage != 2 %}
+            <a disabled class="a">&hellip;</a>
+        {% endif %}
+    {% endif %}
+
+    {% for page in pagesInRange %}
+        {% if page != current %}
+                <a class="a" href="{{ path(route, query|merge({(pageParameterName): page})) }}">{{ page }}</a>
+        {% else %}
+                <a class="active">{{ page }}</a>
+        {% endif %}
+
+    {% endfor %}
+
+    {% if pageCount > endPage %}
+        {% if pageCount > (endPage + 1) %}
+            {% if pageCount > (endPage + 2) %}
+                    <a disabled class="a">&hellip;</a>
+            {% else %}
+                    <a class="a" href="{{ path(route, query|merge({(pageParameterName): (pageCount - 1)})) }}">{{ pageCount -1 }}</a>
+            {% endif %}
+        {% endif %}
+            <a class="a" href="{{ path(route, query|merge({(pageParameterName): pageCount})) }}">{{ pageCount }}</a>
+    {% endif %}
+
+         {% if previous is defined %}
+            <a class="laquo" rel="prev" href="{{ path(route, query|merge({(pageParameterName): previous})) }}">&laquo;&nbsp;</a>
+    {% else %}
+            <a class="page-link">&laquo;&nbsp;</a>
+    {% endif %}
+    {% if next is defined %}
+            <a class="laquo" rel="next" href="{{ path(route, query|merge({(pageParameterName): next})) }}">&nbsp;&raquo;</a>
+    {% else %}
+            <a disabled class="laquo">&nbsp;&raquo;</a>
+    {% endif %}
+{% endif %}

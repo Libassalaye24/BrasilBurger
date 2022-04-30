@@ -1,0 +1,859 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;1,500&family=Roboto+Mono&display=swap");
+/* line 5, ../../../../../../../var/lib/gems/2.7.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+/* line 22, ../../../../../../../var/lib/gems/2.7.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1;
+}
+
+/* line 24, ../../../../../../../var/lib/gems/2.7.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 26, ../../../../../../../var/lib/gems/2.7.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 28, ../../../../../../../var/lib/gems/2.7.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 30, ../../../../../../../var/lib/gems/2.7.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 103, ../../../../../../../var/lib/gems/2.7.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 32, ../../../../../../../var/lib/gems/2.7.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 116, ../../../../../../../var/lib/gems/2.7.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block;
+}
+
+/* line 4, ../sass/partials/_menu.scss */
+body {
+  margin: 0;
+  font-family: Arial;
+}
+
+/* line 6, ../sass/partials/_menu.scss */
+.topnav {
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+@media only screen and (min-width: 768px) {
+  /* line 13, ../sass/partials/_menu.scss */
+  .topnav .logOut {
+    float: right;
+  }
+}
+/* line 17, ../sass/partials/_menu.scss */
+.topnav a {
+  float: left;
+  display: block;
+  text-align: center;
+  padding: 22px;
+  text-decoration: none;
+  font-size: 17px;
+  color: #e04218;
+}
+
+/* line 26, ../sass/partials/_menu.scss */
+.topnav a:not(.active) {
+  color: #ff9409;
+}
+
+/* line 30, ../sass/partials/_menu.scss */
+.active {
+  background-color: #ff9409;
+  color: white;
+}
+
+/* line 35, ../sass/partials/_menu.scss */
+.topnav .icon {
+  display: none;
+}
+
+/* line 39, ../sass/partials/_menu.scss */
+.dropdown {
+  float: left;
+  overflow: hidden;
+  margin-right: 2%;
+  margin-top: 0.4%;
+  background-color: #e04218;
+}
+
+/* line 47, ../sass/partials/_menu.scss */
+.dropdown .dropbtn {
+  font-size: 17px;
+  border: none;
+  outline: none;
+  color: #e04218;
+  padding: 14px 16px;
+  font-family: inherit;
+  margin: 0;
+}
+
+/* line 57, ../sass/partials/_menu.scss */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f2f0f0;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+/* line 66, ../sass/partials/_menu.scss */
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+/* line 75, ../sass/partials/_menu.scss */
+.topnav a:hover:not(.active), .dropdown:hover .dropbtn {
+  background-color: #ff9409;
+  color: white;
+}
+
+/* line 80, ../sass/partials/_menu.scss */
+.dropdown-content a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* line 85, ../sass/partials/_menu.scss */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+@media screen and (max-width: 600px) {
+  /* line 90, ../sass/partials/_menu.scss */
+  .topnav a:not(:first-child), .dropdown .dropbtn {
+    display: none;
+  }
+
+  /* line 93, ../sass/partials/_menu.scss */
+  .topnav a.icon {
+    float: right;
+    display: block;
+  }
+}
+@media screen and (max-width: 600px) {
+  /* line 100, ../sass/partials/_menu.scss */
+  .topnav.responsive {
+    position: relative;
+  }
+
+  /* line 101, ../sass/partials/_menu.scss */
+  .topnav.responsive .icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  /* line 106, ../sass/partials/_menu.scss */
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+
+  /* line 111, ../sass/partials/_menu.scss */
+  .topnav.responsive .dropdown {
+    float: none;
+  }
+
+  /* line 112, ../sass/partials/_menu.scss */
+  .topnav.responsive .dropdown-content {
+    position: relative;
+  }
+
+  /* line 113, ../sass/partials/_menu.scss */
+  .topnav.responsive .dropdown .dropbtn {
+    display: block;
+    width: 100%;
+    text-align: left;
+  }
+}
+/* line 3, ../sass/partials/_cadreShadow.scss */
+.column {
+  margin-top: 5%;
+}
+/* line 7, ../sass/partials/_cadreShadow.scss */
+.column .card {
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  padding: 20px;
+  width: 90%;
+  border-collapse: collapse;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  -moz-border-radius: 10px;
+  -o-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+/* line 15, ../sass/partials/_cadreShadow.scss */
+.column .card .float, .column .card .float1, .column .card .float2 {
+  margin-bottom: 8px;
+}
+/* line 18, ../sass/partials/_cadreShadow.scss */
+.column .card .float1 {
+  float: right;
+}
+/* line 22, ../sass/partials/_cadreShadow.scss */
+.column .card .float2 {
+  float: left;
+}
+/* line 26, ../sass/partials/_cadreShadow.scss */
+.column .card .link {
+  color: #ff9409;
+  float: right;
+}
+/* line 30, ../sass/partials/_cadreShadow.scss */
+.column .card .row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+/* line 34, ../sass/partials/_cadreShadow.scss */
+.column .card .row h4 {
+  margin-top: 8px;
+}
+/* line 37, ../sass/partials/_cadreShadow.scss */
+.column .card .row a {
+  margin-right: 2%;
+}
+/* line 44, ../sass/partials/_cadreShadow.scss */
+.column .card table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  border: none;
+  -moz-border-radius: 10px;
+  -o-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  width: 100%;
+}
+/* line 51, ../sass/partials/_cadreShadow.scss */
+.column .card table td, .column .card table th {
+  border: none;
+  padding: 13px;
+}
+/* line 56, ../sass/partials/_cadreShadow.scss */
+.column .card table tr:nth-child(even) {
+  background-color: #dddddd;
+}
+/* line 59, ../sass/partials/_cadreShadow.scss */
+.column .card table tr:last-child {
+  border-bottom: #ff9409 2px solid;
+}
+/* line 62, ../sass/partials/_cadreShadow.scss */
+.column .card table .thbottom {
+  border-bottom: #BBB2B2 1px solid;
+  text-align: center;
+}
+/* line 66, ../sass/partials/_cadreShadow.scss */
+.column .card table thead {
+  color: #ff9409;
+  border-bottom: #ff9409 2px solid;
+}
+/* line 69, ../sass/partials/_cadreShadow.scss */
+.column .card table thead tr th {
+  font-weight: bold;
+}
+/* line 74, ../sass/partials/_cadreShadow.scss */
+.column .card table .action {
+  display: flex;
+}
+/* line 76, ../sass/partials/_cadreShadow.scss */
+.column .card table .action form {
+  margin-left: 1%;
+}
+/* line 84, ../sass/partials/_cadreShadow.scss */
+.column .card .btn, .column .card .btnUpdate, .column .card .btn-ajout, .column .card .btnajout, .column .card .btnArchive, .column .card .btnSuccess, .column .card .btnRed {
+  background-color: #ff9409;
+  /* Green */
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  padding: 10px;
+  cursor: pointer;
+  -moz-border-radius: 5px;
+  -o-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+/* line 99, ../sass/partials/_cadreShadow.scss */
+.column .card .btn2:hover {
+  background-color: #ff9409;
+}
+/* line 103, ../sass/partials/_cadreShadow.scss */
+.column .card .btnUpdate {
+  background-color: #ffec43;
+}
+/* line 109, ../sass/partials/_cadreShadow.scss */
+.column .card .btnajouthover {
+  background-color: #ff9409;
+}
+/* line 115, ../sass/partials/_cadreShadow.scss */
+.column .card .btnajouthover {
+  background-color: #ff9409;
+}
+/* line 119, ../sass/partials/_cadreShadow.scss */
+.column .card .btnArchive {
+  background-color: #dc3545;
+  margin-left: 2%;
+}
+/* line 126, ../sass/partials/_cadreShadow.scss */
+.column .card .btnSuccess {
+  width: 70px;
+  background-color: #2ecc71;
+}
+/* line 131, ../sass/partials/_cadreShadow.scss */
+.column .card .btnRed {
+  width: 70px;
+  background-color: red;
+}
+
+@media screen and (max-width: 600px) {
+  /* line 143, ../sass/partials/_cadreShadow.scss */
+  table {
+    font-size: 15px;
+  }
+  /* line 145, ../sass/partials/_cadreShadow.scss */
+  table .dn {
+    display: none;
+  }
+  /* line 148, ../sass/partials/_cadreShadow.scss */
+  table .d-none {
+    display: block;
+  }
+
+  /* line 153, ../sass/partials/_cadreShadow.scss */
+  .btn-valide {
+    margin-top: 40%;
+  }
+
+  /* line 156, ../sass/partials/_cadreShadow.scss */
+  .form-inline {
+    font-size: 15px;
+    margin-right: 2%;
+  }
+
+  /* line 160, ../sass/partials/_cadreShadow.scss */
+  .selectCheck {
+    margin-left: 2%;
+  }
+  /* line 162, ../sass/partials/_cadreShadow.scss */
+  .selectCheck select {
+    margin-top: 5%;
+  }
+}
+/* table{
+    border: #152032 2px solid ;
+    thead{
+
+        tr{
+            border-color: #152032;
+        }
+    }
+    .thbottom{
+        border-bottom: #BBB2B2;
+    }
+} */
+/* line 3, ../sass/partials/_btn.scss */
+.btn, .column .card .btnUpdate, .column .card .btnajout, .column .card .btnArchive, .column .card .btnSuccess, .column .card .btnRed, .btnUpdate, .btn-ajout, .btnajout, .btnArchive, .btnSuccess, .btnRed {
+  background-color: #e04218;
+  /* Green */
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  padding: 10px;
+  cursor: pointer;
+  -moz-border-radius: 5px;
+  -o-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+/* line 15, ../sass/partials/_btn.scss */
+.inline {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+/* line 19, ../sass/partials/_btn.scss */
+.inline h4 {
+  margin-top: 10px;
+  margin-left: 4%;
+}
+/* line 23, ../sass/partials/_btn.scss */
+.inline a {
+  margin-right: 4%;
+}
+
+/* line 28, ../sass/partials/_btn.scss */
+.btn2:hover {
+  background-color: #ff9409;
+}
+
+/* line 32, ../sass/partials/_btn.scss */
+.btnUpdate {
+  background-color: #ffec43;
+}
+
+/* line 38, ../sass/partials/_btn.scss */
+.btn-ajouthover {
+  background-color: #ff9409;
+}
+
+/* line 44, ../sass/partials/_btn.scss */
+.btnajouthover {
+  background-color: #ff9409;
+}
+
+/* line 48, ../sass/partials/_btn.scss */
+.btnArchive {
+  background-color: #dc3545;
+  margin-left: 2%;
+}
+
+/* line 54, ../sass/partials/_btn.scss */
+.btnSuccess {
+  width: 70px;
+  background-color: #2ecc71;
+}
+
+/* line 59, ../sass/partials/_btn.scss */
+.btnRed {
+  width: 70px;
+  background-color: red;
+}
+
+/* line 4, ../sass/partials/_form.scss */
+.body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* line 9, ../sass/partials/_form.scss */
+.c1 {
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+/* line 12, ../sass/partials/_form.scss */
+.container {
+  margin-top: 3%;
+  background-color: #fff;
+  border-radius: 5px;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* line 20, ../sass/partials/_form.scss */
+.container .btnaddChambre, .container .btnDelete {
+  background-color: #e04218;
+  /* Green */
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  padding: 10px;
+  cursor: pointer;
+  -moz-border-radius: 5px;
+  -o-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+/* line 32, ../sass/partials/_form.scss */
+.container .btnDelete {
+  background-color: #dc3545;
+  /* Green */
+  margin-top: 15px;
+}
+
+/* line 39, ../sass/partials/_form.scss */
+.container-login .form-control input, .form-control .input, .etu .input, .form-control select, .etu select {
+  border: 2px solid #f0f0f0;
+  border-radius: 4px;
+  display: block;
+  width: 100%;
+  height: 40px;
+  background-color: #F6F6F6;
+  padding: 10px;
+  font-size: 14px;
+}
+
+/* line 49, ../sass/partials/_form.scss */
+.container-login {
+  border-radius: 5px;
+  width: 50%;
+  margin-top: 10%;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  background-color: #fff;
+  color: #fff;
+}
+/* line 57, ../sass/partials/_form.scss */
+.container-login .form-control .label {
+  color: #ffff;
+}
+/* line 60, ../sass/partials/_form.scss */
+.container-login .form-control input {
+  background-color: #F6F6F6;
+  /*  border: 2px solid $colorPrimary   ; */
+  /* border-bottom: #39ACE7 2px solid; */
+  color: #777;
+}
+
+/* line 71, ../sass/partials/_form.scss */
+h2 {
+  text-align: center;
+  margin: 0 0 20px;
+}
+
+/* line 76, ../sass/partials/_form.scss */
+.form {
+  padding: 30px 40px;
+}
+
+/* line 80, ../sass/partials/_form.scss */
+.form-control {
+  margin-bottom: 10px;
+  padding-bottom: 20px;
+  position: relative;
+}
+/* line 84, ../sass/partials/_form.scss */
+.form-control div {
+  margin-bottom: 8px;
+}
+/* line 88, ../sass/partials/_form.scss */
+.form-control ul li {
+  color: red;
+  font-size: 14px;
+}
+
+/* line 93, ../sass/partials/_form.scss */
+.color1 {
+  color: #e04218;
+}
+
+/* line 96, ../sass/partials/_form.scss */
+.form-control label, .form-control2 label, .checkbox .check, .checkbox .label, .etu small {
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* line 100, ../sass/partials/_form.scss */
+.form-control label {
+  color: #777;
+}
+
+/* line 106, ../sass/partials/_form.scss */
+.form-control .input {
+  /*  border-bottom: $colorPrimary 3px solid; */
+}
+
+/* line 111, ../sass/partials/_form.scss */
+.fc2 {
+  display: flex;
+  justify-content: space-around;
+}
+
+/* line 116, ../sass/partials/_form.scss */
+.form-control2 input {
+  border: 2px solid #f0f0f0;
+  border-radius: 4px;
+  width: 100%;
+  height: 40px;
+  background-color: #F6F6F6;
+  padding: 16px;
+  font-size: 14px;
+}
+
+/* line 125, ../sass/partials/_form.scss */
+.form-control2 label {
+  margin-bottom: 10px;
+}
+
+/* line 129, ../sass/partials/_form.scss */
+.form-control2 select {
+  display: block;
+  border: 2px solid #f0f0f0;
+  border-radius: 4px;
+  height: 60px;
+  background-color: #F6F6F6;
+  padding: 16px;
+  font-size: 14px;
+  outline: 0;
+  width: 90%;
+  margin-left: 4.8%;
+}
+
+/* line 141, ../sass/partials/_form.scss */
+.checkbox {
+  position: relative;
+}
+
+/* line 146, ../sass/partials/_form.scss */
+form .row {
+  display: flex;
+}
+/* line 148, ../sass/partials/_form.scss */
+form .row .etu {
+  flex: 1;
+}
+
+/* line 153, ../sass/partials/_form.scss */
+.etu .input {
+  border: 2px solid #f0f0f0;
+  border-radius: 4px;
+  display: block;
+  width: 100%;
+  height: 60px;
+  background-color: #F6F6F6;
+  padding: 10px;
+  font-size: 14px;
+}
+
+/* line 165, ../sass/partials/_form.scss */
+.checkbox .check {
+  display: flex;
+  margin-top: 2%;
+}
+/* line 168, ../sass/partials/_form.scss */
+.checkbox .check input {
+  margin-left: 1%;
+  margin-top: 2px;
+}
+/* line 172, ../sass/partials/_form.scss */
+.checkbox .check label {
+  margin-left: 1%;
+}
+
+/* line 180, ../sass/partials/_form.scss */
+.form-control select {
+  border-bottom: #e04218 3px solid;
+  outline: 0;
+}
+/* line 186, ../sass/partials/_form.scss */
+.form-control select option:hover {
+  background-color: #ff9409;
+}
+
+/* line 191, ../sass/partials/_form.scss */
+.etu select {
+  outline: 0;
+}
+
+/* line 195, ../sass/partials/_form.scss */
+.form-control .input:focus {
+  outline: 0;
+  border-color: #e04218;
+}
+
+/* line 199, ../sass/partials/_form.scss */
+.checkbox.success input, .checkbox.error input, .form-control.success input, .form-control.success select {
+  border-color: #2ecc71;
+}
+
+/* line 202, ../sass/partials/_form.scss */
+.form-control.error select, .form-control.error input {
+  border-color: red;
+}
+
+/* line 223, ../sass/partials/_form.scss */
+.etu.success input {
+  border-color: #2ecc71;
+}
+
+/* line 226, ../sass/partials/_form.scss */
+.etu.error input {
+  border-color: red;
+}
+
+/* line 229, ../sass/partials/_form.scss */
+.form-control small {
+  color: red;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  visibility: hidden;
+}
+
+/* line 239, ../sass/partials/_form.scss */
+.etu small {
+  color: red;
+}
+
+/* line 243, ../sass/partials/_form.scss */
+.form-control.error small {
+  visibility: visible;
+}
+
+/* line 247, ../sass/partials/_form.scss */
+.form button {
+  cursor: pointer;
+  background-color: #e04218;
+  border: 2px solid #e04218;
+  border-radius: 4px;
+  color: #fff;
+  margin-right: auto;
+  margin-left: auto;
+  display: block;
+  font-size: 16px;
+  padding: 10px;
+  margin-top: 20px;
+  width: 30%;
+  box-shadow: #e04218 0px 7px 29px 0px;
+}
+
+/*  .form button:hover{
+     background-color: #39ACE7;
+     border: 2px solid #39ACE7;
+
+ } */
+/* .form .btn-login{
+    background-color: #39ACE7;
+    border: 2px solid #39ACE7;
+} */
+@media only screen and (max-width: 768px) {
+  /* line 276, ../sass/partials/_form.scss */
+  .form button {
+    cursor: pointer;
+    background-color: #e04218;
+    border: 2px solid #e04218;
+    border-radius: 4px;
+    color: #fff;
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+    font-size: 16px;
+    padding: 10px;
+    margin-top: 20px;
+    width: 100%;
+    box-shadow: #e04218 0px 7px 29px 0px;
+  }
+
+  /* line 292, ../sass/partials/_form.scss */
+  .container-login {
+    width: 80%;
+    margin-top: 15%;
+    box-shadow: #195777 0px 7px 20px 0px;
+    background-color: #e04218;
+    color: #fff;
+  }
+  /* line 298, ../sass/partials/_form.scss */
+  .container-login .form-control .label {
+    color: #39ACE7;
+  }
+}
+/* line 2, ../sass/partials/itemsPaginate.scss */
+.p {
+  display: flex;
+  justify-content: right;
+  margin-top: 2%;
+}
+
+/* line 7, ../sass/partials/itemsPaginate.scss */
+.pagination {
+  display: inline-block;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+/* line 12, ../sass/partials/itemsPaginate.scss */
+.pagination a {
+  float: left;
+  padding: 10px 18px;
+  text-decoration: none;
+  border: 2px solid #ddd;
+}
+
+/* line 18, ../sass/partials/itemsPaginate.scss */
+.pagination a:not(.laquo) {
+  color: #000;
+}
+
+/* line 21, ../sass/partials/itemsPaginate.scss */
+.laquo {
+  background: #e04218;
+  color: #fff;
+}
+
+/* line 26, ../sass/partials/itemsPaginate.scss */
+.pagination .active {
+  background-color: #e04218;
+  color: white;
+  border: 2px solid #e04218;
+}
+
+/* line 33, ../sass/partials/itemsPaginate.scss */
+.pagination a:hover:not(.active) {
+  background-color: #e04218;
+  color: #fff;
+}
+
+/* line 19, ../sass/screen.scss */
+a {
+  list-style: none;
+  text-decoration: none;
+}
+
+/* line 23, ../sass/screen.scss */
+small {
+  font-size: 14px;
+}
