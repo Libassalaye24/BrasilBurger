@@ -25,7 +25,7 @@ class ComplementType extends AbstractType
         $builder
             ->add('nom',TextType::class,[
                 'attr' => [
-                     'class' => 'input'
+                     'class' => 'form-control'
                 ],
                 'constraints' => [
                     new NotBlank([
@@ -35,7 +35,7 @@ class ComplementType extends AbstractType
             ])
             ->add('prix',NumberType::class,[
                 'attr' => [
-                     'class' => 'input'
+                     'class' => 'form-control'
                 ],
                 'constraints' => [
                     new NotBlank([
@@ -46,10 +46,9 @@ class ComplementType extends AbstractType
             ->add('image',ImageType::class,[
                
                 'attr' => [
-                     'class' => 'input'
+                     'class' => 'form-control'
                 ]
             ])
-            ->add('Valider', SubmitType::class)
         ;
     }
 

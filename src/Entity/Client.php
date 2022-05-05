@@ -20,7 +20,7 @@ class Client extends User
     public function __construct()
     {
         $this->commandes = new ArrayCollection();
-        //$this->roles = ['ROLE_CLIENT'];
+        
     }
 
     public function getTelephone(): ?string

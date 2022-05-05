@@ -25,7 +25,7 @@ class BurgerType extends AbstractType
         $builder
             ->add('nom',TextType::class,[
                 'attr' => [
-                     'class' => 'input',
+                     'class' => 'form-control',
                 ],
                 'constraints' => [
                     new NotBlank([
@@ -35,7 +35,7 @@ class BurgerType extends AbstractType
             ])
             ->add('prix',NumberType::class,[
                 'attr' => [
-                     'class' => 'input',
+                     'class' => 'form-control',
                 ],
                 'constraints' => [
                     new NotBlank([
@@ -45,7 +45,7 @@ class BurgerType extends AbstractType
             ])
             ->add('description',TextType::class,[
                 'attr' => [
-                     'class' => 'input',
+                     'class' => 'form-control',
                 ],
                 'constraints' => [
                     new NotBlank([
@@ -54,13 +54,8 @@ class BurgerType extends AbstractType
                 ],
             ])
             ->add('image',ImageType::class,[
-               
-                'attr' => [
-                     'class' => 'input',
-                     
-                ]
+                
             ])
-            ->add('Valider', SubmitType::class)
         ;
     }
 

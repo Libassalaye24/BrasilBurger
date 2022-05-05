@@ -10,8 +10,11 @@ use Doctrine\ORM\Mapping\DiscriminatorColumn;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Validator\Constraints\Unique;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[UniqueEntity('email',message:"L'email saisie existe deja")]
 #[ORM\Table(name: '`user`')]
 #[InheritanceType("SINGLE_TABLE")]
 #[DiscriminatorColumn(name:"type", type:"string")]
@@ -25,6 +28,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $id;
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
+    #[Assert\Email(message: "L'email '{{ value }}' n'est pas valide.")]
     private $email;
 
     #[ORM\Column(type: 'json')]
@@ -38,6 +42,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string', length: 255)]
     private $Nom;
+
 
     public function getId(): ?int
     {
@@ -132,4 +137,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+   
 }

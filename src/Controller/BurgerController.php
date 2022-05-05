@@ -2,15 +2,17 @@
 
 namespace App\Controller;
 
-use App\Entity\Burger;
 use App\Entity\Image;
+use App\Entity\Burger;
 use App\Form\BurgerType;
+use App\Service\FileUploader;
 use App\Repository\BurgerRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Tools\Pagination\Paginator;
 use Knp\Component\Pager\PaginatorInterface;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,7 +25,7 @@ class BurgerController extends AbstractController
     {
         $data = $burgerRepository->findBy(['etat' => false]);
         $burgers = $paginatorInterface->paginate(
-            $data,$request->query->getInt('page', 1),2
+            $data,$request->query->getInt('page', 1),5
         );
         return $this->render('burger/index.html.twig', [
             'controller_name' => 'BurgerController',
@@ -32,9 +34,13 @@ class BurgerController extends AbstractController
     }
 
     #[Route('/burger/archives', name: 'list_burger_archive')]
-    public function archives(BurgerRepository $burgerRepository): Response
+    public function archives(BurgerRepository $burgerRepository,Request $request,PaginatorInterface $paginatorInterface): Response
     {
-        $burgers = $burgerRepository->findBy(['etat' => true]);
+       
+        $data = $burgerRepository->findBy(['etat' => true]);
+        $burgers = $paginatorInterface->paginate(
+            $data,$request->query->getInt('page', 1),5
+        );
         return $this->render('burger/archives.html.twig', [
             'controller_name' => 'BurgerController',
             'burgers' => $burgers,
@@ -91,14 +97,34 @@ class BurgerController extends AbstractController
 
     }
     #[Route('/burger/edit/{id}', name: 'edit_burger')]
-    public function editBurger(Burger $burger,Request $request,EntityManagerInterface $manager):Response
+    public function editBurger(int $id,Request $request, FileUploader $fileUploader,EntityManagerInterface $manager,BurgerRepository $burgerRepository):Response
     {
-
+        if (!$id) {
+           
+        }else {
+            $burger = $burgerRepository->find($id);
+        }
+       
         $form = $this->createForm(BurgerType::class,$burger);
+       // $image = new Image();
+            //dd( $form->get('image')->get('nom')->getData());
+          //  $image->setNom(new File($this->getParameter('images_avatars').'/'.$form->get('image')->get('nom')->getData()));
+           // $pictureFile = new File($oldFileNamePath);
+          //  $burger->setImage($image);
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
-            
+            $imageFile = $form->get('image')->get('nom')->getData();
+            $image = new Image();
+          
+            if ($imageFile) {
+                $imageFileName = $fileUploader->upload($imageFile);
+                $image->setNom($imageFileName);
+            }
+            $burger->setImage($image);
+            $manager->persist($burger);
+            $manager->flush();
+    
             return $this->redirectToRoute('list_burger');
         }
         return $this->render('burger/add.html.twig', [
@@ -118,9 +144,7 @@ class BurgerController extends AbstractController
         $manager->persist($burger);
         $manager->flush();
         return $this->redirectToRoute('list_burger');
-        /* return $this->render('burger/add.html.twig', [
-            'controller_name' => 'BurgerController'
-        ]); */
+        
     }
 
 }

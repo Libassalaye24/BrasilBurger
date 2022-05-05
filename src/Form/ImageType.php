@@ -22,6 +22,12 @@ class ImageType extends AbstractType
         $builder
             ->add('nom',FileType::class,[
                 'label' => 'Avatar',
+                'data_class' => null,
+                'attr' => [
+                    'class' => 'form-control',
+                    'type' => 'file'
+                    
+                ],
                 "constraints"=>[
                     new NotBlank([
                         'message'=>$this->translator->trans('burger.blank')
