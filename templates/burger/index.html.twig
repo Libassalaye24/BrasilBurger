@@ -1,75 +1,81 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello BurgerController!{% endblock %}
+{% block title %}Hello BurgerController!
+{% endblock %}
 
 {% block body %}
 
-     <div class="container">
-            <div class="column">
-               <div class="inline">
-                    <h4>
-                        Liste des Burgers
-                    </h4>
-                    <a role="button" href="{{ path('add_burger') }}" class=" btn-ajout">
-                        <i class="fas fa-plus "></i>
-                        Ajouter
-                    </a>
-                </div>
-                <div class="card">
+	<div class="container mt-5">
+		
+			<div class="row">
+				<div class="col">
+					<h5>
+						Liste des Burgers
+					</h5>
+				</div>
+				<div class="col">
+					<a role="button" href="{{ path('add_burger') }}" class="btn btn-primary float-end">
+						<i class="fas fa-plus "></i>
+						Ajouter
+					</a>
+				</div>
 
-                       
-                    <div class="row" >
-                      
-                        <a href="{{path('list_burger_archive')}}" style="margin-left:auto" class="link">
-                           Liste des archives <i class="fas fa-arrow-right "></i>
-                        </a>
-                    </div>
-                    <div style="overflow-x:auto;">
-                    <table >
-                        <thead class=" ">
-                            <tr class="">
-                                <th>#</th>
-                                <th>Nom</th>
-                                <th>Prix</th>
-                                <th>Description</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        {% for burger in burgers %}
-                    
-                            <tr>
-                                <td><img src="{{ asset('img/uploads/' ~ burger.image.nom) }}" class="  rounded-circle" style="width: 35px;height:35px;" alt=""></td>
-                                <td>{{ burger.nom }}</td>
-                                <td>{{ burger.prix }}</td>
-                                <td>{{ burger.description|slice(0, 50) ~ '...'  }}</td>
-                                <td>
-                                    <a name="" id="" class=" btnUpdate" href="{{ path('edit_burger',{'id':burger.id}) }}" role="button">
-                                        <i class="fa fa-edit" aria-hidden="true"></i>
-                                    </a>
-                                    {% if burger.etat == false %}
-                                        <a name="" id="" class=" btnArchive " href="{{ path('change_etat',{'id':burger.id}) }}" role="button">
-                                            <i class="fa fa-archive" aria-hidden="true"></i>
-                                        </a>
-                                    {% else %}
-                                        <a name="" id="" class=" btnArchive" href="{{ path('change_etat',{'id':burger.id}) }}" role="button">
-                                            <i class="fa fa-file" aria-hidden="true"></i>
-                                        </a>
-                                    {% endif %}
+			</div>
+        <div class="shadow card p-2 mt-2">
+            <div class="p-1 ">		
+					<a role="button" href="{{ path('list_burger_archive') }}" class="action float-end">
+                        Liste des archives 
+						<i class="fas fa-arrow-right "></i>
+					</a>
+			</div>
 
-                                </td>
-                            </tr>
-                        {% endfor %}
+		
+			<table class="table" style="overflow-x:auto;">
+				<thead class="bc-secondary border-0">
+					<tr class="border-0">
+						<th>#</th>
+						<th class="p-3">Nom</th>
+						<th class="p-3">Prix</th>
+						<th class="p-3">Description</th>
+						<th class="p-3">Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for burger in burgers %}
+						<tr>
+							<td scope="row" class="p-3"><img src="{{ asset('img/uploads/' ~ burger.image.nom) }}" class="img-fluid rounded" style="width:40px;" alt=""></td>
+							<td class="p-3">{{ burger.nom }}</td>
+							<td class="p-3">{{ burger.prix }}</td>
+							<td class="p-3">{{ burger.description|slice(0, 50) ~ '...'  }}</td>
+							<td class="p-3">
+								<a name="" id="" class="action" style="" href="{{ path('edit_burger',{'id':burger.id}) }}" role="button">
+									modifier
+                                    <i class="fa fa-edit" aria-hidden="true"></i>
+                                    
+								</a>
+								<a name="" id="" class="action" href="{{ path('change_etat',{'id':burger.id}) }}" role="button">
+									archiver
+                                    <i class="fa fa-archive" aria-hidden="true"></i>
+                                     
+								</a>
+								
+							</td>
+						</tr>
+						{% else %}
 
-                    </table>
-                    </div>
-                      <div class="p ">
-                        <div class="pagination">
-                             {{ knp_pagination_render(burgers,'./pagination.twig') }}
-                        </div>
-                   </div>
-                </div>
-                  
-                  
-            </div>
-        </div>
+					{% endfor %}
+
+				</tbody>
+			</table>
+
+            <div class="row ">
+			    {{ knp_pagination_render(burgers,'./pagination.twig') }}
+		    </div>
+
+		</div>
+	
+
+	</div>
+
+</div>
 {% endblock %}

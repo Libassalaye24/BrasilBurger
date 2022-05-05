@@ -1,20 +1,90 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
+{% block title %}Hello UserController!
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+	<div class="container ">
+		{{ form_start(form) }}
+		<div class="card shadow mt-5">
+			<div class="card-body">
+				<div class="row">
+					<div class="col-md-6">
+						<h4 class="float-start c-primary">Formulaire D'inscription</h4>
+					</div>
+					<div class="col-md-6">
+						<a href="{{path('login')}}" class="float-end text-dark">Se connecter ? 
+							<i class="fa fa-connectdevelop" aria-hidden="true"></i>
+						</a>
+					</div>
+				</div>
+				<div class="row ">
+					<div class="col-md-6">
+						<div class="mb-3">
+							<label for="nom" class="form-label">Nom</label>
+							{{form_widget(form.Nom)}}
+							<div class="invalid-feedback"></div>
+							<small id="helpId" class="text-danger">{{form_errors(form.Nom)}}</small>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="mb-3">
+							<label for="nom" class="form-label">Prenom</label>
+							{{form_widget(form.prenom)}}
+							<div class="invalid-feedback"></div>
+							<small id="helpId" class="text-danger">{{form_errors(form.prenom)}}</small>
+						</div>
+					</div>
+				</div>
+				<div class="row ">
+					<div class="col-md-6">
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/libasse/Bureau/SYMFONY/commandes_restaurant/src/Controller/UserController.php'|file_link(0) }}">src/Controller/UserController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/libasse/Bureau/SYMFONY/commandes_restaurant/templates/user/index.html.twig'|file_link(0) }}">templates/user/index.html.twig</a></code></li>
-    </ul>
-</div>
+						<div class="mb-3">
+							<label for="nom" class="form-label">Email</label>
+							{{form_widget(form.email)}}
+							<div class="invalid-feedback">
+							</div>
+							<small id="helpId" class="text-danger">{% if errorEmail is defined %} {{errorEmail}} {% endif %}</small>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="mb-3">
+							<label for="nom" class="form-label">Telephone</label>
+							{{form_widget(form.telephone)}}
+							<div class="invalid-feedback"></div>
+							<small id="helpId" class="text-danger">{{form_errors(form.telephone)}}</small>
+						</div>
+					</div>
+				</div>
+				<div class="row ">
+					<div class="col-md-6">
+						<div class="mb-3">
+							<label for="nom" class="form-label">Password</label>
+							{{form_widget(form.password)}}
+							<div class="invalid-feedback"></div>
+							<small id="helpId" class="text-danger">{{form_errors(form.password)}}</small>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="mb-3">
+							<label for="" class="form-label">Confirm Password</label>
+							{{form_widget(form.confirm)}}
+							<div class="invalid-feedback"></div>
+							<small id="helpId" class="text-danger">
+								{{form_errors(form.confirm)}}
+							</small>
+						</div>
+					</div>
+				</div>
+				{{ form_row(form._token) }}
+				<button type="submit" class="btn btn-primary float-end">S'inscrire</button>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}
+{% block javascripts %}
+	{# <script src="{{asset('js/register.js')}}"></script> #}
 {% endblock %}

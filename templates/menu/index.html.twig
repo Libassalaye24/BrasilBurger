@@ -4,86 +4,97 @@
 {% endblock %}
 
 {% block body %}
-	{{parent()}}
+	<div class="container mt-5">
 
-	<div class="container">
-		<div class="column">
-			<div class="inline">
-				<h4>
+		<div class="row">
+			<div class="col">
+				<h5>
 					Liste des menus
-				</h4>
-				<a role="button" href="{{ path('add_menu') }}" class=" btn-ajout">
+				</h5>
+			</div>
+			<div class="col">
+				<a role="button" href="{{ path('add_menu') }}" class="btn btn-primary float-end">
 					<i class="fas fa-plus "></i>
 					Ajouter
 				</a>
 			</div>
-			<div class="card">
 
-
-				<div class="row">
-
-					<a href="" style="margin-left:auto" class="link">
-						Liste des archives
-						<i class="fas fa-arrow-right "></i>
-					</a>
-				</div>
-				<div style="overflow-x:auto;">
-					<table>
-						<thead class=" ">
-							<tr class="">
-								<th>#</th>
-								<th>Nom</th>
-								<th>Prix</th>
-								<th>Composants</th>
-								<th>Action</th>
-							</tr>
-						</thead>
-						{% for menu in menus %}
-
-							<tr>
-								<td><img src="{{ asset('img/uploads/' ~ menu.image.nom) }}" class="  rounded-pill" style="width: 40px;height:40px;" alt=""></td>
-								<td>{{ menu.nom }}</td>
-								{% set montant = menu.burger.prix %}
-								{% set montantC = 0 %}
-								<td>
-									{{menu.burger.nom}}/
-									{% for comp in menu.complements %}
-										{{comp.nom}}/
-										{% set montantC = montantC + comp.prix %}
-									{% endfor %}
-								</td>
-								<td>
-                                {{montantC + montant }}
-									Fcfa
-                                </td>
-								<td>
-									<a name="" id="" class=" btnUpdate" href="{{ path('edit_menu',{'id':menu.id}) }}" role="button">
-										<i class="fa fa-edit" aria-hidden="true"></i>
-									</a>
-									{% if menu.etat == false %}
-										<a name="" id="" class=" btnArchive " href="{{ path('change_etat',{'id':menu.id}) }}" role="button">
-											<i class="fa fa-archive" aria-hidden="true"></i>
-										</a>
-									{% else %}
-										<a name="" id="" class=" btnArchive" href="{{ path('change_etat',{'id':menu.id}) }}" role="button">
-											<i class="fa fa-file" aria-hidden="true"></i>
-										</a>
-									{% endif %}
-
-								</td>
-							</tr>
-						{% endfor %}
-
-					</table>
-				</div>
-				<div class="p ">
-					<div
-						class="pagination">{#  {{ knp_pagination_render(menus,'./pagination.twig') }} #}
-					</div>
-				</div>
+		</div>
+		<div class="shadow card p-2 mt-2">
+			<div class="p-1 ">
+				<a role="button" href="{{ path('list_menu_archive') }}" class="action float-end">
+					Liste des archives
+					<i class="fas fa-arrow-right "></i>
+				</a>
 			</div>
 
 
+			<table class="table" style="overflow-x:auto;">
+				<thead class="bc-secondary border-0">
+					<tr class="border-0">
+						<th class="p-3">#</th>
+						<th class="p-3">Nom</th>
+						<th class="p-3">Composants</th>
+						<th class="p-3">Prix</th>
+						<th class="p-3">Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for menu in menus %}
+						<tr>
+							<td class="p-3" scope="row"></td>
+							<td class="p-3">{{ menu.nom }}</td>
+							{% set montant = 0 %}
+							{% set montant = menu.burger.prix %}
+							{% set montantC = 0 %}
+							<td class="p-3">
+								{{menu.burger.nom}}/
+								{% for comp in menu.complements %}
+									{{comp.nom}}/
+									{% set montantC = montantC + comp.prix %}
+								{% endfor %}
+							</td>
+							<td class="p-3">
+								{{montantC + montant }}
+								Fcfa
+							</td>
+							<td class="p-3">
+								<a name="" id="" class="action" style="" href="{{ path('edit_menu',{'id':menu.id}) }}" role="button">
+									modifier
+									<i class="fa fa-edit" aria-hidden="true"></i>
+
+								</a>
+								{% if menu.etat == false %}
+									<a name="" id="" class="action" href="{{ path('change_etat_menu',{'id':menu.id}) }}" role="button">
+										archiver
+										<i class="fa fa-archive" aria-hidden="true"></i>
+
+									</a>
+								{% else %}
+									<a name="" id="" class="action" href="{{ path('change_etat_menu',{'id':menu.id}) }}" role="button">
+										desarchiver
+										<i class="fa fa-archive" aria-hidden="true"></i>
+
+									</a>
+								{% endif %}
+
+
+							</td>
+						</tr>
+						{% else %}
+
+					{% endfor %}
+
+				</tbody>
+			</table>
+
+			<div class="row ">
+				{{ knp_pagination_render(menus,'./pagination.twig') }}
+			</div>
+
 		</div>
+
+
 	</div>
-{% endblock %}
+
+</div>{% endblock %}

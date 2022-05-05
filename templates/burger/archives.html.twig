@@ -1,68 +1,70 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello BurgerController!{% endblock %}
+{% block title %}Hello BurgerController!
+{% endblock %}
 
 {% block body %}
 
-     <div class="container">
-            <div class="column">
-               
-                <div class="card">
+	<div class="container mt-5">
 
-                       
-                    <div class="row" >
-                      
-                        <a href="{{path('list_burger')}}" style="margin-right:auto" class="link">
-                            <i class="fas fa-arrow-left "></i>
-                            Liste des archives
-                        </a>
-                    </div>
-                    <div style="overflow-x:auto;">
-                    <table >
-                        <thead class=" ">
-                            <tr class="">
-                                <th>#</th>
-                                <th>Nom</th>
-                                <th>Prix</th>
-                                <th>Description</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        {% for burger in burgers %}
-                    
-                            <tr>
-                                <td><img src="{{ asset('img/uploads/' ~ burger.image.nom) }}" class="  rounded-circle" style="width: 35px;height:35px;" alt=""></td>
-                                <td>{{ burger.nom }}</td>
-                                <td>{{ burger.prix }}</td>
-                                <td>{{ burger.description|slice(0, 50) ~ '...'  }}</td>
-                                <td>
-                                    <a name="" id="" class=" btnUpdate" href="{{ path('edit_burger',{'id':burger.id}) }}" role="button">
-                                        <i class="fa fa-edit" aria-hidden="true"></i>
-                                    </a>
-                                    {% if burger.etat == false %}
-                                        <a name="" id="" class=" btnArchive " href="{{ path('change_etat',{'id':burger.id}) }}" role="button">
-                                            <i class="fa fa-archive" aria-hidden="true"></i>
-                                        </a>
-                                    {% else %}
-                                        <a name="" id="" class=" btnArchive" href="{{ path('change_etat',{'id':burger.id}) }}" role="button">
-                                            <i class="fa fa-file" aria-hidden="true"></i>
-                                        </a>
-                                    {% endif %}
+		<div class="shadow card p-2 mt-2">
+			<div class="p-1 ">
+				<a role="button" href="{{ path('list_burger') }}" class="action float-start">
 
-                                </td>
-                            </tr>
-                        {% endfor %}
+					<i class="fas fa-arrow-left "></i>
+					Liste des burgers
+				</a>
+                	<h5 class="float-end c-primary">
+						Liste des archives
+					</h5>
+			</div>
 
-                    </table>
-                    </div>
-                      <div class="p ">
-                        <div class="pagination">
-                             {# {{ knp_pagination_render(burgers,'./pagination.twig') }} #}
-                        </div>
-                   </div>
-                </div>
-                  
-                  
-            </div>
-        </div>
-{% endblock %}
+
+			<table class="table" style="overflow-x:auto;">
+				<thead class="bc-secondary border-0">
+					<tr class="border-0">
+						<th class="p-3">#</th>
+						<th class="p-3">Nom</th>
+						<th class="p-3">Prix</th>
+						<th class="p-3">Description</th>
+						<th class="p-3">Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for burger in burgers %}
+						<tr>
+							<td class="p-3" scope="row"></td>
+							<td class="p-3">{{ burger.nom }}</td>
+							<td class="p-3">{{ burger.prix }}</td>
+							<td class="p-3">{{ burger.description|slice(0, 50) ~ '...'  }}</td>
+							<td class="p-3">
+								<a name="" id="" class="action" style="" href="{{ path('edit_burger',{'id':burger.id}) }}" role="button">
+									modifier
+									<i class="fa fa-edit" aria-hidden="true"></i>
+
+								</a>
+								<a name="" id="" class="action" href="{{ path('change_etat',{'id':burger.id}) }}" role="button">
+									desarchiver
+									<i class="fa fa-archive" aria-hidden="true"></i>
+
+								</a>
+
+							</td>
+						</tr>
+						{% else %}
+                            Not found
+					{% endfor %}
+
+				</tbody>
+			</table>
+
+			<div class="row ">
+				{{ knp_pagination_render(burgers,'./pagination.twig') }}
+			</div>
+
+		</div>
+
+
+	</div>
+
+</div>{% endblock %}
