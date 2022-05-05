@@ -4,22 +4,150 @@
  * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
 
 @import "compass/reset";
-@import "partials/menu";
+/* @import "partials/menu";
 @import "partials/cadreShadow";
 @import "partials/burgerDesign";
 @import "partials/variables";
 @import "partials/btn";
 @import "partials/form";
-@import "partials/itemsPaginate.scss";
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;1,500&family=Roboto+Mono&display=swap');
+@import "partials/itemsPaginate.scss"; */
+/* @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;1,500&family=Roboto+Mono&display=swap');
+ */
+
+@import "partials/variables";
+ .product-container{
+    background-color: $product-container-color;
+    .card-product{
+        background-color: #fff;
+        .card-body{
+            border-radius: 16px;
+        }
+        img{
+            cursor: pointer;
+        }
+        &:hover{
+            background-color: $colorPrimary;
+            color: #000;
+            .btn-primary{
+                
+                    background-color: #fff;
+                    border: $colorPrimary;
+                    color: $colorPrimary;
+                
+            }
+            .card-title{
+                color: #fff;
+            }
+            .card-text{
+                color: #000;
+            }
+        }
+    }
+ }
+ .card{
+     border: none;
+ }
+
+ .btn-primary{
+     background-color: $colorPrimary;
+     border: $colorPrimary;
+     &:hover{
+        background-color: $colorPrimary;
+        border: $colorPrimary;
+     }
+ }
+ @media (min-width: 800px) {
+    .card-product{
+        width: 18rem;
+       
+    }
+   
+}
+
+    .nav-item{
+        a{
+             color: $colorPrimary;
+        }
+       
+    }
+
+.navbar-brand{
+    background-color: $colorPrimary;
+    padding: 4px;
+    color: #fff;
+}
 
 
-
-
-a{
+ol,ul,li,a
+{
     list-style: none;
     text-decoration: none;
 }
-small{
-    font-size: 14px;
+.action{
+    color: #000;
+    .fa-archive{
+        color: $colorRed;
+    }
+    .fa-edit{
+        color: $colorYellow;
+    }
+    &:hover
+    {
+        color: #000;
+    }
+}
+.bc-primary{
+    background-color: $colorPrimary;
+}
+.c-primary{
+    color: $colorPrimary;
+}
+.bc-secondary{
+    background-color: $product-container-color;
+    color: $colorPrimary;
+}
+table{
+    tr{
+        border-bottom: $product-container-color;
+        
+    }
+    .thbottom{
+        padding: 1%;
+    }
+     tr:last-child {
+        border-bottom: $colorPrimary;
+    }
+    tr:nth-child(even) {
+        background-color: $product-container-color;
+    }
+    
+     
+}
+nav .pagination{
+    .active{
+        background-color: $colorPrimary;
+        color: #fff;
+        &:hover{
+            background-color: $colorPrimary;
+            color: #fff;
+        }
+    }
+    .notactive{
+        background-color: #fff;
+        color: $colorPrimary;
+        &:hover{
+            background-color: #fff;
+            color: $colorPrimary;
+        }
+    }
+}
+
+
+
+
+.card{
+    border: none;
+}
+body{
+    font-size: 18px;
 }

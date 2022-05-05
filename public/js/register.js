@@ -1,30 +1,33 @@
 /* const form = document.getElementById('form');
  */const form = document.querySelector('form');
- const nom = document.getElementById('menu_form_nom');
- const burger = document.getElementById('menu_form_burger');
- const complement1 = document.getElementById('menu_form_complements_1');
- const complement2 = document.getElementById('menu_form_complements_2');
- const image = document.getElementById('menu_form_image_nom');
+ const nom = document.getElementById('inscription_form_Nom');
+ const prenom = document.getElementById('inscription_form_prenom');
+ const email = document.getElementById('inscription_form_email');
+ const telephone = document.getElementById('inscription_form_telephone');
+ const password = document.getElementById('inscription_form_password');
+ const confirmPassword = document.getElementById('inscription_form_confirm');
+
+
+
  let isValid = false;
  //Functions-------------------------------------------------------------
- function showError(input, message) {
-    //Afficher les messages d'erreur
-    const formControl = input.parentElement;
-    formControl.className = "mb-3 invalid";
-    if (formControl.classList.contains("invalid") == true) {
-      formControl.querySelector("input").classList.add("is-invalid");
-    }
-    const small = formControl.querySelector(".invalid-feedback");
-    small.innerText = message;
-  }
-  //
-  function showSuccess(input) {
-    const formControl = input.parentElement;
-    formControl.className = "mb-3 valid";
-    if (formControl.classList.contains("valid") == true) {
-      formControl.querySelector("input").classList.add("is-valid");
-    }
-  }
+ function showError(input, message) {//Afficher les messages d'erreur
+     const formControl = input.parentElement;
+     formControl.className = 'mb-3 invalid';
+     if (formControl.classList.contains("invalid") == true){
+         formControl.querySelector('input').classList.add("is-invalid")
+     }
+     const small = formControl.querySelector('.invalid-feedback');
+     small.innerText = message;
+ }
+ //
+ function showSuccess(input) {
+     const formControl = input.parentElement;
+     formControl.className = 'mb-3 valid';
+     if (formControl.classList.contains("valid") == true){
+         formControl.querySelector('input').classList.add("is-valid")
+     }
+ }
  //
  /* function checknbrEtage(input) {//Tester si l'nbrEtage est valide :  javascript : valid nbrEtage
      const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -40,9 +43,9 @@
      var bool =false;
      inputArray.forEach(input => {
          if (input.value.trim() === '') {
-             showError(input,`${getFieldName(input)} est obligatoire`);
+             showError(input,`Ce champ est obligatoire`);
           }else if(input.value === '0'){
-              showError(input,`${getFieldName(input)} est obligatoire`);
+              showError(input,`Ce champ est obligatoire`);
           }else{
               showSuccess(input);
               isValid=true;
@@ -58,9 +61,9 @@
  //
  function checkLength(input, min, max) {//Tester la longueur de la valeur  d'un input
      if(input.value.length < min){
-         showError(input, `${getFieldName(input)} doit contenir au moins ${min} caractéres!`)
+         showError(input, `Ce champ doit contenir au moins ${min} caractéres!`)
      }else if(input.value.length > max){
-         showError(input, `${getFieldName(input)} ne doit contenir au plus ${max} caractéres !`);
+         showError(input, `Ce champ ne doit contenir au plus ${max} caractéres !`);
          console.log(input.value.length)
      }else{
          showSuccess(input);
@@ -80,18 +83,15 @@
      return bool;
  }
  function CheckNumberMatch(input) {
-     const rg  = /^[0-9]+$/;
-     var bool =false;
-     if (input.value.trim()==='') {
-         showError(input,"Champs obligatoire!!"); 
-     }else if (!rg.test(input.value.trim())) {
+    // const rg = new RegExp('^[0-9]+$');
+    const reg = /^(33|77|78|75|76)[0-9]{7}/;
+     if (!reg.test(input.value.trim())) {
          showError(input,"le Numero est invalide!!");
      }else{
          showSuccess(input);
          isValid = true;
      }
-     
-        
+ 
  }
  //
  function checkPasswordMatch(input1, input2) {
@@ -101,7 +101,28 @@
  }
  
  
- 
+ function checkEmail(input) {//Tester si l'email est valide :  javascript : valid email
+    var bool = false;
+     if(!isValidEmail(input.value)){
+         showError(input,"L'email n'est pas valide!");
+     }else{
+         showSuccess(input);
+         isValid = true;
+     } 
+}
+
+function CheckEle(ele){
+    if (ele.checked == false) {
+        
+    }
+}
+
+
+function isValidEmail(email) {//Tester si l'email est valide
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
+
  
  
  //Even listeners--------------------------------------------------------
@@ -109,12 +130,18 @@
    // var nb = CheckNumberMatch(nbrEtage);
      if (isValid) {} else {
          e.preventDefault();
-         checkRequired([nom,burger,image]);
-         if (complement1 === "" && complement2==="") {
-             showError(complement1,"Veiller cocher une case")
-         }
+         checkRequired([nom,prenom,email,password,telephone,confirmPassword]);
          checkLength(nom,3,30);
+         checkLength(prenom,3,30);
+         checkLength(password,5,20);
+         checkLength(confirmPassword,5,20);
+         CheckNumberMatch(telephone);
+         checkPasswordMatch(password,confirmPassword);
+         checkEmail(email);
+         CheckNumberMatch(telephone);
+        
      }
+    
   
  
  

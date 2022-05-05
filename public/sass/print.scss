@@ -1,7 +1,137 @@
 /* Welcome to Compass. Use this file to define print styles.
  * Import this file using the following HTML or equivalent:
  * <link href="/stylesheets/print.css" media="print" rel="stylesheet" type="text/css" /> */
-@import "partials/menu";
-body{
-    font-size: 15px;
+ @import "partials/variables";
+
+
+ .product-container{
+    background-color: $product-container-color;
+    .card-product{
+        background-color: #fff;
+        .card-body{
+            border-radius: 16px;
+        }
+        img{
+            cursor: pointer;
+        }
+        &:hover{
+            background-color: $colorPrimary;
+            color: #000;
+            .btn-primary{
+                
+                    background-color: #fff;
+                    border: $colorPrimary;
+                    color: $colorPrimary;
+                
+            }
+            .card-title{
+                color: #fff;
+            }
+            .card-text{
+                color: #000;
+            }
+        }
+    }
+ }
+ .card{
+     border: none;
+ }
+
+ .btn-primary{
+     background-color: $colorPrimary;
+     border: $colorPrimary;
+     &:hover{
+        background-color: $colorPrimary;
+        border: $colorPrimary;
+     }
+ }
+ @media (min-width: 800px) {
+    .card-product{
+        width: 18rem;
+       
+    }
+   
 }
+
+    .nav-item{
+        a{
+             color: $colorPrimary;
+        }
+       
+    }
+a,button,select{
+    outline: 0;
+}
+.navbar-brand{
+    background-color: $colorPrimary;
+    padding: 4px;
+    color: #fff;
+}
+
+
+ol,ul,li,a
+{
+    list-style: none;
+    text-decoration: none;
+}
+.action{
+    color: #000;
+    .fa-archive{
+        color: $colorRed;
+    }
+    .fa-edit{
+        color: $colorYellow;
+    }
+    &:hover
+    {
+        color: #000;
+    }
+}
+.bc-primary{
+    background-color: $colorPrimary;
+}
+.c-primary{
+    color: $colorPrimary;
+}
+.bc-secondary{
+    background-color: $product-container-color;
+    color: $colorPrimary;
+}
+table{
+    tr{
+        border-bottom: $product-container-color;
+        
+    }
+    .thbottom{
+        padding: 1%;
+    }
+     tr:last-child {
+        border-bottom: $colorPrimary;
+    }
+    tr:nth-child(even) {
+        background-color: $product-container-color;
+    }
+    
+     
+}
+nav .pagination{
+    .active{
+        background-color: $colorPrimary;
+        color: #fff;
+        &:hover{
+            background-color: $colorPrimary;
+            color: #fff;
+        }
+    }
+    .notactive{
+        background-color: #fff;
+        color: $colorPrimary;
+        &:hover{
+            background-color: #fff;
+            color: $colorPrimary;
+        }
+    }
+}
+
+  
+

@@ -8,14 +8,20 @@ let isValid = false;
 //Functions-------------------------------------------------------------
 function showError(input, message) {//Afficher les messages d'erreur
     const formControl = input.parentElement;
-    formControl.className = 'form-control error';
-    const small = formControl.querySelector('small');
+    formControl.className = 'mb-3 invalid';
+    if (formControl.classList.contains("invalid") == true){
+        formControl.querySelector('input').classList.add("is-invalid")
+    }
+    const small = formControl.querySelector('.invalid-feedback');
     small.innerText = message;
 }
 //
 function showSuccess(input) {
     const formControl = input.parentElement;
-    formControl.className = 'form-control success'; 
+    formControl.className = 'mb-3 valid';
+    if (formControl.classList.contains("valid") == true){
+        formControl.querySelector('input').classList.add("is-valid")
+    }
 }
 //
 /* function checknbrEtage(input) {//Tester si l'nbrEtage est valide :  javascript : valid nbrEtage
@@ -105,6 +111,14 @@ form.addEventListener('submit',function(e){
         checkLength(nom,3,30);
         checkLength(description,3,30);
         CheckNumberMatch(prix);
+       
+    }
+    if (image === null) {
+        console.log('false')
+        e.preventDefault();
+        showError(image,`Image est obligatoire`);
+    }else{
+        showSuccess(image);
     }
  
 
