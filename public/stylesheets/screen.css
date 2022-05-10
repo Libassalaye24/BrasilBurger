@@ -2,6 +2,8 @@
  * In this file you should write your main styles. (or centralize your imports)
  * Import this file using the following HTML or equivalent:
  * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Satisfy&display=swap");
 /* line 5, ../../../../../../../var/lib/gems/2.7.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -67,6 +69,1924 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   display: block;
 }
 
+/* line 4, ../sass/partials/_menu.scss */
+body {
+  margin: 0;
+  font-family: Arial;
+}
+
+/* line 6, ../sass/partials/_menu.scss */
+.topnav {
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  position: fixed;
+  /* Set the navbar to fixed position */
+  top: 0;
+  /* Position the navbar at the top of the page */
+  width: 100%;
+  /* Full width */
+}
+
+@media only screen and (min-width: 768px) {
+  /* line 16, ../sass/partials/_menu.scss */
+  .topnav .logOut {
+    float: right;
+    margin-right: 1%;
+  }
+}
+/* line 22, ../sass/partials/_menu.scss */
+.topnav a {
+  float: left;
+  display: block;
+  text-align: center;
+  padding: 22px;
+  text-decoration: none;
+  font-size: 17px;
+  color: #e04218;
+}
+
+/* line 31, ../sass/partials/_menu.scss */
+.a {
+  margin-top: 0.3%;
+}
+
+/* line 34, ../sass/partials/_menu.scss */
+.topnav a:not(.active) {
+  color: #e04218;
+}
+
+/* line 38, ../sass/partials/_menu.scss */
+.active {
+  background-color: #ff9409;
+  color: white;
+}
+
+/* line 43, ../sass/partials/_menu.scss */
+.topnav .icon {
+  display: none;
+}
+
+/* line 47, ../sass/partials/_menu.scss */
+.dropdown {
+  float: left;
+  overflow: hidden;
+  margin-right: 2%;
+  margin-top: 0.4%;
+  background-color: #e04218;
+}
+
+/* line 55, ../sass/partials/_menu.scss */
+.dropdown .dropbtn {
+  font-size: 17px;
+  border: none;
+  outline: none;
+  color: #e04218;
+  padding: 14px 16px;
+  font-family: inherit;
+  margin: 0;
+}
+
+/* line 65, ../sass/partials/_menu.scss */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f2f0f0;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+/* line 74, ../sass/partials/_menu.scss */
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+/* .topnav a:hover:not(.active), .dropdown:hover .dropbtn {
+  background-color: $color2;
+  color: white;
+}
+ */
+/* line 88, ../sass/partials/_menu.scss */
+.dropdown-content a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* line 93, ../sass/partials/_menu.scss */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+@media screen and (max-width: 600px) {
+  /* line 98, ../sass/partials/_menu.scss */
+  .topnav a:not(:first-child), .dropdown .dropbtn {
+    display: none;
+  }
+
+  /* line 101, ../sass/partials/_menu.scss */
+  .topnav a.icon {
+    float: right;
+    display: block;
+  }
+}
+@media screen and (max-width: 600px) {
+  /* line 108, ../sass/partials/_menu.scss */
+  .topnav.responsive {
+    position: relative;
+  }
+
+  /* line 109, ../sass/partials/_menu.scss */
+  .topnav.responsive .icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  /* line 114, ../sass/partials/_menu.scss */
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+
+  /* line 119, ../sass/partials/_menu.scss */
+  .topnav.responsive .dropdown {
+    float: none;
+  }
+
+  /* line 120, ../sass/partials/_menu.scss */
+  .topnav.responsive .dropdown-content {
+    position: relative;
+  }
+
+  /* line 121, ../sass/partials/_menu.scss */
+  .topnav.responsive .dropdown .dropbtn {
+    display: block;
+    width: 100%;
+    text-align: left;
+  }
+}
+/* line 49, ../sass/partials/_burgerDesign.scss */
+* {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  text-decoration: none;
+  text-transform: capitalize;
+  transition: .2s linear;
+}
+
+/* $colorPrimary:#27ae60; */
+/* line 79, ../sass/partials/_burgerDesign.scss */
+html {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  font-size: 62.5%;
+  scroll-padding-top: 8.5rem;
+}
+/* line 85, ../sass/partials/_burgerDesign.scss */
+html::-webkit-scrollbar {
+  width: 1rem;
+}
+/* line 89, ../sass/partials/_burgerDesign.scss */
+html::-webkit-scrollbar-track {
+  background: #fff;
+}
+/* line 93, ../sass/partials/_burgerDesign.scss */
+html::-webkit-scrollbar-thumb {
+  background: #e04218;
+  border-radius: 5rem;
+}
+
+/* line 99, ../sass/partials/_burgerDesign.scss */
+section {
+  padding: 2rem 9%;
+}
+
+/* line 103, ../sass/partials/_burgerDesign.scss */
+.heading {
+  text-align: center;
+  padding-bottom: 2rem;
+}
+/* line 107, ../sass/partials/_burgerDesign.scss */
+.heading span {
+  font-family: 'Satisfy', cursive;
+  font-size: 3rem;
+  color: #e04218;
+}
+/* line 111, ../sass/partials/_burgerDesign.scss */
+.heading h3 {
+  font-size: 3rem;
+  color: #130f40;
+}
+
+/* line 117, ../sass/partials/_burgerDesign.scss */
+.btn, .card2 .btnUpdate, .card2 .btnajout, .column .card .btnUpdate, .column .card .btnajout, .column .card .btnArchive, .column .card .btnSuccess, .column .card .btnRed {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: .7rem 1.8rem;
+  font-size: 1.7rem;
+  cursor: pointer;
+  color: #fff;
+  background: #e04218;
+  border-radius: .5rem;
+}
+/* line 127, ../sass/partials/_burgerDesign.scss */
+.btn:hover, .card2 .btnUpdate:hover, .card2 .btnajout:hover, .column .card .btnUpdate:hover, .column .card .btnajout:hover, .column .card .btnArchive:hover, .column .card .btnSuccess:hover, .column .card .btnRed:hover {
+  background: #130f40;
+}
+
+/* line 132, ../sass/partials/_burgerDesign.scss */
+.header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: #fff;
+  box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem 9%;
+}
+/* line 143, ../sass/partials/_burgerDesign.scss */
+.header .logo {
+  font-size: 2.5rem;
+  font-weight: bolder;
+  color: #130f40;
+}
+/* line 148, ../sass/partials/_burgerDesign.scss */
+.header .logo i {
+  padding-right: .5rem;
+  color: #e04218;
+}
+/* line 156, ../sass/partials/_burgerDesign.scss */
+.header .navbar a {
+  font-size: 1.7rem;
+  margin: 0 1rem;
+  color: #666;
+}
+/* line 161, ../sass/partials/_burgerDesign.scss */
+.header .navbar a:hover {
+  color: #e04218;
+}
+/* line 167, ../sass/partials/_burgerDesign.scss */
+.header .icons div {
+  height: 4.5rem;
+  width: 4.5rem;
+  line-height: 4.5rem;
+  font-size: 2rem;
+  background: #f7f7f7;
+  color: #130f40;
+  border-radius: .5rem;
+  margin-left: .3rem;
+  cursor: pointer;
+  text-align: center;
+}
+/* line 179, ../sass/partials/_burgerDesign.scss */
+.header .icons div:hover {
+  color: #fff;
+  background: #e04218;
+}
+
+/* line 186, ../sass/partials/_burgerDesign.scss */
+#menu-btn {
+  display: none;
+}
+
+@keyframes fadeUp {
+  0% {
+    transform: translateY(5rem);
+    opacity: 0;
+  }
+}
+/* line 197, ../sass/partials/_burgerDesign.scss */
+.search-form-container {
+  position: fixed;
+  top: 8.5rem;
+  left: 0;
+  right: 0;
+  height: calc(100vh - 8.5rem);
+  background: #fff;
+  z-index: 1000;
+  display: none;
+ /*  form{
+    height: 7rem;
+    border-bottom: .2rem solid $black;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    animation: fadeUp .4s linear;
+
+    input{
+      height: 100%;
+      width: 100%;
+      font-size: 1.7rem;
+      color:$black;
+      text-transform: none;
+      padding-right: 1rem;
+    }
+
+    label{
+      font-size: 3rem;
+      cursor: pointer;
+      color:$black;
+
+      &:hover{
+        color:$colorPrimary;
+      }
+    }
+  } */
+}
+/* line 205, ../sass/partials/_burgerDesign.scss */
+.search-form-container.active {
+  display: block;
+}
+
+/* line 238, ../sass/partials/_burgerDesign.scss */
+.shopping-cart-container {
+  position: fixed;
+  top: 8.5rem;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: calc(100vh - 8.5rem);
+  background: #fff;
+  overflow-y: scroll;
+  padding-bottom: 8rem;
+  display: none;
+}
+/* line 248, ../sass/partials/_burgerDesign.scss */
+.shopping-cart-container.active {
+  display: block;
+}
+/* line 252, ../sass/partials/_burgerDesign.scss */
+.shopping-cart-container::-webkit-scrollbar {
+  width: 1rem;
+}
+/* line 256, ../sass/partials/_burgerDesign.scss */
+.shopping-cart-container::-webkit-scrollbar-track {
+  background: #fff;
+}
+/* line 260, ../sass/partials/_burgerDesign.scss */
+.shopping-cart-container::-webkit-scrollbar-thumb {
+  background: #130f40;
+  border-radius: 5rem;
+}
+/* line 265, ../sass/partials/_burgerDesign.scss */
+.shopping-cart-container .title {
+  font-size: 2.5rem;
+  padding: 1rem;
+  color: #130f40;
+  border-bottom: 0.1rem solid rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+/* line 273, ../sass/partials/_burgerDesign.scss */
+.shopping-cart-container .products-container {
+  border: 0.1rem solid rgba(0, 0, 0, 0.2);
+  border-radius: .5rem;
+  animation: fadeUp .4s linear;
+}
+/* line 278, ../sass/partials/_burgerDesign.scss */
+.shopping-cart-container .products-container .box-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+  gap: 1.5rem;
+  padding: 1.5rem;
+}
+/* line 282, ../sass/partials/_burgerDesign.scss */
+.shopping-cart-container .products-container .box-container .box {
+  border-radius: .5rem;
+  background: #f7f7f7;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2rem;
+  position: relative;
+}
+/* line 291, ../sass/partials/_burgerDesign.scss */
+.shopping-cart-container .products-container .box-container .box .fa-times {
+  position: absolute;
+  top: .7rem;
+  right: 1rem;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #130f40;
+}
+/* line 298, ../sass/partials/_burgerDesign.scss */
+.shopping-cart-container .products-container .box-container .box .fa-times:hover {
+  color: #e04218;
+}
+/* line 303, ../sass/partials/_burgerDesign.scss */
+.shopping-cart-container .products-container .box-container .box img {
+  height: 8rem;
+}
+/* line 309, ../sass/partials/_burgerDesign.scss */
+.shopping-cart-container .products-container .box-container .box .content h3 {
+  font-size: 2rem;
+  color: #130f40;
+}
+/* line 314, ../sass/partials/_burgerDesign.scss */
+.shopping-cart-container .products-container .box-container .box .content span {
+  font-size: 1.5rem;
+  color: #666;
+}
+/* line 318, ../sass/partials/_burgerDesign.scss */
+.shopping-cart-container .products-container .box-container .box .content span.price {
+  color: #e04218;
+  font-size: 1.7rem;
+}
+/* line 324, ../sass/partials/_burgerDesign.scss */
+.shopping-cart-container .products-container .box-container .box .content input {
+  width: 8rem;
+  padding: .5rem 1.2rem;
+  font-size: 1.5rem;
+  color: #130f40;
+  margin: .7rem 0;
+}
+/* line 336, ../sass/partials/_burgerDesign.scss */
+.shopping-cart-container .cart-total {
+  margin-top: 2rem;
+  border: 0.1rem solid rgba(0, 0, 0, 0.2);
+  border-radius: .5rem;
+  animation: fadeUp .4s linear .4s backwards;
+}
+/* line 342, ../sass/partials/_burgerDesign.scss */
+.shopping-cart-container .cart-total .box {
+  padding: 1.5rem;
+}
+/* line 345, ../sass/partials/_burgerDesign.scss */
+.shopping-cart-container .cart-total .box h3 {
+  color: #130f40;
+  font-size: 2rem;
+  padding-bottom: .7rem;
+}
+/* line 350, ../sass/partials/_burgerDesign.scss */
+.shopping-cart-container .cart-total .box h3 span {
+  color: #e04218;
+}
+
+/* line 358, ../sass/partials/_burgerDesign.scss */
+.login-form-container {
+  position: fixed;
+  top: 8.5rem;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: calc(100vh - 8.5rem);
+  background: #fff;
+  padding: 0 2rem;
+  display: none;
+}
+/* line 367, ../sass/partials/_burgerDesign.scss */
+.login-form-container.active {
+  display: block;
+}
+/* line 371, ../sass/partials/_burgerDesign.scss */
+.login-form-container form {
+  margin: 2rem auto;
+  max-width: 40rem;
+  box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.05);
+  border: 0.1rem solid rgba(0, 0, 0, 0.2);
+  padding: 2rem;
+  border-radius: .5rem;
+  animation: fadeUp .4s linear;
+}
+/* line 380, ../sass/partials/_burgerDesign.scss */
+.login-form-container form h3 {
+  padding-bottom: 1rem;
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  color: #130f40;
+}
+/* line 387, ../sass/partials/_burgerDesign.scss */
+.login-form-container form .box {
+  margin: .7rem 0;
+  border-radius: .5rem;
+  background: #f7f7f7;
+  padding: 1rem 1.2rem;
+  font-size: 1.6rem;
+  color: #130f40;
+  text-transform: none;
+  width: 100%;
+}
+/* line 398, ../sass/partials/_burgerDesign.scss */
+.login-form-container form .remember {
+  padding: 1rem 0;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+/* line 404, ../sass/partials/_burgerDesign.scss */
+.login-form-container form .remember label {
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+}
+/* line 411, ../sass/partials/_burgerDesign.scss */
+.login-form-container form .btn, .login-form-container form .card2 .btnUpdate, .card2 .login-form-container form .btnUpdate, .login-form-container form .card2 .btnajout, .card2 .login-form-container form .btnajout, .login-form-container form .column .card .btnUpdate, .column .card .login-form-container form .btnUpdate, .login-form-container form .column .card .btnajout, .column .card .login-form-container form .btnajout, .login-form-container form .column .card .btnArchive, .column .card .login-form-container form .btnArchive, .login-form-container form .column .card .btnSuccess, .column .card .login-form-container form .btnSuccess, .login-form-container form .column .card .btnRed, .column .card .login-form-container form .btnRed {
+  margin: 1rem 0;
+  width: 100%;
+  text-align: center;
+}
+/* line 417, ../sass/partials/_burgerDesign.scss */
+.login-form-container form p {
+  padding-top: 1rem;
+  font-size: 1.5rem;
+  color: #666;
+}
+/* line 422, ../sass/partials/_burgerDesign.scss */
+.login-form-container form p a {
+  color: #e04218;
+}
+/* line 425, ../sass/partials/_burgerDesign.scss */
+.login-form-container form p a:hover {
+  color: #130f40;
+  text-decoration: underline;
+}
+
+/* line 434, ../sass/partials/_burgerDesign.scss */
+.home {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap-reverse;
+  gap: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+/* line 442, ../sass/partials/_burgerDesign.scss */
+.home .content {
+  flex: 1 1 41rem;
+}
+/* line 445, ../sass/partials/_burgerDesign.scss */
+.home .content span {
+  font-size: 2rem;
+  color: #e04218;
+}
+/* line 450, ../sass/partials/_burgerDesign.scss */
+.home .content h3 {
+  font-size: 4rem;
+  color: #130f40;
+  padding-top: 1rem;
+}
+/* line 456, ../sass/partials/_burgerDesign.scss */
+.home .content p {
+  font-size: 1.4rem;
+  color: #666;
+  line-height: 2;
+  padding: 1rem 0;
+}
+/* line 464, ../sass/partials/_burgerDesign.scss */
+.home .image {
+  flex: 1 1 41rem;
+  margin: 2rem 0;
+  pointer-events: none;
+}
+/* line 469, ../sass/partials/_burgerDesign.scss */
+.home .image .home-img {
+  width: 100%;
+  margin-top: 5rem;
+}
+/* line 475, ../sass/partials/_burgerDesign.scss */
+.home .home-parallax-img {
+  position: absolute;
+  top: -10rem;
+  right: -10rem;
+  width: 80vw;
+}
+
+/* line 482, ../sass/partials/_burgerDesign.scss */
+.category {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1.5rem;
+  padding-bottom: 5rem;
+}
+/* line 486, ../sass/partials/_burgerDesign.scss */
+.category .box {
+  padding: 2rem;
+  text-align: center;
+  border-radius: .5rem;
+  background: #f9f7ec;
+}
+/* line 492, ../sass/partials/_burgerDesign.scss */
+.category .box:hover {
+  background: #e04218;
+}
+/* line 495, ../sass/partials/_burgerDesign.scss */
+.category .box:hover h3 {
+  color: #fff;
+}
+/* line 500, ../sass/partials/_burgerDesign.scss */
+.category .box img {
+  height: 7rem;
+}
+/* line 504, ../sass/partials/_burgerDesign.scss */
+.category .box h3 {
+  font-size: 1.8rem;
+  color: #130f40;
+}
+
+/* line 511, ../sass/partials/_burgerDesign.scss */
+.about {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2rem;
+  background: #f7f7f7;
+}
+/* line 518, ../sass/partials/_burgerDesign.scss */
+.about .image {
+  flex: 1 1 40rem;
+}
+/* line 521, ../sass/partials/_burgerDesign.scss */
+.about .image img {
+  width: 100%;
+}
+/* line 526, ../sass/partials/_burgerDesign.scss */
+.about .content {
+  flex: 1 1 40rem;
+}
+/* line 529, ../sass/partials/_burgerDesign.scss */
+.about .content span {
+  font-family: 'Satisfy', cursive;
+  font-size: 3rem;
+  color: #e04218;
+}
+/* line 533, ../sass/partials/_burgerDesign.scss */
+.about .content .title {
+  font-size: 3rem;
+  padding-top: .5rem;
+  color: #130f40;
+}
+/* line 539, ../sass/partials/_burgerDesign.scss */
+.about .content p {
+  padding: 1rem 0;
+  line-height: 2;
+  font-size: 1.4rem;
+  color: #666;
+}
+/* line 546, ../sass/partials/_burgerDesign.scss */
+.about .content .icons-container {
+  margin-top: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+/* line 552, ../sass/partials/_burgerDesign.scss */
+.about .content .icons-container .icons {
+  flex: 1 1 20rem;
+  border-radius: .5rem;
+  background: #fff;
+  box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+}
+/* line 562, ../sass/partials/_burgerDesign.scss */
+.about .content .icons-container .icons h3 {
+  font-size: 1.7rem;
+  color: #130f40;
+}
+
+/* line 570, ../sass/partials/_burgerDesign.scss */
+.popular {
+  background-color: #f9f7ec;
+}
+
+/* line 574, ../sass/partials/_burgerDesign.scss */
+.popular .box-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+  gap: 1.5rem;
+}
+/* line 578, ../sass/partials/_burgerDesign.scss */
+.popular .box-container .box {
+  border-radius: .5rem;
+  position: relative;
+  background: #f7f7f7;
+  padding: 2rem;
+  text-align: center;
+  background-color: #FFFF;
+}
+/* line 586, ../sass/partials/_burgerDesign.scss */
+.popular .box-container .box .fa-heart {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  font-size: 2.5rem;
+  color: #666;
+  cursor: pointer;
+}
+/* line 593, ../sass/partials/_burgerDesign.scss */
+.popular .box-container .box .fa-heart:hover {
+  color: #e04218;
+}
+/* line 598, ../sass/partials/_burgerDesign.scss */
+.popular .box-container .box .image {
+  margin: 1rem 0;
+}
+/* line 601, ../sass/partials/_burgerDesign.scss */
+.popular .box-container .box .image img {
+  height: 15rem;
+}
+/* line 608, ../sass/partials/_burgerDesign.scss */
+.popular .box-container .box .content h3 {
+  font-size: 2rem;
+  color: #130f40;
+}
+/* line 613, ../sass/partials/_burgerDesign.scss */
+.popular .box-container .box .content .stars {
+  padding: 1rem 0;
+  font-size: 1.7rem;
+}
+/* line 617, ../sass/partials/_burgerDesign.scss */
+.popular .box-container .box .content .stars i {
+  color: gold;
+}
+/* line 621, ../sass/partials/_burgerDesign.scss */
+.popular .box-container .box .content .stars span {
+  color: #666;
+}
+/* line 626, ../sass/partials/_burgerDesign.scss */
+.popular .box-container .box .content .price {
+  font-size: 2rem;
+  color: #130f40;
+}
+/* line 630, ../sass/partials/_burgerDesign.scss */
+.popular .box-container .box .content .price span {
+  font-size: 1.5rem;
+  color: #666;
+  text-decoration: line-through;
+}
+
+/* line 642, ../sass/partials/_burgerDesign.scss */
+.banner .row-banner {
+  background: url(../../img/image/row-banner.png) no-repeat;
+  height: 45rem;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+/* line 649, ../sass/partials/_burgerDesign.scss */
+.banner .row-banner .content {
+  position: absolute;
+  top: 50%;
+  left: 7%;
+  transform: translateY(-50%);
+}
+/* line 654, ../sass/partials/_burgerDesign.scss */
+.banner .row-banner .content span {
+  font-family: 'Satisfy', cursive;
+  font-size: 4rem;
+  color: #e04218;
+  color: #130f40;
+}
+/* line 659, ../sass/partials/_burgerDesign.scss */
+.banner .row-banner .content h3 {
+  font-size: 6rem;
+  color: red;
+  text-transform: uppercase;
+}
+/* line 665, ../sass/partials/_burgerDesign.scss */
+.banner .row-banner .content p {
+  font-size: 2rem;
+  padding-bottom: 1rem;
+}
+/* line 672, ../sass/partials/_burgerDesign.scss */
+.banner .grid-banner {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+  gap: 1.5rem;
+}
+/* line 675, ../sass/partials/_burgerDesign.scss */
+.banner .grid-banner .grid {
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+  height: 45rem;
+}
+/* line 681, ../sass/partials/_burgerDesign.scss */
+.banner .grid-banner .grid:hover img {
+  transform: scale(1.2);
+}
+/* line 685, ../sass/partials/_burgerDesign.scss */
+.banner .grid-banner .grid img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+/* line 691, ../sass/partials/_burgerDesign.scss */
+.banner .grid-banner .grid .content {
+  position: absolute;
+  top: 2rem;
+  padding: 0 2rem;
+}
+/* line 696, ../sass/partials/_burgerDesign.scss */
+.banner .grid-banner .grid .content.center {
+  text-align: center;
+  width: 100%;
+}
+/* line 700, ../sass/partials/_burgerDesign.scss */
+.banner .grid-banner .grid .content.center span {
+  color: #666;
+}
+/* line 704, ../sass/partials/_burgerDesign.scss */
+.banner .grid-banner .grid .content.center h3 {
+  color: #130f40;
+}
+/* line 709, ../sass/partials/_burgerDesign.scss */
+.banner .grid-banner .grid .content span {
+  font-size: 2.5rem;
+  color: #fff;
+}
+/* line 714, ../sass/partials/_burgerDesign.scss */
+.banner .grid-banner .grid .content h3 {
+  font-size: 3rem;
+  color: #fff;
+  padding-top: .5rem;
+}
+
+/* line 724, ../sass/partials/_burgerDesign.scss */
+.menu .box-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+  gap: 1.5rem;
+}
+/* line 727, ../sass/partials/_burgerDesign.scss */
+.menu .box-container .box {
+  border-radius: .5rem;
+  background: #f7f7f7;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+/* line 735, ../sass/partials/_burgerDesign.scss */
+.menu .box-container .box:hover {
+  background: #130f40;
+}
+/* line 738, ../sass/partials/_burgerDesign.scss */
+.menu .box-container .box:hover .content h3 {
+  color: #fff;
+}
+/* line 744, ../sass/partials/_burgerDesign.scss */
+.menu .box-container .box img {
+  height: 10rem;
+}
+/* line 750, ../sass/partials/_burgerDesign.scss */
+.menu .box-container .box .content h3 {
+  font-size: 2rem;
+  color: #130f40;
+  padding-bottom: .5rem;
+}
+/* line 756, ../sass/partials/_burgerDesign.scss */
+.menu .box-container .box .content .price {
+  font-size: 1.8rem;
+  color: #e04218;
+}
+
+/* line 766, ../sass/partials/_burgerDesign.scss */
+.order .icons-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+/* line 770, ../sass/partials/_burgerDesign.scss */
+.order .icons-container .icons {
+  border-radius: .5rem;
+  padding: 2rem;
+  text-align: center;
+  background: #f9f7ec;
+}
+/* line 776, ../sass/partials/_burgerDesign.scss */
+.order .icons-container .icons img {
+  height: 10rem;
+}
+/* line 780, ../sass/partials/_burgerDesign.scss */
+.order .icons-container .icons h3 {
+  font-size: 2rem;
+  color: #130f40;
+  margin-top: .5rem;
+}
+/* line 788, ../sass/partials/_burgerDesign.scss */
+.order form {
+  background: #f7f7f7;
+  padding: 2rem;
+  border-radius: .5rem;
+}
+/* line 793, ../sass/partials/_burgerDesign.scss */
+.order form .flex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+/* line 798, ../sass/partials/_burgerDesign.scss */
+.order form .flex .inputBox {
+  width: 49%;
+  padding: .7rem 0;
+}
+/* line 803, ../sass/partials/_burgerDesign.scss */
+.order form .flex span {
+  font-size: 1.7rem;
+  color: #666;
+}
+/* line 808, ../sass/partials/_burgerDesign.scss */
+.order form .flex input, .order form .flex textarea {
+  width: 100%;
+  margin-top: .5rem;
+  padding: 1rem 1.2rem;
+  width: 100%;
+  border-radius: .5rem;
+  font-size: 1.6rem;
+  text-transform: none;
+  color: #130f40;
+}
+/* line 819, ../sass/partials/_burgerDesign.scss */
+.order form .flex textarea {
+  height: 20rem;
+  resize: none;
+}
+/* line 824, ../sass/partials/_burgerDesign.scss */
+.order form .flex .map {
+  height: 100%;
+  width: 100%;
+  border-radius: .5rem;
+}
+
+/* line 835, ../sass/partials/_burgerDesign.scss */
+.blogs .box-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+  gap: 1.5rem;
+}
+/* line 838, ../sass/partials/_burgerDesign.scss */
+.blogs .box-container .box {
+  border-radius: .5rem;
+  overflow: hidden;
+}
+/* line 845, ../sass/partials/_burgerDesign.scss */
+.blogs .box-container .box:hover .image h3 {
+  left: 1.5rem;
+}
+/* line 849, ../sass/partials/_burgerDesign.scss */
+.blogs .box-container .box:hover .image img {
+  transform: scale(1.1);
+}
+/* line 855, ../sass/partials/_burgerDesign.scss */
+.blogs .box-container .box .image {
+  position: relative;
+  height: 25rem;
+  overflow: hidden;
+  width: 100%;
+}
+/* line 861, ../sass/partials/_burgerDesign.scss */
+.blogs .box-container .box .image h3 {
+  position: absolute;
+  z-index: 10;
+  top: 1rem;
+  left: -100%;
+  border-radius: .5rem;
+  padding: .5rem 1rem;
+  background: #fff;
+  color: #130f40;
+  font-size: 1.5rem;
+}
+/* line 871, ../sass/partials/_burgerDesign.scss */
+.blogs .box-container .box .image h3 i {
+  padding-right: .5rem;
+  color: #e04218;
+}
+/* line 877, ../sass/partials/_burgerDesign.scss */
+.blogs .box-container .box .image img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+/* line 884, ../sass/partials/_burgerDesign.scss */
+.blogs .box-container .box .content {
+  padding: 2rem 1.5rem;
+  background: #f7f7f7;
+}
+/* line 888, ../sass/partials/_burgerDesign.scss */
+.blogs .box-container .box .content .tags {
+  padding-bottom: 1rem;
+}
+/* line 891, ../sass/partials/_burgerDesign.scss */
+.blogs .box-container .box .content .tags a {
+  font-size: 1.5rem;
+  color: #666;
+  padding-right: .5rem;
+}
+/* line 896, ../sass/partials/_burgerDesign.scss */
+.blogs .box-container .box .content .tags a:hover {
+  color: #e04218;
+}
+/* line 900, ../sass/partials/_burgerDesign.scss */
+.blogs .box-container .box .content .tags a i {
+  color: #e04218;
+  padding-right: .5rem;
+}
+/* line 907, ../sass/partials/_burgerDesign.scss */
+.blogs .box-container .box .content h3 {
+  font-size: 2rem;
+  color: #130f40;
+}
+/* line 912, ../sass/partials/_burgerDesign.scss */
+.blogs .box-container .box .content p {
+  font-size: 1.4rem;
+  color: #666;
+  padding: 1rem 0;
+  line-height: 2;
+}
+
+/* line 923, ../sass/partials/_burgerDesign.scss */
+.footer {
+  background: #f9f7ec;
+}
+/* line 926, ../sass/partials/_burgerDesign.scss */
+.footer .newsletter {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+/* line 930, ../sass/partials/_burgerDesign.scss */
+.footer .newsletter h3 {
+  font-size: 2.5rem;
+  color: #130f40;
+  padding-bottom: 1rem;
+}
+/* line 936, ../sass/partials/_burgerDesign.scss */
+.footer .newsletter form {
+  max-width: 70rem;
+  margin: 1rem auto;
+  max-width: 70rem;
+  display: flex;
+  border-radius: .5rem;
+  overflow: hidden;
+}
+/* line 944, ../sass/partials/_burgerDesign.scss */
+.footer .newsletter form input[type="email"] {
+  height: 100%;
+  width: 100%;
+  padding: 1rem 1.2rem;
+  font-size: 1.6rem;
+  color: #130f40;
+  text-transform: none;
+}
+/* line 953, ../sass/partials/_burgerDesign.scss */
+.footer .newsletter form input[type="submit"] {
+  padding: 0 2rem;
+  font-size: 1.6rem;
+  color: #fff;
+  background: #e04218;
+  cursor: pointer;
+}
+/* line 960, ../sass/partials/_burgerDesign.scss */
+.footer .newsletter form input[type="submit"]:hover {
+  background: #130f40;
+}
+/* line 967, ../sass/partials/_burgerDesign.scss */
+.footer .box-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+  gap: 1.5rem;
+}
+/* line 972, ../sass/partials/_burgerDesign.scss */
+.footer .box-container .box h3 {
+  font-size: 2.2rem;
+  color: #130f40;
+  padding: 1rem 0;
+}
+/* line 978, ../sass/partials/_burgerDesign.scss */
+.footer .box-container .box p {
+  font-size: 1.4rem;
+  color: #666;
+  padding: 1rem 0;
+}
+/* line 984, ../sass/partials/_burgerDesign.scss */
+.footer .box-container .box a {
+  display: block;
+  font-size: 1.4rem;
+  color: #666;
+  padding: 1rem 0;
+}
+/* line 990, ../sass/partials/_burgerDesign.scss */
+.footer .box-container .box a:hover {
+  color: #e04218;
+}
+/* line 993, ../sass/partials/_burgerDesign.scss */
+.footer .box-container .box a:hover i {
+  padding-right: 2rem;
+}
+/* line 998, ../sass/partials/_burgerDesign.scss */
+.footer .box-container .box a i {
+  padding-right: .5rem;
+  color: #e04218;
+}
+/* line 1006, ../sass/partials/_burgerDesign.scss */
+.footer .bottom {
+  padding-top: 1rem;
+  text-align: center;
+}
+/* line 1010, ../sass/partials/_burgerDesign.scss */
+.footer .bottom .share {
+  margin: 1.5rem 0;
+}
+/* line 1013, ../sass/partials/_burgerDesign.scss */
+.footer .bottom .share a {
+  height: 4.5rem;
+  width: 4.5rem;
+  line-height: 4.5rem;
+  font-size: 2rem;
+  border-radius: .5rem;
+  margin: 0 .3rem;
+  color: #fff;
+  background: #e04218;
+}
+/* line 1023, ../sass/partials/_burgerDesign.scss */
+.footer .bottom .share a:hover {
+  background: #130f40;
+}
+/* line 1029, ../sass/partials/_burgerDesign.scss */
+.footer .bottom .credit {
+  font-size: 2rem;
+  color: #666;
+  padding: 1rem;
+}
+/* line 1034, ../sass/partials/_burgerDesign.scss */
+.footer .bottom .credit span {
+  color: #e04218;
+}
+
+@media (max-width: 991px) {
+  /* line 1065, ../sass/partials/_burgerDesign.scss */
+  html {
+    font-size: 55%;
+  }
+
+  /* line 1069, ../sass/partials/_burgerDesign.scss */
+  .header {
+    padding: 2rem;
+  }
+
+  /* line 1073, ../sass/partials/_burgerDesign.scss */
+  section {
+    padding: 2rem;
+  }
+}
+@media (max-width: 768px) {
+  /* line 1081, ../sass/partials/_burgerDesign.scss */
+  #menu-btn {
+    display: inline-block;
+  }
+
+  /* line 1085, ../sass/partials/_burgerDesign.scss */
+  .header .navbar {
+    position: absolute;
+    top: 99%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-top: 0.1rem solid rgba(0, 0, 0, 0.2);
+    border-bottom: 0.1rem solid rgba(0, 0, 0, 0.2);
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  }
+  /* line 1093, ../sass/partials/_burgerDesign.scss */
+  .header .navbar.active {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+  }
+  /* line 1097, ../sass/partials/_burgerDesign.scss */
+  .header .navbar a {
+    font-size: 2rem;
+    margin: 2rem;
+    display: block;
+  }
+
+  /* line 1104, ../sass/partials/_burgerDesign.scss */
+  .home .home-parallax-img {
+    top: 0;
+    right: 0;
+    width: 130%;
+  }
+
+  /* line 1109, ../sass/partials/_burgerDesign.scss */
+  .order form .flex .inputBox {
+    width: 100%;
+  }
+}
+@media (max-width: 450px) {
+  /* line 1117, ../sass/partials/_burgerDesign.scss */
+  html {
+    font-size: 50%;
+  }
+
+  /* line 1123, ../sass/partials/_burgerDesign.scss */
+  .shopping-cart-container .cart-total .box {
+    text-align: center;
+  }
+  /* line 1126, ../sass/partials/_burgerDesign.scss */
+  .shopping-cart-container .cart-total .box .btn, .shopping-cart-container .cart-total .box .card2 .btnUpdate, .card2 .shopping-cart-container .cart-total .box .btnUpdate, .shopping-cart-container .cart-total .box .card2 .btnajout, .card2 .shopping-cart-container .cart-total .box .btnajout, .shopping-cart-container .cart-total .box .column .card .btnUpdate, .column .card .shopping-cart-container .cart-total .box .btnUpdate, .shopping-cart-container .cart-total .box .column .card .btnajout, .column .card .shopping-cart-container .cart-total .box .btnajout, .shopping-cart-container .cart-total .box .column .card .btnArchive, .column .card .shopping-cart-container .cart-total .box .btnArchive, .shopping-cart-container .cart-total .box .column .card .btnSuccess, .column .card .shopping-cart-container .cart-total .box .btnSuccess, .shopping-cart-container .cart-total .box .column .card .btnRed, .column .card .shopping-cart-container .cart-total .box .btnRed {
+    width: 100%;
+  }
+
+  /* line 1133, ../sass/partials/_burgerDesign.scss */
+  .home .content h3 {
+    font-size: 3rem;
+  }
+  /* line 1136, ../sass/partials/_burgerDesign.scss */
+  .home .content p {
+    font-size: 1.5rem;
+  }
+}
+/* line 3, ../sass/partials/_cadreShadow.scss */
+.rowLine {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+/* line 7, ../sass/partials/_cadreShadow.scss */
+.rowLine h4 {
+  margin-top: 8px;
+}
+/* line 10, ../sass/partials/_cadreShadow.scss */
+.rowLine a {
+  margin-right: 2%;
+}
+
+/* line 15, ../sass/partials/_cadreShadow.scss */
+.card2 {
+  padding: 20px;
+  width: 90%;
+  border-collapse: collapse;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* line 23, ../sass/partials/_cadreShadow.scss */
+.card2 .row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+/* line 27, ../sass/partials/_cadreShadow.scss */
+.card2 .row h4 {
+  margin-top: 8px;
+  color: #e04218;
+}
+/* line 31, ../sass/partials/_cadreShadow.scss */
+.card2 .row a {
+  margin-right: 2%;
+}
+/* line 36, ../sass/partials/_cadreShadow.scss */
+.card2 .btn, .card2 .btnUpdate, .card2 .btnajout, .card2 .column .card .btnUpdate, .column .card .card2 .btnUpdate, .card2 .column .card .btnajout, .column .card .card2 .btnajout, .card2 .column .card .btnArchive, .column .card .card2 .btnArchive, .card2 .column .card .btnSuccess, .column .card .card2 .btnSuccess, .card2 .column .card .btnRed, .column .card .card2 .btnRed {
+  background-color: #e04218;
+  /* Green */
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  padding: 10px;
+  cursor: pointer;
+  -moz-border-radius: 5px;
+  -o-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+/* line 51, ../sass/partials/_cadreShadow.scss */
+.card2 .btn2:hover {
+  background-color: #ff9409;
+}
+/* line 55, ../sass/partials/_cadreShadow.scss */
+.card2 .btnUpdate {
+  background-color: #ffec43;
+}
+/* line 61, ../sass/partials/_cadreShadow.scss */
+.card2 .btnajouthover {
+  background-color: #e04218;
+}
+
+/* line 68, ../sass/partials/_cadreShadow.scss */
+.c1 {
+  background-color: #fff;
+}
+
+/* line 71, ../sass/partials/_cadreShadow.scss */
+.column {
+  margin-top: 2%;
+}
+/* line 74, ../sass/partials/_cadreShadow.scss */
+.column .card {
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  padding: 20px;
+  background-color: #fff;
+  width: 90%;
+  border-collapse: collapse;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  -moz-border-radius: 10px;
+  -o-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+/* line 83, ../sass/partials/_cadreShadow.scss */
+.column .card .float, .column .card .float1, .column .card .float2 {
+  margin-bottom: 8px;
+}
+/* line 86, ../sass/partials/_cadreShadow.scss */
+.column .card .float1 {
+  float: right;
+}
+/* line 90, ../sass/partials/_cadreShadow.scss */
+.column .card .float2 {
+  float: left;
+}
+/* line 94, ../sass/partials/_cadreShadow.scss */
+.column .card .link {
+  color: #e04218;
+  float: right;
+}
+/* line 98, ../sass/partials/_cadreShadow.scss */
+.column .card .row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+/* line 102, ../sass/partials/_cadreShadow.scss */
+.column .card .row h4 {
+  margin-top: 8px;
+  color: #e04218;
+}
+/* line 106, ../sass/partials/_cadreShadow.scss */
+.column .card .row a {
+  margin-right: 2%;
+}
+/* line 113, ../sass/partials/_cadreShadow.scss */
+.column .card table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  border: none;
+  -moz-border-radius: 10px;
+  -o-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  width: 100%;
+}
+/* line 120, ../sass/partials/_cadreShadow.scss */
+.column .card table td, .column .card table th {
+  padding: 13px;
+}
+/* line 123, ../sass/partials/_cadreShadow.scss */
+.column .card table a {
+  color: black;
+  font-size: 16px;
+}
+/* line 128, ../sass/partials/_cadreShadow.scss */
+.column .card table tr:nth-child(even) {
+  background-color: #f9f7ec;
+}
+/* line 131, ../sass/partials/_cadreShadow.scss */
+.column .card table tr:last-child {
+  border-bottom: #e04218 2px solid;
+}
+/* line 134, ../sass/partials/_cadreShadow.scss */
+.column .card table .thbottom {
+  border-bottom: #f9f7ec 1px solid;
+  padding: 15px;
+}
+/* line 138, ../sass/partials/_cadreShadow.scss */
+.column .card table thead {
+  color: #e04218;
+  border-bottom: #ff9409 2px solid;
+}
+/* line 141, ../sass/partials/_cadreShadow.scss */
+.column .card table thead tr th {
+  font-weight: bold;
+}
+/* line 146, ../sass/partials/_cadreShadow.scss */
+.column .card table .action {
+  display: flex;
+}
+/* line 148, ../sass/partials/_cadreShadow.scss */
+.column .card table .action form {
+  margin-left: 1%;
+}
+/* line 156, ../sass/partials/_cadreShadow.scss */
+.column .card .btn, .column .card .btnUpdate, .column .card .btnajout, .column .card .btnArchive, .column .card .btnSuccess, .column .card .btnRed {
+  background-color: #e04218;
+  /* Green */
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  padding: 10px;
+  cursor: pointer;
+  -moz-border-radius: 5px;
+  -o-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+/* line 171, ../sass/partials/_cadreShadow.scss */
+.column .card .btn2:hover {
+  background-color: #ff9409;
+}
+/* line 175, ../sass/partials/_cadreShadow.scss */
+.column .card .btnUpdate {
+  background-color: #ffec43;
+}
+/* line 181, ../sass/partials/_cadreShadow.scss */
+.column .card .btnajouthover {
+  background-color: #e04218;
+}
+/* line 187, ../sass/partials/_cadreShadow.scss */
+.column .card .btnajouthover {
+  background-color: #ff9409;
+}
+/* line 191, ../sass/partials/_cadreShadow.scss */
+.column .card .btnArchive {
+  background-color: #dc3545;
+  margin-left: 2%;
+}
+/* line 198, ../sass/partials/_cadreShadow.scss */
+.column .card .btnSuccess {
+  width: 70px;
+  background-color: #2ecc71;
+}
+/* line 203, ../sass/partials/_cadreShadow.scss */
+.column .card .btnRed {
+  width: 70px;
+  background-color: red;
+}
+
+@media screen and (max-width: 600px) {
+  /* line 215, ../sass/partials/_cadreShadow.scss */
+  table {
+    font-size: 15px;
+  }
+  /* line 217, ../sass/partials/_cadreShadow.scss */
+  table .dn {
+    display: none;
+  }
+  /* line 220, ../sass/partials/_cadreShadow.scss */
+  table .d-none {
+    display: block;
+  }
+
+  /* line 225, ../sass/partials/_cadreShadow.scss */
+  .btn-valide {
+    margin-top: 40%;
+  }
+
+  /* line 228, ../sass/partials/_cadreShadow.scss */
+  .form-inline {
+    font-size: 15px;
+    margin-right: 2%;
+  }
+
+  /* line 232, ../sass/partials/_cadreShadow.scss */
+  .selectCheck {
+    margin-left: 2%;
+  }
+  /* line 234, ../sass/partials/_cadreShadow.scss */
+  .selectCheck select {
+    margin-top: 5%;
+  }
+}
+/* table{
+    border: #152032 2px solid ;
+    thead{
+
+        tr{
+            border-color: #152032;
+        }
+    }
+    .thbottom{
+        border-bottom: #BBB2B2;
+    }
+} */
+/* line 4, ../sass/partials/_form.scss */
+.body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* line 9, ../sass/partials/_form.scss */
+.c1 {
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+/* line 12, ../sass/partials/_form.scss */
+.invalid-feedback, small {
+  color: #dc3545;
+  padding: 2px;
+  margin-top: 2%;
+  font-size: 15px;
+}
+
+/* line 18, ../sass/partials/_form.scss */
+.container {
+  margin-top: 3%;
+  /* background-color: #fff; */
+  border-radius: 5px;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* line 26, ../sass/partials/_form.scss */
+.container .btnaddChambre, .container .btnDelete {
+  background-color: #e04218;
+  /* Green */
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  padding: 10px;
+  cursor: pointer;
+  -moz-border-radius: 5px;
+  -o-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+/* line 38, ../sass/partials/_form.scss */
+.container .btnDelete {
+  background-color: #dc3545;
+  /* Green */
+  margin-top: 15px;
+}
+
+/* line 44, ../sass/partials/_form.scss */
+.container-login .form-control input, .form-control .input, .etu .input, .form-control select, .etu select {
+  border: 2px solid #f0f0f0;
+  border-radius: 4px;
+  display: block;
+  width: 100%;
+  height: 60px;
+  background-color: #f6f6f6;
+  padding: 10px;
+  font-size: 14px;
+}
+
+/* line 54, ../sass/partials/_form.scss */
+.container-register {
+  margin-top: 5%;
+}
+/* line 58, ../sass/partials/_form.scss */
+.container-register form {
+  background: #f7f7f7;
+  padding: 2rem;
+  border-radius: .5rem;
+}
+/* line 63, ../sass/partials/_form.scss */
+.container-register form .flex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+/* line 68, ../sass/partials/_form.scss */
+.container-register form .flex .inputBox {
+  width: 49%;
+  padding: .7rem 0;
+}
+/* line 73, ../sass/partials/_form.scss */
+.container-register form .flex span {
+  font-size: 1.7rem;
+  color: #666;
+}
+/* line 78, ../sass/partials/_form.scss */
+.container-register form .flex input, .container-register form .flex textarea {
+  width: 100%;
+  margin-top: .5rem;
+  padding: 1rem 1.2rem;
+  width: 100%;
+  border-radius: .5rem;
+  font-size: 1.6rem;
+  text-transform: none;
+  color: #130f40;
+}
+/* line 89, ../sass/partials/_form.scss */
+.container-register form .flex textarea {
+  height: 20rem;
+  resize: none;
+}
+/* line 94, ../sass/partials/_form.scss */
+.container-register form .flex .map {
+  height: 100%;
+  width: 100%;
+  border-radius: .5rem;
+}
+
+/* line 102, ../sass/partials/_form.scss */
+.container-login {
+  border-radius: 5px;
+  width: 50%;
+  margin-top: 10%;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  background-color: #fff;
+  color: #000;
+}
+/* line 109, ../sass/partials/_form.scss */
+.container-login .line {
+  float: right;
+  margin-right: 4%;
+  margin-top: 1%;
+}
+/* line 113, ../sass/partials/_form.scss */
+.container-login .line a {
+  color: #e04218;
+}
+/* line 119, ../sass/partials/_form.scss */
+.container-login .form-control .label {
+  color: #ffff;
+}
+/* line 122, ../sass/partials/_form.scss */
+.container-login .form-control input {
+  background-color: #f6f6f6;
+  /*  border: 2px solid $colorPrimary   ; */
+  /* border-bottom: #39ACE7 2px solid; */
+  color: #777;
+  border: 2px solid #f0f0f0;
+  border-radius: 4px;
+  width: 100%;
+  height: 60px;
+  background-color: #f6f6f6;
+  padding: 16px;
+  font-size: 14px;
+}
+
+/* line 138, ../sass/partials/_form.scss */
+h2 {
+  text-align: center;
+  margin: 0 0 20px;
+}
+
+/* line 143, ../sass/partials/_form.scss */
+.form {
+  padding: 30px 40px;
+}
+
+/* line 147, ../sass/partials/_form.scss */
+.form-control {
+  margin-bottom: 8px;
+  padding-bottom: 15px;
+  position: relative;
+}
+/* line 151, ../sass/partials/_form.scss */
+.form-control div {
+  margin-bottom: 8px;
+}
+/* line 154, ../sass/partials/_form.scss */
+.form-control ul li {
+  color: red;
+  font-size: 14px;
+}
+
+/* line 159, ../sass/partials/_form.scss */
+.color1 {
+  color: #e04218;
+}
+
+/* line 162, ../sass/partials/_form.scss */
+.form-control label, .form-control2 label, .checkbox .check, .checkbox .label, .etu small {
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* line 166, ../sass/partials/_form.scss */
+.form-control label {
+  color: #777;
+}
+
+/* line 171, ../sass/partials/_form.scss */
+.form-control .input {
+  /*  border-bottom: $colorPrimary 3px solid; */
+}
+
+/* line 175, ../sass/partials/_form.scss */
+.fc2 {
+  display: flex;
+  justify-content: space-around;
+}
+
+/* line 179, ../sass/partials/_form.scss */
+.form-control2 input {
+  border: 2px solid #f0f0f0;
+  border-radius: 4px;
+  width: 100%;
+  height: 40px;
+  background-color: #f6f6f6;
+  padding: 16px;
+  font-size: 14px;
+}
+
+/* line 189, ../sass/partials/_form.scss */
+.form-control2 label {
+  margin-bottom: 10px;
+}
+
+/* line 193, ../sass/partials/_form.scss */
+.form-control2 select {
+  display: block;
+  border: 2px solid #f0f0f0;
+  border-radius: 4px;
+  height: 60px;
+  background-color: #f6f6f6;
+  padding: 16px;
+  font-size: 14px;
+  outline: 0;
+  width: 90%;
+  margin-left: 4.8%;
+}
+
+/* line 205, ../sass/partials/_form.scss */
+.checkbox {
+  position: relative;
+}
+
+/* line 209, ../sass/partials/_form.scss */
+form .row {
+  display: flex;
+}
+/* line 211, ../sass/partials/_form.scss */
+form .row .etu {
+  flex: 1;
+}
+
+/* line 215, ../sass/partials/_form.scss */
+.etu .input {
+  border: 2px solid #f0f0f0;
+  border-radius: 4px;
+  display: block;
+  width: 100%;
+  height: 60px;
+  background-color: #f6f6f6;
+  padding: 10px;
+  font-size: 14px;
+}
+
+/* line 226, ../sass/partials/_form.scss */
+.checkbox .check {
+  display: flex;
+  margin-top: 2%;
+}
+/* line 229, ../sass/partials/_form.scss */
+.checkbox .check input {
+  margin-left: 1%;
+  margin-top: 2px;
+}
+/* line 233, ../sass/partials/_form.scss */
+.checkbox .check label {
+  margin-left: 1%;
+}
+
+/* line 241, ../sass/partials/_form.scss */
+.form-control select {
+  border-bottom: #e04218 3px solid;
+  outline: 0;
+}
+/* line 247, ../sass/partials/_form.scss */
+.form-control select option:hover {
+  background-color: #ff9409;
+}
+
+/* line 252, ../sass/partials/_form.scss */
+.etu select {
+  outline: 0;
+}
+
+/* line 256, ../sass/partials/_form.scss */
+.form-control .input:focus {
+  outline: 0;
+  border-color: #e04218;
+}
+
+/* line 260, ../sass/partials/_form.scss */
+.checkbox.success input, .checkbox.error input, .form-control.success input, .form-control.success select {
+  border-color: #2ecc71;
+}
+
+/* line 263, ../sass/partials/_form.scss */
+.form-control.error select, .form-control.error input {
+  border-color: red;
+}
+
+/* line 284, ../sass/partials/_form.scss */
+.etu.success input {
+  border-color: #2ecc71;
+}
+
+/* line 287, ../sass/partials/_form.scss */
+.etu.error input {
+  border-color: red;
+}
+
+/* line 290, ../sass/partials/_form.scss */
+.form-control small {
+  color: red;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  visibility: hidden;
+}
+
+/* line 299, ../sass/partials/_form.scss */
+.etu small {
+  color: red;
+}
+
+/* line 303, ../sass/partials/_form.scss */
+.form-control.error small {
+  visibility: visible;
+}
+
+/* line 307, ../sass/partials/_form.scss */
+.form button {
+  cursor: pointer;
+  background-color: #e04218;
+  border: 2px solid #e04218;
+  border-radius: 4px;
+  color: #fff;
+  margin-right: auto;
+  margin-left: auto;
+  display: block;
+  font-size: 16px;
+  padding: 10px;
+  margin-top: 20px;
+  width: 30%;
+  box-shadow: #e04218 0px 7px 29px 0px;
+}
+
+/*  .form button:hover{
+     background-color: #39ACE7;
+     border: 2px solid #39ACE7;
+
+ } */
+/*  .form .btn-login{
+    cursor: pointer;
+    background-color: $colorPrimary;
+    border: 2px solid $colorPrimary;
+    border-radius: 4px;
+    color: #fff;
+    margin-left: auto;
+    display: block;
+    font-size: 16px;
+    padding: 10px;
+    margin-top: 20px;
+    width: 30%;
+    box-shadow: $shadow2;
+ } */
+/* line 342, ../sass/partials/_form.scss */
+.register {
+  display: flex;
+  justify-content: space-around;
+}
+
+@media only screen and (max-width: 768px) {
+  /* line 348, ../sass/partials/_form.scss */
+  .form button {
+    cursor: pointer;
+    background-color: #e04218;
+    border: 2px solid #e04218;
+    border-radius: 4px;
+    color: #fff;
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+    font-size: 16px;
+    padding: 10px;
+    margin-top: 20px;
+    width: 100%;
+    box-shadow: #e04218 0px 7px 29px 0px;
+  }
+
+  /* line 363, ../sass/partials/_form.scss */
+  .container-login {
+    width: 80%;
+    margin-top: 15%;
+  }
+  /* line 367, ../sass/partials/_form.scss */
+  .container-login .form-control .label {
+    color: #39ace7;
+  }
+}
 /* @import "partials/menu";
 @import "partials/cadreShadow";
 @import "partials/burgerDesign";
@@ -76,159 +1996,164 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 @import "partials/itemsPaginate.scss"; */
 /* @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;1,500&family=Roboto+Mono&display=swap');
  */
-/* line 18, ../sass/screen.scss */
+/* line 23, ../sass/screen.scss */
 .product-container {
   background-color: #f9f7ec;
 }
-/* line 20, ../sass/screen.scss */
+/* line 25, ../sass/screen.scss */
 .product-container .card-product {
   background-color: #fff;
 }
-/* line 22, ../sass/screen.scss */
+/* line 27, ../sass/screen.scss */
 .product-container .card-product .card-body {
   border-radius: 16px;
 }
-/* line 25, ../sass/screen.scss */
+/* line 30, ../sass/screen.scss */
 .product-container .card-product img {
   cursor: pointer;
 }
-/* line 28, ../sass/screen.scss */
+/* line 33, ../sass/screen.scss */
 .product-container .card-product:hover {
   background-color: #e04218;
   color: #000;
 }
-/* line 31, ../sass/screen.scss */
+/* line 36, ../sass/screen.scss */
 .product-container .card-product:hover .btn-primary {
   background-color: #fff;
   border: #e04218;
   color: #e04218;
 }
-/* line 38, ../sass/screen.scss */
+/* line 43, ../sass/screen.scss */
 .product-container .card-product:hover .card-title {
   color: #fff;
 }
-/* line 41, ../sass/screen.scss */
+/* line 46, ../sass/screen.scss */
 .product-container .card-product:hover .card-text {
   color: #000;
 }
 
-/* line 47, ../sass/screen.scss */
+/* line 52, ../sass/screen.scss */
 .card {
   border: none;
 }
 
-/* line 51, ../sass/screen.scss */
+/* line 56, ../sass/screen.scss */
 .btn-primary {
   background-color: #e04218;
   border: #e04218;
 }
-/* line 54, ../sass/screen.scss */
+/* line 59, ../sass/screen.scss */
 .btn-primary:hover {
   background-color: #e04218;
   border: #e04218;
 }
 
 @media (min-width: 800px) {
-  /* line 60, ../sass/screen.scss */
+  /* line 65, ../sass/screen.scss */
   .card-product {
     width: 18rem;
   }
 }
-/* line 68, ../sass/screen.scss */
+/* line 73, ../sass/screen.scss */
 .nav-item a {
   color: #e04218;
 }
 
-/* line 74, ../sass/screen.scss */
+/* line 79, ../sass/screen.scss */
 .navbar-brand {
   background-color: #e04218;
   padding: 4px;
   color: #fff;
 }
 
-/* line 81, ../sass/screen.scss */
+/* line 86, ../sass/screen.scss */
 ol, ul, li, a {
   list-style: none;
   text-decoration: none;
 }
 
-/* line 86, ../sass/screen.scss */
+/* line 91, ../sass/screen.scss */
 .action {
   color: #000;
 }
-/* line 88, ../sass/screen.scss */
+/* line 93, ../sass/screen.scss */
 .action .fa-archive {
   color: #dc3545;
 }
-/* line 91, ../sass/screen.scss */
+/* line 96, ../sass/screen.scss */
 .action .fa-edit {
   color: #ffec43;
 }
-/* line 94, ../sass/screen.scss */
+/* line 99, ../sass/screen.scss */
 .action:hover {
   color: #000;
 }
 
-/* line 99, ../sass/screen.scss */
+/* line 104, ../sass/screen.scss */
 .bc-primary {
   background-color: #e04218;
 }
 
-/* line 102, ../sass/screen.scss */
+/* line 107, ../sass/screen.scss */
 .c-primary {
   color: #e04218;
 }
 
-/* line 105, ../sass/screen.scss */
+/* line 110, ../sass/screen.scss */
+.c-edit {
+  color: #ffec43;
+}
+
+/* line 113, ../sass/screen.scss */
 .bc-secondary {
   background-color: #f9f7ec;
   color: #e04218;
 }
 
-/* line 110, ../sass/screen.scss */
+/* line 118, ../sass/screen.scss */
 table tr {
   border-bottom: #f9f7ec;
 }
-/* line 114, ../sass/screen.scss */
+/* line 122, ../sass/screen.scss */
 table .thbottom {
   padding: 1%;
 }
-/* line 117, ../sass/screen.scss */
+/* line 125, ../sass/screen.scss */
 table tr:last-child {
   border-bottom: #e04218;
 }
-/* line 120, ../sass/screen.scss */
+/* line 128, ../sass/screen.scss */
 table tr:nth-child(even) {
   background-color: #f9f7ec;
 }
 
-/* line 127, ../sass/screen.scss */
+/* line 135, ../sass/screen.scss */
 nav .pagination .active {
   background-color: #e04218;
   color: #fff;
 }
-/* line 130, ../sass/screen.scss */
+/* line 138, ../sass/screen.scss */
 nav .pagination .active:hover {
   background-color: #e04218;
   color: #fff;
 }
-/* line 135, ../sass/screen.scss */
+/* line 143, ../sass/screen.scss */
 nav .pagination .notactive {
   background-color: #fff;
   color: #e04218;
 }
-/* line 138, ../sass/screen.scss */
+/* line 146, ../sass/screen.scss */
 nav .pagination .notactive:hover {
   background-color: #fff;
   color: #e04218;
 }
 
-/* line 148, ../sass/screen.scss */
+/* line 156, ../sass/screen.scss */
 .card {
   border: none;
 }
 
-/* line 151, ../sass/screen.scss */
+/* line 159, ../sass/screen.scss */
 body {
-  font-size: 15px;
+  font-size: 18px;
 }

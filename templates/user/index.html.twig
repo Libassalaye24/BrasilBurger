@@ -4,87 +4,81 @@
 {% endblock %}
 
 {% block body %}
-
-	<div class="container ">
-		{{ form_start(form) }}
-		<div class="card shadow mt-5">
-			<div class="card-body">
-				<div class="row">
-					<div class="col-md-6">
-						<h4 class="float-start c-primary">Formulaire D'inscription</h4>
-					</div>
-					<div class="col-md-6">
-						<a href="{{path('login')}}" class="float-end text-dark">Se connecter ? 
-							<i class="fa fa-connectdevelop" aria-hidden="true"></i>
-						</a>
-					</div>
-				</div>
-				<div class="row ">
-					<div class="col-md-6">
-						<div class="mb-3">
-							<label for="nom" class="form-label">Nom</label>
-							{{form_widget(form.Nom)}}
+	<style>
+		body {
+			background-image: url("https://st2.depositphotos.com/3300441/11588/i/950/depositphotos_115884046-stock-photo-burgers-set-background.jpg");
+			background-size: cover;
+			background-repeat: no repeat;
+		}
+		.container-login{
+			margin-bottom: 4%;
+			margin-top: 4%;
+		}
+	</style>
+	 <div class="body">
+        <div class="container-login ">
+            {{ form_start(form) }}
+               <div id="form" class="form">
+                   {#  {% if pavillonMode %}
+                         <h2>Modifier Pavillon</h2>
+                    {% else %}
+                        <h2>Ajout Pavillon</h2>
+                    {% endif %} #}
+                    
+                    {#   {% if errors is defined %}
+                            {% for error in errors %}
+                               <div class="alert alert-danger" style="background-color: #F8D7DA;padding:10px;text-align:center;border-radius:5px;margin-bottom:5px;">{{ error.message }}</div>
+                            {% endfor %}
+                     {% endif %} #}
+					 <h2 class="h3 mb-3 font-weight-normal " style="color:#000">Formulaire d'inscription</h2>
+                        <div class="form-control">
+                            <label for="Nom">Nom</label>
+                            {{ form_widget(form.Nom) }}
+                             <small> {{ form_errors(form.Nom) }}</small>
+							 <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="form-control">
+                            <label for="prenom">Prenom</label>
+                            {{ form_widget(form.prenom) }}
+                              <small> {{ form_errors(form.prenom) }}</small>
+							  <div class="invalid-feedback"></div>
+                        </div>
+						 <div class="form-control">
+                            <label for="email">Email</label>
+                            {{ form_widget(form.email) }}
+                              <small> {{ form_errors(form.email) }}</small>
+							  <div class="invalid-feedback"></div>
+                        </div>
+						 <div class="form-control">
+                            <label for="telephone">Telephone</label>
+                            {{ form_widget(form.telephone) }}
 							<div class="invalid-feedback"></div>
-							<small id="helpId" class="text-danger">{{form_errors(form.Nom)}}</small>
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="mb-3">
-							<label for="nom" class="form-label">Prenom</label>
-							{{form_widget(form.prenom)}}
+                              <small> {{ form_errors(form.telephone) }}</small>
+                        </div>
+						 <div class="form-control">
+                            <label for="password">Password</label>
+                            {{ form_widget(form.password) }}
 							<div class="invalid-feedback"></div>
-							<small id="helpId" class="text-danger">{{form_errors(form.prenom)}}</small>
-						</div>
-					</div>
-				</div>
-				<div class="row ">
-					<div class="col-md-6">
-
-						<div class="mb-3">
-							<label for="nom" class="form-label">Email</label>
-							{{form_widget(form.email)}}
-							<div class="invalid-feedback">
-							</div>
-							<small id="helpId" class="text-danger">{% if errorEmail is defined %} {{errorEmail}} {% endif %}</small>
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="mb-3">
-							<label for="nom" class="form-label">Telephone</label>
-							{{form_widget(form.telephone)}}
+                              <small> {{ form_errors(form.password) }}</small>
+                        </div>
+						 <div class="form-control">
+                            <label for="confirm">Confirm Password</label>
+                            {{ form_widget(form.confirm) }}
 							<div class="invalid-feedback"></div>
-							<small id="helpId" class="text-danger">{{form_errors(form.telephone)}}</small>
-						</div>
-					</div>
-				</div>
-				<div class="row ">
-					<div class="col-md-6">
-						<div class="mb-3">
-							<label for="nom" class="form-label">Password</label>
-							{{form_widget(form.password)}}
-							<div class="invalid-feedback"></div>
-							<small id="helpId" class="text-danger">{{form_errors(form.password)}}</small>
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="mb-3">
-							<label for="" class="form-label">Confirm Password</label>
-							{{form_widget(form.confirm)}}
-							<div class="invalid-feedback"></div>
-							<small id="helpId" class="text-danger">
-								{{form_errors(form.confirm)}}
-							</small>
-						</div>
-					</div>
-				</div>
-				{{ form_row(form._token) }}
-				<button type="submit" class="btn btn-primary float-end">S'inscrire</button>
-			</div>
-		</div>
-	</div>
-
-
+                              <small> {{ form_errors(form.confirm) }}</small>
+                        </div>
+                      
+                                            
+                       
+                         {{ form_row(form._token) }}
+						 
+						 {{ form_widget(form.Valider) }}	
+               </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
 {% endblock %}
 {% block javascripts %}
-	{# <script src="{{asset('js/register.js')}}"></script> #}
+	{{parent()}}
+	<script src="{{asset('js/register.js')}}"></script>
 {% endblock %}

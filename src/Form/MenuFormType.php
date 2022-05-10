@@ -73,6 +73,7 @@ class MenuFormType extends AbstractType
             ->add('image',ImageType::class,[
                 
             ])
+            ->add('Valider', SubmitType::class)
         ;
     }
 

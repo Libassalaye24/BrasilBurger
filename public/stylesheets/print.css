@@ -2,27 +2,6 @@
  * Import this file using the following HTML or equivalent:
  * <link href="/stylesheets/print.css" media="print" rel="stylesheet" type="text/css" /> */
 /* line 7, ../sass/print.scss */
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font: inherit;
-  font-size: 100%;
-  vertical-align: baseline;
-}
-
 .product-container {
   background-color: #f9f7ec;
 }
@@ -74,101 +53,123 @@ time, mark, audio, video {
   border: #e04218;
 }
 
+/* line 48, ../sass/print.scss */
+.btn-primaryV {
+  background-color: #fff;
+  border: #e04218 2px solid;
+  color: #e04218;
+}
+/* line 52, ../sass/print.scss */
+.btn-primaryV:hover {
+  background-color: #e04218;
+  border: #e04218 2px solid;
+  color: #fff;
+}
+
 @media (min-width: 800px) {
-  /* line 49, ../sass/print.scss */
+  /* line 59, ../sass/print.scss */
   .card-product {
     width: 18rem;
   }
 }
-/* line 57, ../sass/print.scss */
+/* line 67, ../sass/print.scss */
 .nav-item a {
   color: #e04218;
 }
 
-/* line 62, ../sass/print.scss */
+/* line 72, ../sass/print.scss */
 a, button, select {
   outline: 0;
 }
 
-/* line 65, ../sass/print.scss */
+/* line 75, ../sass/print.scss */
 .navbar-brand {
   background-color: #e04218;
   padding: 4px;
   color: #fff;
 }
 
-/* line 72, ../sass/print.scss */
+/* line 82, ../sass/print.scss */
 ol, ul, li, a {
   list-style: none;
   text-decoration: none;
 }
 
-/* line 77, ../sass/print.scss */
+/* line 87, ../sass/print.scss */
 .action {
   color: #000;
 }
-/* line 79, ../sass/print.scss */
+/* line 89, ../sass/print.scss */
 .action .fa-archive {
   color: #dc3545;
 }
-/* line 82, ../sass/print.scss */
+/* line 92, ../sass/print.scss */
 .action .fa-edit {
   color: #ffec43;
 }
-/* line 85, ../sass/print.scss */
+/* line 95, ../sass/print.scss */
 .action:hover {
   color: #000;
 }
 
-/* line 90, ../sass/print.scss */
+/* line 100, ../sass/print.scss */
 .bc-primary {
   background-color: #e04218;
 }
 
-/* line 93, ../sass/print.scss */
+/* line 104, ../sass/print.scss */
 .c-primary {
   color: #e04218;
 }
-
-/* line 96, ../sass/print.scss */
-.bc-secondary {
-  background-color: #f9f7ec;
+/* line 106, ../sass/print.scss */
+.c-primary:hover {
   color: #e04218;
 }
 
-/* line 101, ../sass/print.scss */
+/* line 110, ../sass/print.scss */
+.form-check-input {
+  cursor: pointer;
+}
+
+/* line 113, ../sass/print.scss */
+.bc-secondary {
+  background-color: #f9f7ec;
+  /*  color: $colorPrimary; */
+}
+
+/* line 118, ../sass/print.scss */
 table tr {
   border-bottom: #f9f7ec;
 }
-/* line 105, ../sass/print.scss */
+/* line 122, ../sass/print.scss */
 table .thbottom {
   padding: 1%;
 }
-/* line 108, ../sass/print.scss */
+/* line 125, ../sass/print.scss */
 table tr:last-child {
   border-bottom: #e04218;
 }
-/* line 111, ../sass/print.scss */
+/* line 128, ../sass/print.scss */
 table tr:nth-child(even) {
   background-color: #f9f7ec;
 }
 
-/* line 118, ../sass/print.scss */
+/* line 135, ../sass/print.scss */
 nav .pagination .active {
   background-color: #e04218;
   color: #fff;
 }
-/* line 121, ../sass/print.scss */
+/* line 138, ../sass/print.scss */
 nav .pagination .active:hover {
   background-color: #e04218;
   color: #fff;
 }
-/* line 126, ../sass/print.scss */
+/* line 143, ../sass/print.scss */
 nav .pagination .notactive {
   background-color: #fff;
   color: #e04218;
 }
-/* line 129, ../sass/print.scss */
+/* line 146, ../sass/print.scss */
 nav .pagination .notactive:hover {
   background-color: #fff;
   color: #e04218;

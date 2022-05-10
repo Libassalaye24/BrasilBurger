@@ -4,24 +4,22 @@ const nom = document.getElementById('burger_nom');
 const prix = document.getElementById('burger_prix');
 const description = document.getElementById('burger_description');
 const image = document.getElementById('burger_image_nom');
-let isValid = false;
+//Functions-------------------------------------------------------------
+let isValid = [];
 //Functions-------------------------------------------------------------
 function showError(input, message) {//Afficher les messages d'erreur
     const formControl = input.parentElement;
-    formControl.className = 'mb-3 invalid';
-    if (formControl.classList.contains("invalid") == true){
-        formControl.querySelector('input').classList.add("is-invalid")
-    }
-    const small = formControl.querySelector('.invalid-feedback');
+    formControl.className = 'form-control error';
+    const small = formControl.querySelector('small');
     small.innerText = message;
+    isValid.push(false);
 }
 //
 function showSuccess(input) {
     const formControl = input.parentElement;
-    formControl.className = 'mb-3 valid';
-    if (formControl.classList.contains("valid") == true){
-        formControl.querySelector('input').classList.add("is-valid")
-    }
+    formControl.className = 'form-control success';
+   
+    isValid.push(true);
 }
 //
 /* function checknbrEtage(input) {//Tester si l'nbrEtage est valide :  javascript : valid nbrEtage
@@ -43,7 +41,6 @@ function checkRequired(inputArray){// Tester si les champs ne sont pas vides
              showError(input,`${getFieldName(input)} est obligatoire`);
          }else{
              showSuccess(input);
-             isValid=true;
          }
     });
       
@@ -62,7 +59,7 @@ function checkLength(input, min, max) {//Tester la longueur de la valeur  d'un i
         console.log(input.value.length)
     }else{
         showSuccess(input);
-        isValid = true
+        
     }
 }
 // 
@@ -86,7 +83,7 @@ function CheckNumberMatch(input) {
         showError(input,"le Numero est invalide!!");
     }else{
         showSuccess(input);
-        isValid = true;
+        
     }
     
        
@@ -105,21 +102,25 @@ function checkPasswordMatch(input1, input2) {
 //Even listeners--------------------------------------------------------
 form.addEventListener('submit',function(e){    
   // var nb = CheckNumberMatch(nbrEtage);
-    if (isValid) {} else {
-        e.preventDefault();
-        checkRequired([nom,description,prix]);
+   
+        checkRequired([nom,description,prix,image]);
         checkLength(nom,3,30);
         checkLength(description,3,30);
         CheckNumberMatch(prix);
        
-    }
-    if (image === null) {
+        for (let i = 0; i < isValid.length; i++) {
+            if (isValid[i]  == false) {
+               e.preventDefault();
+            }
+            
+        }
+   /*  if (image.value === '') {
         console.log('false')
         e.preventDefault();
         showError(image,`Image est obligatoire`);
     }else{
         showSuccess(image);
-    }
+    } */
  
 
 

@@ -30,10 +30,17 @@ class Menu
     #[ORM\Column(type: 'boolean')]
     private $etat;
 
+    #[ORM\OneToMany(mappedBy: 'menu', targetEntity: Commande::class)]
+    private $commandes;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $type;
+
     public function __construct()
     {
         $this->complements = new ArrayCollection();
         $this->etat = false;
+        $this->commandes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -114,4 +121,48 @@ class Menu
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Commande>
+     */
+    public function getCommandes(): Collection
+    {
+        return $this->commandes;
+    }
+
+    public function addCommande(Commande $commande): self
+    {
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes[] = $commande;
+            $commande->setMenu($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommande(Commande $commande): self
+    {
+        if ($this->commandes->removeElement($commande)) {
+            // set the owning side to null (unless already changed)
+            if ($commande->getMenu() === $this) {
+                $commande->setMenu(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+   
 }

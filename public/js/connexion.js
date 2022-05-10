@@ -1,11 +1,8 @@
 /* const form = document.getElementById('form');
  */const form = document.querySelector('form');
- const nom = document.getElementById('inscription_form_Nom');
- const prenom = document.getElementById('inscription_form_prenom');
- const email = document.getElementById('inscription_form_email');
- const telephone = document.getElementById('inscription_form_telephone');
- const password = document.getElementById('inscription_form_password');
- const confirmPassword = document.getElementById('inscription_form_confirm');
+
+ const email = document.getElementById('inputEmail');
+ const password = document.getElementById('inputPassword');
 
 
 
@@ -126,15 +123,9 @@ function isValidEmail(email) {//Tester si l'email est valide
  form.addEventListener('submit',function(e){    
    // var nb = CheckNumberMatch(nbrEtage);
         isValid = [];
-         checkRequired([nom,prenom,email,password,telephone,confirmPassword]);
-         checkLength(nom,3,30);
-         checkLength(prenom,3,30);
+         checkRequired([email,password]);
          checkLength(password,5,20);
-         checkLength(confirmPassword,5,20);
-         CheckNumberMatch(telephone);
-         checkPasswordMatch(password,confirmPassword);
          checkEmail(email);
-         CheckNumberMatch(telephone);
         
      for (let i = 0; i < isValid.length; i++) {
          if (isValid[i]  == false) {

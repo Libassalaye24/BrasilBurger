@@ -1,272 +1,331 @@
- @import "mixins";
- @import "variables";
- @import "responsive";
- .body{
-     display: flex;
-     justify-content: center;
-     align-items: center;
- }
- .c1{
-     box-shadow: $shadow;
- }
- .container{
-     margin-top: 3%;
-     background-color: #fff;
-     border-radius: 5px;
-     width: 90%;
-    margin-left: auto;
-    margin-right: auto;
- 
-    .btnaddChambre{
-     background-color: $colorPrimary; /* Green */
-     border: none;
-     color: white;
-     text-align: center;
-     text-decoration: none;
-     display: inline-block;
-     font-size: 16px;
-     padding: 10px;
-     cursor: pointer;
-     @include border-radius(5px);
-     }
-     .btnDelete{
-         @extend .btnaddChambre;
-         background-color: $colorRed; /* Green */ 
-         margin-top: 15px;
-     }
-    
- }
- %form-control{
-     border: 2px solid #f0f0f0;
-     border-radius: 4px;
-     display: block;
-     width: 100%;
-     height: 40px;
-     background-color: #F6F6F6;
-     padding: 10px;
-     font-size: 14px;
- }
- .container-login{
-     border-radius: 5px;
-     width: 50%;
-     margin-top: 10%;
-     box-shadow: $shadow;
-    background-color: #fff;
-     color: #fff;
+@import "mixins";
+@import "variables";
+@import "responsive";
+.body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.c1 {
+  box-shadow: $shadow;
+}
+.invalid-feedback,small{
+    color: $colorRed;
+    padding: 2px;
+    margin-top: 2%;
+    font-size: 15px;
+}
+.container {
+  margin-top: 3%;
+  /* background-color: #fff; */
+  border-radius: 5px;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+
+  .btnaddChambre {
+    background-color: $colorPrimary; /* Green */
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    padding: 10px;
+    cursor: pointer;
+    @include border-radius(5px);
+  }
+  .btnDelete {
+    @extend .btnaddChambre;
+    background-color: $colorRed; /* Green */
+    margin-top: 15px;
+  }
+}
+%form-control {
+  border: 2px solid #f0f0f0;
+  border-radius: 4px;
+  display: block;
+  width: 100%;
+  height: 60px;
+  background-color: #f6f6f6;
+  padding: 10px;
+  font-size: 14px;
+}
+.container-register{
+    margin-top: 5%;
    
-     .form-control .label{
-         color: #ffff;
-     }
-     .form-control input{
-         @extend %form-control;
-         background-color: #F6F6F6;
-        /*  border: 2px solid $colorPrimary   ; */
-         /* border-bottom: #39ACE7 2px solid; */
-         color: #777;
-
-     }
- 
- }
-
- h2{
-     text-align: center;
-     margin: 0 0 20px;
- }
-
- .form{
-     padding: 30px 40px;
- }
-
- .form-control{
-     margin-bottom: 8px;
-     padding-bottom: 15px;
-     position: relative;
-     div{
-         margin-bottom: 8px;
     
-     }
-     ul li{
-        color: $error;
-        font-size: 14px;
+    form{
+        background:$light-bg;
+        padding:2rem;
+        border-radius: .5rem;
+    
+        .flex{
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
+    
+          .inputBox{
+            width:49%;
+            padding:.7rem 0;
+          }
+    
+          span{
+            font-size: 1.7rem;
+            color:$light-color;
+          }
+    
+          input, textarea{
+            width:100%;
+            margin-top: .5rem;
+            padding:1rem 1.2rem;
+            width:100%;
+            border-radius: .5rem;
+            font-size: 1.6rem;
+            text-transform: none;
+            color:$black;
+          }
+    
+          textarea{
+            height:20rem;
+            resize: none;
+          }
+    
+          .map{
+            height:100%;
+            width:100%;
+            border-radius: .5rem;
+          }
+        }
+      }
+}
+.container-login {
+  border-radius: 5px;
+  width: 50%;
+  margin-top: 10%;
+  box-shadow: $shadow;
+  background-color: #fff;
+  color: #000;
+    .line{
+        float: right;
+        margin-right: 4%;
+        margin-top: 1%;
+       a{
+        color: $colorPrimary;
+        
+       }
+
     }
- }
- .color1{
-     color: $colorPrimary;
- }
- %displayBlock{
-     display: block;
-     margin-bottom: 5px;
- }
- .form-control label{
-     color: #777;
-     @extend %displayBlock;
- }
+  .form-control .label {
+    color: #ffff;
+  }
+  .form-control input {
+    @extend %form-control;
+    background-color: #f6f6f6;
+    /*  border: 2px solid $colorPrimary   ; */
+    /* border-bottom: #39ACE7 2px solid; */
+    color: #777;
+    border: 2px solid #f0f0f0;
+    border-radius: 4px;
+    width: 100%;
+    height: 60px;
+    background-color: #f6f6f6;
+    padding: 16px;
+    font-size: 14px;
+  }
+}
 
+h2 {
+  text-align: center;
+  margin: 0 0 20px;
+}
 
- .form-control .input {
-     @extend %form-control;
-    /*  border-bottom: $colorPrimary 3px solid; */
+.form {
+  padding: 30px 40px;
+}
 
- }
- .fc2{
-     display: flex;
-     justify-content: space-around;
-  
- }  
- .form-control2 input{
-     border: 2px solid #f0f0f0;
-     border-radius: 4px;
-     width: 100%;
-     height: 40px;
-     background-color: #F6F6F6;
-     padding: 16px;
-     font-size: 14px;
- }
- .form-control2 label{
-     @extend %displayBlock;
-    margin-bottom: 10px;
- }
- .form-control2 select{
-     display: block;
-     border: 2px solid #f0f0f0;
-     border-radius: 4px;
-     height: 60px;
-     background-color: #F6F6F6;
-     padding: 16px;
-     font-size: 14px;
-     outline: 0;
-     width: 90%;
-     margin-left: 4.8%;
- }
- .checkbox{
-     position: relative;
-   
- }
- 
- form .row{
-     display: flex;
-     .etu{
-         flex: 1;
-     }
-    
- }
- .etu .input {
-     @extend %form-control;
-     border: 2px solid #f0f0f0;
-     border-radius: 4px;
-     display: block;
-     width: 100%;
-     height: 60px;
-     background-color: #F6F6F6;
-     padding: 10px;
-     font-size: 14px;
+.form-control {
+  margin-bottom: 8px;
+  padding-bottom: 15px;
+  position: relative;
+  div {
+    margin-bottom: 8px;
+  }
+  ul li {
+    color: $error;
+    font-size: 14px;
+  }
+}
+.color1 {
+  color: $colorPrimary;
+}
+%displayBlock {
+  display: block;
+  margin-bottom: 5px;
+}
+.form-control label {
+  color: #777;
+  @extend %displayBlock;
+}
 
- }
- .checkbox .check{
-     @extend %displayBlock;
-     display: flex;
-     input{
-         margin-left: 1%;
-         margin-top: 2px;
-     }
-     label{
-         margin-left: 1%;
-     }
-     margin-top: 2%
- }
- .checkbox .label{
-     @extend %displayBlock;
- }
- .form-control select{
-     @extend %form-control;
-     
-     border-bottom: $colorPrimary 3px solid;
-     outline: 0;
-     option{
-         &:hover{
-             background-color: $color2;
-         }
-     }
- }
- .etu select{
-     @extend %form-control;
-     outline: 0;
- }
- .form-control .input:focus{
-     outline: 0;
-     border-color: $colorPrimary;
- }
- %border-success{
-     border-color: $succes;
- }
- %border-error{
-     border-color: $error;
- }
- .checkbox.success input{
-    @extend %border-success;
- }
- .checkbox.error input{
-    @extend %border-success;
- }
- .form-control.success input{
-     @extend %border-success;
- }
- .form-control.success select{
-     @extend %border-success;
- }
- .form-control.error select{
-     @extend %border-error;
- }
- .form-control.error input{
-    @extend %border-error;
- }
- .etu.success input{
-     border-color: $succes;
- }
- .etu.error input{
-     border-color: $error;
- }
- .form-control small{
-     color: $error;
-     position: absolute;
-     bottom: 0;
-     left: 0;
-     visibility: hidden;
- }
- .checkbox small{
+.form-control .input {
+  @extend %form-control;
+  /*  border-bottom: $colorPrimary 3px solid; */
+}
+.fc2 {
+  display: flex;
+  justify-content: space-around;
+}
+.form-control2 input {
+  border: 2px solid #f0f0f0;
+  border-radius: 4px;
+  width: 100%;
+  height: 40px;
+  background-color: #f6f6f6;
+  padding: 16px;
+  font-size: 14px;
+}
 
- }
- .etu small{
-     color: $error;
-     @extend %displayBlock;
- }
- .form-control.error small{
-     visibility: visible;
- }
+.form-control2 label {
+  @extend %displayBlock;
+  margin-bottom: 10px;
+}
+.form-control2 select {
+  display: block;
+  border: 2px solid #f0f0f0;
+  border-radius: 4px;
+  height: 60px;
+  background-color: #f6f6f6;
+  padding: 16px;
+  font-size: 14px;
+  outline: 0;
+  width: 90%;
+  margin-left: 4.8%;
+}
+.checkbox {
+  position: relative;
+}
 
- .form button:not(.btn-login){
-     cursor: pointer;
-     background-color: $colorPrimary;
-     border: 2px solid $colorPrimary;
-     border-radius: 4px;
-     color: #fff;
-     margin-right: auto;
-     margin-left: auto;
-     display: block;
-     font-size: 16px;
-     padding: 10px;
-     margin-top: 20px;
-     width: 30%;
-     box-shadow: $shadow2;
-    
- }
+form .row {
+  display: flex;
+  .etu {
+    flex: 1;
+  }
+}
+.etu .input {
+  @extend %form-control;
+  border: 2px solid #f0f0f0;
+  border-radius: 4px;
+  display: block;
+  width: 100%;
+  height: 60px;
+  background-color: #f6f6f6;
+  padding: 10px;
+  font-size: 14px;
+}
+.checkbox .check {
+  @extend %displayBlock;
+  display: flex;
+  input {
+    margin-left: 1%;
+    margin-top: 2px;
+  }
+  label {
+    margin-left: 1%;
+  }
+  margin-top: 2%;
+}
+.checkbox .label {
+  @extend %displayBlock;
+}
+.form-control select {
+  @extend %form-control;
+
+  border-bottom: $colorPrimary 3px solid;
+  outline: 0;
+  option {
+    &:hover {
+      background-color: $color2;
+    }
+  }
+}
+.etu select {
+  @extend %form-control;
+  outline: 0;
+}
+.form-control .input:focus {
+  outline: 0;
+  border-color: $colorPrimary;
+}
+%border-success {
+  border-color: $succes;
+}
+%border-error {
+  border-color: $error;
+}
+.checkbox.success input {
+  @extend %border-success;
+}
+.checkbox.error input {
+  @extend %border-success;
+}
+.form-control.success input {
+  @extend %border-success;
+}
+.form-control.success select {
+  @extend %border-success;
+}
+.form-control.error select {
+  @extend %border-error;
+}
+.form-control.error input {
+  @extend %border-error;
+}
+.etu.success input {
+  border-color: $succes;
+}
+.etu.error input {
+  border-color: $error;
+}
+.form-control small {
+  color: $error;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  visibility: hidden;
+}
+.checkbox small {
+}
+.etu small {
+  color: $error;
+  @extend %displayBlock;
+}
+.form-control.error small {
+  visibility: visible;
+}
+
+.form button {
+  cursor: pointer;
+  background-color: $colorPrimary;
+  border: 2px solid $colorPrimary;
+  border-radius: 4px;
+  color: #fff;
+  margin-right: auto;
+  margin-left: auto;
+  display: block;
+  font-size: 16px;
+  padding: 10px;
+  margin-top: 20px;
+  width: 30%;
+  box-shadow: $shadow2;
+}
 
 /*  .form button:hover{
      background-color: #39ACE7;
      border: 2px solid #39ACE7;
 
  } */
- .form .btn-login{
+/*  .form .btn-login{
     cursor: pointer;
     background-color: $colorPrimary;
     border: 2px solid $colorPrimary;
@@ -279,38 +338,34 @@
     margin-top: 20px;
     width: 30%;
     box-shadow: $shadow2;
- }
- .register{
-    display: flex;
-    justify-content: space-around;
- }
+ } */
+.register {
+  display: flex;
+  justify-content: space-around;
+}
 
- @media #{$medium-up} {
-  
-     .form button{
-         cursor: pointer;
-         background-color: $colorPrimary;
-         border: 2px solid $colorPrimary;
-         border-radius: 4px;
-         color: #fff;
-         margin-right: auto;
-         margin-left: auto;
-         display: block;
-         font-size: 16px;
-         padding: 10px;
-         margin-top: 20px;
-         width: 100%;
-         box-shadow: $shadow2;
-        
-     }
-     .container-login{
-         width: 80%;
-         margin-top: 15%;
-        
-         .form-control .label{
-             color: #39ACE7;
-         }
-        
-     }
+@media #{$medium-up} {
+  .form button {
+    cursor: pointer;
+    background-color: $colorPrimary;
+    border: 2px solid $colorPrimary;
+    border-radius: 4px;
+    color: #fff;
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+    font-size: 16px;
+    padding: 10px;
+    margin-top: 20px;
+    width: 100%;
+    box-shadow: $shadow2;
+  }
+  .container-login {
+    width: 80%;
+    margin-top: 15%;
 
- }
+    .form-control .label {
+      color: #39ace7;
+    }
+  }
+}

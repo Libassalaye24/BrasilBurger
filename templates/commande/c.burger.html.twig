@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CommandeController!
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div class="card  mt-5 p-4">
+			<form method="POST">
+				<div class="row bc-secondary mb-2">
+					<div class="col-md-8">
+						<img class="card-img-top  mx-auto float-start d-block" style="width: 15%;" src="{{ asset('img/uploads/' ~ burger.image.nom) }}" alt="">
+					</div>
+
+					<div class="col-md-4">
+						<div class="card-body mr-auto">
+							<h5 class="card-title mb-1 mt-0">{{burger.nom}}</h5>
+
+							<div class="form-inline mb-1">
+								<label for="">Quantite</label>
+								<input type="number" value="1" name="quantite" id="" class="form-control" placeholder="" aria-describedby="helpId">
+							</div>
+							<p class="card-text">Prix : {{burger.prix}} fcfa</p>
+						</div>
+					</div>
+				</div>
+                <h5 class="    ">Complemts</h5>
+				{% for complement in complements %}
+
+					<div class="row bc-secondary mb-2">
+						<div class="col-md-8">
+							<img class="card-img-top mx-auto float-start" style="width: 15%;" src="{{ asset('img/uploads/' ~ complement.image.nom) }}" alt="">
+						</div>
+
+						<div class="col-md-4">
+							<div class="card-body mr-auto">
+								<h4 class="card-title">{{complement.nom}}</h4>
+								<p class="card-text">{{complement.prix}} fcfa</p>
+                                <input type="checkbox" class="form-check-input" value="{{complement.id}}" name="complements[]" id="">
+							</div>
+						</div>
+					</div>
+
+				{% endfor %}
+			{# 	<div class="card mb-3">
+  <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/25d45014-8cc3-4c98-b02c-5a0cf3a55ddd/dcgotp7-361e4632-4c86-4ab2-b562-d07a3f22138c.png/v1/fill/w_900,h_900,strp/black_burger_on_a_transparent_background_by_prussiaart_dcgotp7-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzI1ZDQ1MDE0LThjYzMtNGM5OC1iMDJjLTVhMGNmM2E1NWRkZFwvZGNnb3RwNy0zNjFlNDYzMi00Yzg2LTRhYjItYjU2Mi1kMDdhM2YyMjEzOGMucG5nIiwiaGVpZ2h0IjoiPD05MDAiLCJ3aWR0aCI6Ijw9OTAwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLndhdGVybWFyayJdLCJ3bWsiOnsicGF0aCI6Ilwvd21cLzI1ZDQ1MDE0LThjYzMtNGM5OC1iMDJjLTVhMGNmM2E1NWRkZFwvcHJ1c3NpYWFydC00LnBuZyIsIm9wYWNpdHkiOjk1LCJwcm9wb3J0aW9ucyI6MC40NSwiZ3Jhdml0eSI6ImNlbnRlciJ9fQ.e4snUoo0eWZEcM1vefojEn9xqgDbXP4f-68e9bJSqz8" class="card-img-top w-sm-25 d-block mx-auto" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+  </div>
+</div> #}
+               <div class="">
+                    <button type="submit" name="submit" class="btn btn-primary float-end mr-1">Submit</button>
+               </div>
+			</form>
+
+		</div>
+
+	</div>
+{% endblock %}

@@ -33,6 +33,20 @@ class BurgerController extends AbstractController
         ]);
     }
 
+
+    #[Route('/burger/details/{id}', name: 'burger_details')]
+    public function burgerDetails(int $id,Request $request,BurgerRepository $burgerRepository):Response
+    {
+        if ($id) {
+            $burger = $burgerRepository->find($id);
+        }else{
+
+        }
+        return $this->render('burger/details.html.twig', [
+            'burger' => $burger,
+        ]);
+    }
+
     #[Route('/burger/archives', name: 'list_burger_archive')]
     public function archives(BurgerRepository $burgerRepository,Request $request,PaginatorInterface $paginatorInterface): Response
     {

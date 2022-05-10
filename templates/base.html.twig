@@ -12,106 +12,105 @@
 		rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
 		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
 		{% block stylesheets %}
-			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-			<link rel="stylesheet" href="{{ asset('stylesheets/print.css') }}"/>
+			{# 			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+									 #}
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+			<link rel="stylesheet" href="{{ asset('stylesheets/screen.css') }}"/>
 		{% endblock %}
 
 
 	</head>
 	<body>
 		{# <div class="topnav" id="myTopnav">
-												 <a class="burger active" href="{{path('catalogue')}}">Burgers.</a>
-											     <a class="" href="{{path('catalogue')}}">Acceuil</a>
-												 {% if is_granted("ROLE_CLIENT") %}
-													 <a class="" href="{{path('list_commande')}}">Mes Commandes</a>
-												 {% endif %}
-												 {% if is_granted("ROLE_GESTIONNAIRE") %}
-													<a class="" href="{{path('list_burger')}}">Burger</a>
-											     	<a class="" href="{{path('list_menu')}}">Menu</a>
-											     	<a class="" href="{{path('list_complement')}}">Complement</a>
-												 {% endif %}
-												{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-													 <a class="logOut" href="{{ path('logout') }}">
-												 		Deconnexion
-													<i class="fa fa-sign-out" aria-hidden="true"></i>
-												 	</a>
-												{% else %}
-													<a class="logOut" href="{{ path('login') }}">
-												 		Se connecter
-												 		<i class="fa fa-user" aria-hidden="true"></i>
-												 	</a>   
-												{% endif %}		 
-													
-												
-												<a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
-											</div> #}
-		{% block menu %}
-			<nav class="navbar navbar-expand-lg navbar-light bc-secondary">
-				<div class="container p-2">
-					<a class="navbar-brand text-white" href="#">BURGERS.</a>
-					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-						<span class="navbar-toggler-icon"></span>
-					</button>
-					<div class="collapse navbar-collapse justify-content-center"  id="navbarSupportedContent">
-						<ul class="navbar-nav me-auto bc-secondary   mb-2 mb-lg-0">
-							<li class="nav-item">
-								<a class="nav-link  active" style="color:#e04218" aria-current="page" href="{{path('catalogue')}}">Acceuil</a>
-							</li>
-							{% if is_granted("ROLE_GESTIONNAIRE") %}
-								<li class="nav-item">
-									<a class="nav-link " style="color:#e04218" href="{{path('list_menu')}}">Menu</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" style="color:#e04218" href="{{path('list_burger')}}">Burger</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" style="color:#e04218" href="{{path('list_complement')}}">Complement</a>
-								</li>
-							{% endif %}
-							{# <li class="nav-item dropdown">
-															<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-																Dropdown
-															</a>
-															<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-																<li>
-																	<a class="dropdown-item" href="#">Action</a>
-																</li>
-																<li>
-																	<a class="dropdown-item" href="#">Another action</a>
-																</li>
-																<li><hr class="dropdown-divider"></li>
-																<li>
-																	<a class="dropdown-item" href="#">Something else here</a>
-																</li>
-															</ul>
-														</li> #}
+							
+							<a class="burger " href="{{path('catalogue')}}"><img style="width:50px;" src="https://www.kindpng.com/picc/m/56-566747_burger-png-transparent-png.png" class="" alt=""></a>
+							<a class="a" href="{{path('catalogue')}}">Acceuil</a>
 							{% if is_granted("ROLE_CLIENT") %}
-								<li class="nav-item">
-									<a class="nav-link" style="color:#e04218" href="{{path('login')}}">Mes Commandes</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" style="color:#e04218">Liste Commandes</a>
-								</li>
+								<a class="" href="{{path('list_commande')}}">Mes Commandes</a>
 							{% endif %}
-						</ul>
-						{% if is_granted("IS_AUTHENTICATED_FULLY") %}
-							<a role="button" href="{{path('logout')}}" class="btn btn-primary shadow float-end">Se Deconnecter</a>
-						{% else %}
-							<a role="button" href="{{path('login')}}" class="btn btn-primary shadow	 float-end">Se connecter</a>
-						{% endif %}
-					</div>
-				</div>
-			</nav>
-			
-		{% endblock %}
-		{% block body %}
-		{% endblock %}
-		{% block javascripts %}
+							{% if is_granted("ROLE_GESTIONNAIRE") %}
+								<a class="a" href="{{path('list_burger')}}">Burger</a>
+								<a class="a" href="{{path('list_menu')}}">Menu</a>
+								<a class="a" href="{{path('list_complement')}}">Complement</a>
+							{% endif %}
+							{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+								<a class="logOut a" href="{{ path('logout') }}">
+									Deconnexion
+									<i class="fa fa-sign-out" aria-hidden="true"></i>
+								</a>
+							{% else %}
+								<a class="logOut a" href="{{ path('login') }}">
+									Se connecter
+									<i class="fa fa-user" aria-hidden="true"></i>
+								</a>
+							{% endif %}
+				
+				
+							<a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
+						</div> #}
+		{% block menu %}
 
+			<!-- header section starts  -->
+
+			<header class="header">
+
+				<a
+					href="#" class="logo">
+					{# <i class="fas fa-utensils"></i> #}
+					<i class="fa-solid fa-burger"></i>
+				</a>
+
+				<nav class="navbar">
+					{% if is_granted("ROLE_CLIENT") %}
+						<a href="{{path('catalogue')}}">Accueil</a>
+						<a class="" href="{{path('list_commande')}}">Mes Commandes</a>
+					{% endif %}
+					{% if is_granted("ROLE_GESTIONNAIRE") %}
+						<a class="a" href="{{path('list_burger')}}">Burger</a>
+						<a class="a" href="{{path('list_menu')}}">Menu</a>
+						<a class="a" href="{{path('list_complement')}}">Complement</a>
+						<a class="a" href="{{path('list_commande')}}">Commandes</a>
+					{% endif %}
+				</nav>
+
+				<div class="icons">
+					<div id="menu-btn" class="fas fa-bars"></div>
+					{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+						<a href="{{path('logout')}}">
+						
+							<div id="cart-btn" class="fa-solid fa-arrow-right-from-bracket"></div>
+						</a>
+					{% else %}
+						<a href="{{path('login')}}">
+							
+							<div id="login-btn" class="fas fa-user"></div>
+						</a>
+					{% endif %}
+				</div>
+
+			</header>
+
+			<!-- header section ends  -->
+
+		{% endblock %}
+		{% block body %}{% endblock %}
+		{% block javascripts %}
+		<script src="{{asset('js/menu.js')}}"></script>
+			<script>
+				function myFunction() {
+				var x = document.getElementById("myTopnav");
+					if (x.className === "topnav") {
+						x.className += " responsive";
+					} else {
+						x.className = "topnav";
+					}
+				}
+			</script>
+			
 			<!-- Bootstrap JavaScript Libraries -->
-			<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+			{# <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+									<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+						 #}
 		{% endblock %}
 
 	</body>

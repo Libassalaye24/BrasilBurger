@@ -7,14 +7,19 @@ body {margin:0;font-family:Arial}
   overflow: hidden;
   background-color: #fff;
   box-shadow: $shadow;
+  position: fixed; /* Set the navbar to fixed position */
+  top: 0; /* Position the navbar at the top of the page */
+  width: 100%; /* Full width */
   
 }
 @media #{$medium-down} {
   .topnav .logOut{
      float: right;
+     margin-right: 1%;
    }
 }
-.topnav a {
+
+.topnav a{
   float: left;
   display: block;
   text-align: center;
@@ -23,8 +28,11 @@ body {margin:0;font-family:Arial}
   font-size: 17px;
   color: $colorPrimary;
 }
+.a{
+  margin-top: 0.3%;
+}
 .topnav a:not(.active){
-  color: $color2;
+  color: $colorPrimary;
 }
 
 .active {
@@ -72,11 +80,11 @@ body {margin:0;font-family:Arial}
   text-align: left;
 }
 
-.topnav a:hover:not(.active), .dropdown:hover .dropbtn {
+/* .topnav a:hover:not(.active), .dropdown:hover .dropbtn {
   background-color: $color2;
   color: white;
 }
-
+ */
 .dropdown-content a:hover {
   background-color: #ddd;
   color: black;

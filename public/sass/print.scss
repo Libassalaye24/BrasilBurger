@@ -45,6 +45,16 @@
         border: $colorPrimary;
      }
  }
+ .btn-primaryV{
+    background-color: #fff;
+    border: $colorPrimary 2px solid;
+    color: $colorPrimary;
+    &:hover{
+        background-color: $colorPrimary;
+        border: $colorPrimary 2px solid;
+        color: #fff;
+     }
+}
  @media (min-width: 800px) {
     .card-product{
         width: 18rem;
@@ -90,12 +100,19 @@ ol,ul,li,a
 .bc-primary{
     background-color: $colorPrimary;
 }
+
 .c-primary{
     color: $colorPrimary;
+    &:hover{
+        color: $colorPrimary;
+    }
+}
+.form-check-input{
+    cursor: pointer;
 }
 .bc-secondary{
     background-color: $product-container-color;
-    color: $colorPrimary;
+   /*  color: $colorPrimary; */
 }
 table{
     tr{

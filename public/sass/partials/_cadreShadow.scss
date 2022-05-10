@@ -1,12 +1,80 @@
 @import "mixins";
 @import "variables";
-.column{
-    margin-top: 5%;
+.rowLine{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    h4{
+        margin-top: 8px;
+    }
+    a{
+        margin-right: 2%;
+    }
+   
+}
+.card2{
+    padding: 20px;
+    width: 90%;
+    border-collapse: collapse;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    
+    .row{
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 14px;
+        h4{
+            margin-top: 8px;
+            color: $colorPrimary;
+        }
+        a{
+            margin-right: 2%;
+        }
+       
+    }
+    .btn{
+        background-color: $colorPrimary; /* Green */
+        border: none;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        padding: 10px;
+        cursor: pointer;
+        @include border-radius(5px);
+          
+     }
+     .btn2{
+
+        &:hover{
+            background-color: $color2;
+        }
+     }
+     .btnUpdate{
+         @extend .btn;
+         background-color: $colorYellow;
+     }
+     .btnajout{
+         @extend .btn;
+         &hover{
+            background-color: $colorPrimary;
+        }
+     }
     
 
+}
+.c1{
+    background-color: #fff;
+}
+.column{
+    margin-top: 2%;
+    
     .card{
         box-shadow: $shadow;
         padding: 20px;
+        background-color: #fff;
         width: 90%;
         border-collapse: collapse;
         height: auto;
@@ -24,7 +92,7 @@
             float: left;
         }
         .link{
-            color: $color2;
+            color: $colorPrimary;
             float: right;
         }
         .row{
@@ -33,6 +101,7 @@
             margin-bottom: 14px;
             h4{
                 margin-top: 8px;
+                color: $colorPrimary;
             }
             a{
                 margin-right: 2%;
@@ -51,19 +120,23 @@
             td, th {
                 padding: 13px;
             }
-              
+              a{
+                  color: black;
+                  font-size: 16px;
+
+              }
               tr:nth-child(even) {
-                background-color: #dddddd;
+                background-color: $product-container-color;
               }
                tr:last-child {
-                border-bottom: $color2 2px solid;
+                border-bottom: $colorPrimary 2px solid;
               }
               .thbottom{
-                border-bottom: #BBB2B2 1px solid;
-                text-align: center;
+                border-bottom: $product-container-color 1px solid;
+                padding: 15px;
               }
               thead{
-                  color: $color2;
+                  color: $colorPrimary;
                   border-bottom: $color2 2px solid;
                   tr th{
                       font-weight: bold;
@@ -81,7 +154,7 @@
         }
           
          .btn{
-            background-color: $color2; /* Green */
+            background-color: $colorPrimary; /* Green */
             border: none;
             color: white;
             text-align: center;
@@ -106,7 +179,7 @@
          .btnajout{
              @extend .btn;
              &hover{
-                background-color: $color2;
+                background-color: $colorPrimary;
             }
          }
          .btnajout{

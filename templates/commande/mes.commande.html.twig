@@ -1,0 +1,161 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CommandeController!
+{% endblock %}
+
+{% block body %}
+<style>
+	{# body{
+		background:#f9f7ec;
+	} #}
+</style>
+	<div class="container-fluid ">
+		<div class="container pt-2">
+			<form method="POST" action="{{path('commande_filtre_by_etat')}}">
+				<div class="row mt-5">
+					<div class="col-md-2 mt-2">
+						<h4>
+							Filtrer Par:
+						</h4>
+					</div>
+					<div class="col-md-2">
+						<select class="form-select" id="select-etat" style="border:#E04218 2px solid" aria-label="Default select example">
+							{# <option>Filtrer par etat</option> #}
+							<option value="0" {% if etatSelected is defined %} {% if etatSelected == 'en cours' %} selected="selected" {% endif %} {% endif %} data-path="{{ path('commande_filtre_by_etat',{id:'en cours'})}}">En cours</option>
+							<option value="1" {% if etatSelected is defined %} {% if etatSelected == 'valider' %} selected="selected" {% endif %} {% endif %} data-path="{{ path('commande_filtre_by_etat',{id:'valider'})}}">Valider</option>
+						</select>
+					</div>
+
+				</div>
+			</form>
+		</div>
+		<div class="container p-4">
+			{% for message in app.flashes('notification') %}
+				<div class="alert alert-info alert-dismissible fade show">
+					{{ message }}
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+			{% endfor %}
+			<div class="row mb-4">
+				{% for commande in commandes %}
+					<div class="col-md-3 mb-4">
+						<div class="card card-product h-100">
+							<img href="" src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/25d45014-8cc3-4c98-b02c-5a0cf3a55ddd/dcgotp7-361e4632-4c86-4ab2-b562-d07a3f22138c.png/v1/fill/w_900,h_900,strp/black_burger_on_a_transparent_background_by_prussiaart_dcgotp7-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzI1ZDQ1MDE0LThjYzMtNGM5OC1iMDJjLTVhMGNmM2E1NWRkZFwvZGNnb3RwNy0zNjFlNDYzMi00Yzg2LTRhYjItYjU2Mi1kMDdhM2YyMjEzOGMucG5nIiwiaGVpZ2h0IjoiPD05MDAiLCJ3aWR0aCI6Ijw9OTAwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLndhdGVybWFyayJdLCJ3bWsiOnsicGF0aCI6Ilwvd21cLzI1ZDQ1MDE0LThjYzMtNGM5OC1iMDJjLTVhMGNmM2E1NWRkZFwvcHJ1c3NpYWFydC00LnBuZyIsIm9wYWNpdHkiOjk1LCJwcm9wb3J0aW9ucyI6MC40NSwiZ3Jhdml0eSI6ImNlbnRlciJ9fQ.e4snUoo0eWZEcM1vefojEn9xqgDbXP4f-68e9bJSqz8" class="card-img-top mb-0 w-75 mx-auto d-block" alt="...">
+							<div class="card-body mb-0">
+								<h5 class="card-title mb-1">
+									{{commande.quantite}}x
+								{{commande.burger.nom}}
+									{% if commande.burger.complements %}
+										{% for complement in commande.burger.complements %}
+										+	{{complement.nom}}
+										{% else %}
+										.........................
+										{% endfor %}
+									
+									{% endif %}
+								</h5>
+								<p class="card-text mb-1 badge bg-success ">Montant: {{commande.montant}}
+									fcfa</p> <br>
+
+								{% if commande.etat == 'en cours' %}
+									<span class="badge bg-white text-warning border border-warning p-2 w-30">
+										En cours
+										<i class="fa-solid fa-spinner"></i>
+									</span>
+									<a  onclick="return confirm('Voulez-vous annuler cette commande?');" href="{{path('delete_commande',{id:commande.id})}}">
+										<span class="badge bg-white text-danger border border-danger p-2 w-30">
+											Supprimer
+											<i class="fa-solid fa-trash"></i>
+										</span>
+									</a>
+								{% else %}
+									<span class="badge bg-white text-success border border-success p-2 w-30">
+										Valider
+										<i class="fa-solid fa-check-double"></i>
+									</span>
+									<a href="">
+										<span class="badge bg-white text-info border border-info p-2 w-30">
+											Payer
+											<i class="fa-solid fa-money-bill-transfer"></i>
+										</span>
+									</a>
+								{% endif %}
+								
+							</div>
+						</div>
+					</div>
+					{% else %}
+
+				{% endfor %}
+
+			</div>
+			{# <table class="  table border-none">
+																			<thead>
+																				<tr>
+																					<th>#</th>
+																					<th>Nom</th>
+																					<th>Etat</th>
+																					<th>Prix</th>
+																					<th>Action</th>
+																				</tr>
+																			</thead>
+															
+																			<tbody>
+																				{% for commande in commandes %}
+															
+																					<tr>
+																						<td>{{commande.quantite}}x</td>
+																						<td>{{commande.burger.nom}}</td>
+																						<td>
+																							{% if commande.etat == false %}
+																								En cours
+																							{% else %}
+																								Prete
+																							{% endif %}
+																						</td>
+																						<td>{{commande.montant}}
+																							fcfa</td>
+																						<td>
+																							<a href="{{path('delete_commande',{'id':commande.id})}}" class="">
+																								<i class="fas fa-trash    text-danger"></i>
+																							</a>
+																						</td>
+																					</tr>
+															
+																				{% endfor %}
+															
+																			</tbody>
+																		</table> #}
+			<div class="row ">
+				{% if etatSelected is not defined %}
+					{{ knp_pagination_render(commandes,'./pagination.twig') }}
+				{% endif %}
+
+			</div>
+		</div>
+	</div>
+{% endblock %}
+{% block javascripts %}
+	{{parent()}}
+	<script>
+
+		const select = document.querySelector('#select-etat');
+select.addEventListener("change", function (event) {
+console.log('true');
+const option = event.target.options[select.selectedIndex];
+const path = option.getAttribute('data-path')
+fetch(path, {
+method: 'GET',
+headers: {
+'Content-Type': 'application/json'
+}
+}).then(response => response.json()).then(promesse => {
+window.location.href = promesse;
+}).catch(err => console.log(err))
+
+
+});
+	</script>
+{% endblock %}

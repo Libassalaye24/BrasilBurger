@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CommandeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CommandeRepository::class)]
@@ -16,7 +18,7 @@ class Commande
     #[ORM\Column(type: 'datetime')]
     private $date;
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(type: 'string')]
     private $etat;
 
     #[ORM\Column(type: 'integer')]
@@ -27,6 +29,23 @@ class Commande
 
     #[ORM\OneToOne(targetEntity: Paiement::class, cascade: ['persist', 'remove'])]
     private $paiement;
+
+  
+    #[ORM\Column(type: 'integer')]
+    private $quantite;
+
+    #[ORM\ManyToOne(targetEntity: Burger::class, inversedBy: 'commandes')]
+    private $burger;
+
+    #[ORM\ManyToOne(targetEntity: Menu::class, inversedBy: 'commandes')]
+    private $menu;
+
+
+
+    public function __construct()
+    {
+        $this->etat = 'en cours';
+    }
 
     public function getId(): ?int
     {
@@ -50,7 +69,7 @@ class Commande
         return $this->etat;
     }
 
-    public function setEtat(bool $etat): self
+    public function setEtat(string $etat): self
     {
         $this->etat = $etat;
 
@@ -92,4 +111,44 @@ class Commande
 
         return $this;
     }
+
+  
+   
+    public function getQuantite(): ?int
+    {
+        return $this->quantite;
+    }
+
+    public function setQuantite(int $quantite): self
+    {
+        $this->quantite = $quantite;
+
+        return $this;
+    }
+
+    public function getBurger(): ?Burger
+    {
+        return $this->burger;
+    }
+
+    public function setBurger(?Burger $burger): self
+    {
+        $this->burger = $burger;
+
+        return $this;
+    }
+
+    public function getMenu(): ?Menu
+    {
+        return $this->menu;
+    }
+
+    public function setMenu(?Menu $menu): self
+    {
+        $this->menu = $menu;
+
+        return $this;
+    }
+
+  
 }

@@ -30,12 +30,12 @@ class InscriptionFormType extends AbstractType
         $builder
             ->add('email',TextType::class,[
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'input'
                 ]
             ])
             ->add('password',PasswordType::class,[
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'input'
                 ],
                 'constraints' => [
                     new NotBlank([
@@ -46,7 +46,7 @@ class InscriptionFormType extends AbstractType
             ->add('confirm',PasswordType::class,[
                 'mapped' => false,
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'input'
                 ],
                 'constraints' => [
                     new NotBlank([
@@ -57,7 +57,7 @@ class InscriptionFormType extends AbstractType
             ])
             ->add('prenom',TextType::class,[
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'input'
                 ],
                 'constraints' => [
                     new NotBlank([
@@ -67,7 +67,7 @@ class InscriptionFormType extends AbstractType
             ])
             ->add('Nom',TextType::class,[
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'input'
                 ],
                 'constraints' => [
                     new NotBlank([
@@ -77,7 +77,7 @@ class InscriptionFormType extends AbstractType
             ])
             ->add('telephone',NumberType::class,[
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'input'
                 ],
                 'constraints' => [
                     new NotBlank([

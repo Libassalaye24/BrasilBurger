@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container mt-5">
+{# 	<div class="container mt-5">
 
 		<div class="row">
 			<div class="col">
@@ -45,10 +45,10 @@
 							<td class="p-3" scope="row"></td>
 							<td class="p-3">{{ menu.nom }}</td>
 							{% set montant = 0 %}
-							{% set montant = menu.burger.prix %}
+							{% set montant = menu.menu.prix %}
 							{% set montantC = 0 %}
 							<td class="p-3">
-								{{menu.burger.nom}}/
+								{{menu.menu.nom}}/
 								{% for comp in menu.complements %}
 									{{comp.nom}}/
 									{% set montantC = montantC + comp.prix %}
@@ -95,6 +95,73 @@
 		</div>
 
 
+	</div> #}
+	<div class="container">
+		<div class="column">
+			<div class="card2">
+				<div class="row">
+					
+					<h4 style="margin-top:2%">Liste des menus</h4>
+					<a href="{{path('add_menu')}}" class="btnajout">
+						<i class="fas fa-plus "></i>Ajout
+					</a>
+				</div>
+			</div>
+			<div class="card">
+				{% for message in app.flashes('success') %}
+					<div class="alert alert-danger" style="background-color: #adeace;padding:10px;text-align:center;border-radius:5px;margin-bottom:5px;">
+						{{ message }}
+					</div>
+				{% endfor %}
+				<div class="row" style=" margin-bottom: 14px;">
+					<a href="{{path('add_menu')}}" class="link">
+						Liste des archives
+						<i class="fas fa-arrow-right "></i>
+					</a>
+				</div>
+				<div style="overflow-x:auto;">
+					<table>
+						<thead>
+							<tr>
+								<th scope="col">#</th>
+								<th scope="col">Nom</th>
+								<th scope="col">Composants</th>
+								<th scope="col">Action</th>
+							</tr>
+						</thead>
+						{% for menu in menus %}
+							<tr>
+								<td class="thbottom">#</td>
+								<td class="thbottom">{{menu.nom}}</td>
+								<td class="thbottom">
+									<a href="{{path('edit_menu',{'id':menu.id})}}" class="btnajout">
+										<i class="fas fa-plus"></i>
+										voir
+									</a>
+								</td>
+								
+								<td class="thbottom">
+									<a href="{{path('edit_menu',{'id':menu.id})}}" class="">
+										<i class="fas fa-edit edit c-edit"></i>
+										update
+									</a>
+									<a href="{{path('change_etat',{'id':menu.id})}}" class="">
+										<i class="fa-solid fa-file-zipper c-primary"></i>
+										archiver
+									</a>
+								</td>
+							</tr>
+						{% endfor %}
+					</table>
+				</div>
+			</div>
+
+			<div class="p">
+				<div class="pagination">
+					{{ knp_pagination_render(menus,'./pagination.twig') }}
+				</div>
+			</div>
+		</div>
 	</div>
 
 </div>{% endblock %}

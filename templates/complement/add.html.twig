@@ -49,5 +49,6 @@
 
 {% endblock %}
 {% block javascripts %}
+    {{parent()}}
 	<script src="{{asset('js/complement.js')}}"></script>
 {% endblock %}

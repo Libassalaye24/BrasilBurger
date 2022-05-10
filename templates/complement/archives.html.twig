@@ -4,64 +4,66 @@
 {% endblock %}
 
 {% block body %}
-
-	<div class="container mt-5">
-		
-        <div class="shadow card p-2 mt-2">
-            <div class="p-1 ">		
-					<a role="button" href="{{ path('list_complement') }}" class="action float-start">
-						<i class="fas fa-arrow-left "></i>
-						 Liste des complements 
+<div class="container">
+		<div class="column">
+			<div class="card2">
+				<div class="row">
+					
+					<h4 style="margin-top:2%">Liste des complements</h4>
+					<a href="{{path('add_complement')}}" class="btnajout">
+						<i class="fas fa-plus "></i>Ajout
 					</a>
-					<h5 class="c-primary float-end">
-						Liste des complements
-					</h5>
+				</div>
 			</div>
-		
-			<table class="table" style="overflow-x:auto;">
-				<thead class="bc-secondary border-0">
-					<tr class="border-0">
-						<th>#</th>
-						<th class="p-3">Nom</th>
-						<th class="p-3">Prix</th>
-						<th class="p-3">Action</th>
-					</tr>
-				</thead>
-				<tbody>
-					{% for complement in complements %}
-						<tr>
-							<td scope="row" class="p-3">h</td>
-							<td class="p-3">{{ complement.nom }}</td>
-							<td class="p-3">{{ complement.prix }}</td>
-							<td class="p-3">
-								<a name="" id="" class="action" style="" href="{{ path('edit_complement',{'id':complement.id}) }}" role="button">
-									modifier
-                                    <i class="fa fa-edit" aria-hidden="true"></i>
-                                    
-								</a>
-								<a name="" id="" class="action" href="{{ path('change_etat',{'id':complement.id}) }}" role="button">
-									desarchiver
-                                    <i class="fa fa-archive" aria-hidden="true"></i>
-                                     
-								</a>
+			<div class="card">
+				{% for message in app.flashes('success') %}
+					<div class="alert alert-danger" style="background-color: #adeace;padding:10px;text-align:center;border-radius:5px;margin-bottom:5px;">
+						{{ message }}
+					</div>
+				{% endfor %}
+				<div class="row" style=" margin-bottom: 14px;">
+					<a href="{{path('add_complement')}}" class="link">
+						Liste des archives
+						<i class="fas fa-arrow-right "></i>
+					</a>
+				</div>
+				<div style="overflow-x:auto;">
+					<table>
+						<thead>
+							<tr>
+								<th scope="col">#</th>
+								<th scope="col">Nom</th>
+								<th scope="col">Prix</th>
+								<th scope="col">Action</th>
+							</tr>
+						</thead>
+						{% for complement in complements %}
+							<tr>
+								<td class="thbottom">#</td>
+								<td class="thbottom">{{complement.nom}}</td>
+								<td class="thbottom">{{complement.prix}}</td>
 								
-							</td>
-						</tr>
-						{% else %}
+								<td class="thbottom">
+									<a href="{{path('edit_complement',{'id':complement.id})}}" class="">
+										<i class="fas fa-edit edit c-edit"></i>
+										update
+									</a>
+									<a href="{{path('change_etat',{'id':complement.id})}}" class="">
+										<i class="fa-solid fa-file-zipper c-primary"></i>
+										archiver
+									</a>
+								</td>
+							</tr>
+						{% endfor %}
+					</table>
+				</div>
+			</div>
 
-					{% endfor %}
-
-				</tbody>
-			</table>
-
-            <div class="row ">
-			    {{ knp_pagination_render(complements,'./pagination.twig') }}
-		    </div>
-
+			<div class="p">
+				<div class="pagination">
+					{{ knp_pagination_render(complements,'./pagination.twig') }}
+				</div>
+			</div>
 		</div>
-	
-
 	</div>
-
-</div>
 {% endblock %}
