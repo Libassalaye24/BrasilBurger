@@ -4,138 +4,314 @@
 {% endblock %}
 
 {% block body %}
-<style>
-	{# body{
-		background:#f9f7ec;
-	} #}
-</style>
-	<div class="container-fluid ">
-		<div class="container pt-2">
-			<form method="POST" action="{{path('commande_filtre_by_etat')}}">
-				<div class="row mt-5">
-					<div class="col-md-2 mt-2">
-						<h4>
-							Filtrer Par:
-						</h4>
-					</div>
-					<div class="col-md-2">
-						<select class="form-select" id="select-etat" style="border:#E04218 2px solid" aria-label="Default select example">
-							{# <option>Filtrer par etat</option> #}
-							<option value="0" {% if etatSelected is defined %} {% if etatSelected == 'en cours' %} selected="selected" {% endif %} {% endif %} data-path="{{ path('commande_filtre_by_etat',{id:'en cours'})}}">En cours</option>
-							<option value="1" {% if etatSelected is defined %} {% if etatSelected == 'valider' %} selected="selected" {% endif %} {% endif %} data-path="{{ path('commande_filtre_by_etat',{id:'valider'})}}">Valider</option>
-						</select>
-					</div>
+	<style>
+		
+		.retour {
+			margin-top: 1%;
 
+		}
+		.retour a {
+			color: #e04218;
+		}
+		h3 {
+			color: #000;
+		}
+		.etat{
+			position:absolute;
+			top:0px;
+			padding:5px;
+			left:1px;
+			background:#ddd;
+			font-size:15px;
+		}
+	</style>
+	<!-- popular section starts  -->
+	<section class="retour" id="">
+		<a href="{{path('catalogue')}}">
+			<i class="fa-solid fa-reply fa-1x"></i>
+			catalogue
+		</a>
+	</section>
+	<section class="popular" id="popular">
+		{% for message in app.flashes('add_commande') %}
+			<div class="alert alert-danger" style="background-color: #adeace;padding:10px;text-align:center;border-radius:5px;margin-bottom:5px;">
+				{{ message }}
+			</div>
+		{% endfor %}
+		<div class="heading">
+			<span>popular food</span>
+			<h3>Mes Commandes</h3>
+		</div>
+
+		<div class="form-filtre">
+			<form method="POST" action="{{path('commande_filtre_by_etat')}}">
+				<div class="col-md-2">
+					<label>Filter les commandes :</label>
+					<select class="form-select" id="select-etat" aria-label="Default select example">
+						<option value="encours" {% if etatSelected is defined %} {% if etatSelected == 'encours' %} selected="selected" {% endif %} {% endif %} data-path="{{ path('commande_filtre_by_etat',{etat:'encours'})}}">En cours</option>
+						<option value="valider" {% if etatSelected is defined %} {% if etatSelected == 'valider' %} selected="selected" {% endif %} {% endif %} data-path="{{ path('commande_filtre_by_etat',{etat:'valider'})}}">Valider</option>
+						<option value="annuler" {% if etatSelected is defined %} {% if etatSelected == 'annuler' %} selected="selected" {% endif %} {% endif %} data-path="{{ path('commande_filtre_by_etat',{etat:'annuler'})}}">Annuler</option>
+					</select>
 				</div>
 			</form>
 		</div>
-		<div class="container p-4">
-			{% for message in app.flashes('notification') %}
-				<div class="alert alert-info alert-dismissible fade show">
-					{{ message }}
-					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-			{% endfor %}
-			<div class="row mb-4">
-				{% for commande in commandes %}
-					<div class="col-md-3 mb-4">
-						<div class="card card-product h-100">
-							<img href="" src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/25d45014-8cc3-4c98-b02c-5a0cf3a55ddd/dcgotp7-361e4632-4c86-4ab2-b562-d07a3f22138c.png/v1/fill/w_900,h_900,strp/black_burger_on_a_transparent_background_by_prussiaart_dcgotp7-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzI1ZDQ1MDE0LThjYzMtNGM5OC1iMDJjLTVhMGNmM2E1NWRkZFwvZGNnb3RwNy0zNjFlNDYzMi00Yzg2LTRhYjItYjU2Mi1kMDdhM2YyMjEzOGMucG5nIiwiaGVpZ2h0IjoiPD05MDAiLCJ3aWR0aCI6Ijw9OTAwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLndhdGVybWFyayJdLCJ3bWsiOnsicGF0aCI6Ilwvd21cLzI1ZDQ1MDE0LThjYzMtNGM5OC1iMDJjLTVhMGNmM2E1NWRkZFwvcHJ1c3NpYWFydC00LnBuZyIsIm9wYWNpdHkiOjk1LCJwcm9wb3J0aW9ucyI6MC40NSwiZ3Jhdml0eSI6ImNlbnRlciJ9fQ.e4snUoo0eWZEcM1vefojEn9xqgDbXP4f-68e9bJSqz8" class="card-img-top mb-0 w-75 mx-auto d-block" alt="...">
-							<div class="card-body mb-0">
-								<h5 class="card-title mb-1">
-									{{commande.quantite}}x
-								{{commande.burger.nom}}
-									{% if commande.burger.complements %}
-										{% for complement in commande.burger.complements %}
-										+	{{complement.nom}}
-										{% else %}
-										.........................
-										{% endfor %}
+		
+		<div
+			class="box-container">
+		
+			 			{% for commande in commandes %}
+								{% for burger in commande.burger %}
 									
-									{% endif %}
-								</h5>
-								<p class="card-text mb-1 badge bg-success ">Montant: {{commande.montant}}
-									fcfa</p> <br>
+								<div class="box">
+									<div class="image">
+										<img src="{{asset('img/uploads/' ~ burger.image.nom)}}" class="animate__backInUp" alt="">	
+									</div>
+									<div class="content">
+											<h3>{{burger.nom}}</h3>
+										<div class="etat">
+											{{commande.etat}}
+										</div>
+										
+										<div class="stars">
+											commande :
+											{{commande.numero}}
+										</div>
+										<div >
+											le 
+											{{commande.date|date('d/m/Y')}}
+											
+										</div>
+										<a href="{{path('details_commande',{id:commande.id})}}" disabled class="btn">Details</a>
+										{# {% if commande.etat == "encours" %}
+											<a href="" class="btn">
+												annuler
+											</a>
+				
+										{% endif %} #}
+										{% if commande.etat == "valider" %}
+											<a href="{{path('payer',{id: commande.id})}}" class="btn">
+												payer
+												<i class="fa-solid fa-money-bill-transfer"></i>
+											</a>
+										{% endif %}
+										{% if commande.etat == "terminer" %}
+											<a href="{{path('payer',{id: commande.id})}}" class="btn">
+												terminer
+											</a>
+										{% endif %}
+				
+									</div>
+								</div>
+								{% endfor %}
+									{% for menu in commande.menu %}
+									
+								<div class="box">
+									<div class="image">
+										<img src="{{asset('img/uploads/' ~ menu.image.nom)}}" class="animate__backInUp" alt="">	
+									</div>
+									<div class="content">
+											<h3>{{menu.nom}}</h3>
+										<div class="etat">
+											{{commande.etat}}
+										</div>
+										
+										<div class="stars">
+											commande :
+											{{commande.numero}}
+										</div>
+										<div >
+											le 
+											{{commande.date|date('d/m/Y')}}
+											
+										</div>
+										
+										<a href="{{path('details_commande',{id:commande.id})}}" disabled class="btn">Details</a>
+										{# {% if commande.etat == "encours" %}
+											<a href="" class="btn">
+												annuler
+											</a>
+				
+										{% endif %} #}
+										{% if commande.etat == "valider" %}
+											<a href="{{path('payer',{id: commande.id})}}" class="btn">
+												payer
+												<i class="fa-solid fa-money-bill-transfer"></i>
+											</a>
+										{% endif %}
+										{% if commande.etat == "terminer" %}
+											<a href="{{path('payer',{id: commande.id})}}" class="btn">
+												terminer
+											</a>
+										{% endif %}
+				
+									</div>
+								</div>
+								{% endfor %}
 
-								{% if commande.etat == 'en cours' %}
-									<span class="badge bg-white text-warning border border-warning p-2 w-30">
-										En cours
-										<i class="fa-solid fa-spinner"></i>
-									</span>
-									<a  onclick="return confirm('Voulez-vous annuler cette commande?');" href="{{path('delete_commande',{id:commande.id})}}">
-										<span class="badge bg-white text-danger border border-danger p-2 w-30">
-											Supprimer
-											<i class="fa-solid fa-trash"></i>
-										</span>
-									</a>
-								{% else %}
-									<span class="badge bg-white text-success border border-success p-2 w-30">
-										Valider
-										<i class="fa-solid fa-check-double"></i>
-									</span>
-									<a href="">
-										<span class="badge bg-white text-info border border-info p-2 w-30">
-											Payer
-											<i class="fa-solid fa-money-bill-transfer"></i>
-										</span>
-									</a>
-								{% endif %}
-								
-							</div>
-						</div>
-					</div>
-					{% else %}
+							{% else %}
+								tableau vide .........
+							{% endfor %}
+				 
 
-				{% endfor %}
+		</div>
 
-			</div>
-			{# <table class="  table border-none">
-																			<thead>
-																				<tr>
-																					<th>#</th>
-																					<th>Nom</th>
-																					<th>Etat</th>
-																					<th>Prix</th>
-																					<th>Action</th>
-																				</tr>
-																			</thead>
-															
-																			<tbody>
-																				{% for commande in commandes %}
-															
-																					<tr>
-																						<td>{{commande.quantite}}x</td>
-																						<td>{{commande.burger.nom}}</td>
-																						<td>
-																							{% if commande.etat == false %}
-																								En cours
-																							{% else %}
-																								Prete
-																							{% endif %}
-																						</td>
-																						<td>{{commande.montant}}
-																							fcfa</td>
-																						<td>
-																							<a href="{{path('delete_commande',{'id':commande.id})}}" class="">
-																								<i class="fas fa-trash    text-danger"></i>
-																							</a>
-																						</td>
-																					</tr>
-															
-																				{% endfor %}
-															
-																			</tbody>
-																		</table> #}
-			<div class="row ">
-				{% if etatSelected is not defined %}
-					{{ knp_pagination_render(commandes,'./pagination.twig') }}
-				{% endif %}
+		{% if etatSelected is not defined %}
+			{# <div class="p" style="">
+																						<div class="pagination">
+																							{{ knp_pagination_render(commandes,'./pagination.twig') }}
+																						</div>
+																					</div> #}
+		{% endif %}
+	</section>
 
+	<!-- popular section ends -->
+	<!-- banner section starts  -->
+
+	<section class="banner">
+
+		<div class="row-banner">
+			<div class="content">
+				<span>double cheese</span>
+				<h3>burger</h3>
+				<p>with cococola and fries</p>
+				<a href="#" class="btn">order now</a>
 			</div>
 		</div>
-	</div>
+
+	</section>
+
+	<!-- banner section ends -->
+	<!-- order section starts  -->
+
+	<section class="order" id="order">
+
+		<div class="heading">
+			<span>order now</span>
+			<h3>fastest home delivery</h3>
+		</div>
+
+		<div class="icons-container">
+
+			<div class="icons">
+				<img src="{{asset('img/image/icon-1.png')}}" alt="">
+				<h3>7:00am to 10:30pm</h3>
+			</div>
+
+			<div class="icons">
+				<img src="{{asset('img/image/icon-2.png')}}" alt="">
+				<h3>+123-456-7890</h3>
+			</div>
+
+			<div class="icons">
+				<img src="{{asset('img/image/icon-3.png')}}" alt="">
+				<h3>mumbai, india - 400104</h3>
+			</div>
+
+		</div>
+
+		<iframe src="https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d63612502.52014224!2d-11.285175924981752!3d13.312969429018338!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m0!4m5!1s0xec173c21564c333%3A0x504d9e7bb5384f5a!2sEcole%20221%2C%20Dieuppeul%201%20Villa%20en%20face!3m2!1d14.716926299999999!2d-17.45194!5e0!3m2!1sfr!2ssn!4v1652188228495!5m2!1sfr!2ssn" width="1240" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+	</section>
+
+
+	<!-- order section ends -->
+	<!-- footer section starts  -->
+
+	<section class="footer">
+
+
+		<div class="box-container">
+
+			<div class="box">
+				<h3>our menu</h3>
+				<a href="#">
+					<i class="fas fa-arrow-right"></i>
+					pizza</a>
+				<a href="#">
+					<i class="fas fa-arrow-right"></i>
+					burger</a>
+				<a href="#">
+					<i class="fas fa-arrow-right"></i>
+					chicken</a>
+				<a href="#">
+					<i class="fas fa-arrow-right"></i>
+					pasta</a>
+				<a href="#">
+					<i class="fas fa-arrow-right"></i>
+					and more...</a>
+			</div>
+
+			<div class="box">
+				<h3>quick links</h3>
+				<a href="#home">
+					<i class="fas fa-arrow-right"></i>
+					home</a>
+				<a href="#about">
+					<i class="fas fa-arrow-right"></i>
+					about</a>
+				<a href="#popular">
+					<i class="fas fa-arrow-right"></i>
+					popular</a>
+				<a href="#menu">
+					<i class="fas fa-arrow-right"></i>
+					menu</a>
+				<a href="#order">
+					<i class="fas fa-arrow-right"></i>
+					order</a>
+				<a href="#blogs">
+					<i class="fas fa-arrow-right"></i>
+					blogs</a>
+			</div>
+
+			<div class="box">
+				<h3>extra links</h3>
+				<a href="#">
+					<i class="fas fa-arrow-right"></i>
+					my order</a>
+				<a href="#">
+					<i class="fas fa-arrow-right"></i>
+					my account</a>
+				<a href="#">
+					<i class="fas fa-arrow-right"></i>
+					my favorite</a>
+				<a href="#">
+					<i class="fas fa-arrow-right"></i>
+					terms of use</a>
+				<a href="#">
+					<i class="fas fa-arrow-right"></i>
+					privary policy</a>
+			</div>
+
+			<div class="box">
+				<h3>opening hours</h3>
+				<p>monday : 7:00am to 10:00pm</p>
+				<p>tuesday : 7:00am to 10:00pm</p>
+				<p>wednesday : 7:00am to 10:00pm</p>
+				<p>friday : 7:00am to 10:00pm</p>
+				<p>saturday and sunday closed</p>
+			</div>
+
+		</div>
+
+		<div class="bottom">
+
+			<div class="share">
+				<a href="#" class="fab fa-facebook-f"></a>
+				<a href="#" class="fab fa-twitter"></a>
+				<a href="#" class="fab fa-instagram"></a>
+				<a href="#" class="fab fa-linkedin"></a>
+				<a href="#" class="fab fa-pinterest"></a>
+			</div>
+
+			<div class="credit">
+				created
+				<span>mr. Libasse Laye Mbaye</span>
+				| all rights reserved!
+			</div>
+
+		</div>
+
+	</section>
+
 {% endblock %}
 {% block javascripts %}
 	{{parent()}}

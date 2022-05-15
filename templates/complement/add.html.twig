@@ -3,50 +3,49 @@
 {% block title %}Hello ComplementController!{% endblock %}
 
 {% block body %}
-   
-   <div class="container-fluid mt-5">
-		<div class="card shadow">
-			<div class="card-body">
-				<h4 class="text-center">Ajout Complement</h4>
-				{{form_start(form)}}
-				<div class="mb-3">
-					<label for="" class="">Nom Complement</label>
-					{{form_widget(form.nom)}}
-					<div class="invalid-feedback">
-						
-					</div>
-					<small id="helpId" class="text-danger">
-						{{form_errors(form.nom)}}
-					</small>
-				</div>
-				<div class="mb-3">
-					<label for="" class="">Prix</label>
-					{{form_widget(form.prix)}}
-					<div class="invalid-feedback">
-						
-					</div>
-					<small id="helpId" class="text-danger">
-						{{form_errors(form.prix)}}
-					</small>
-				</div>
-			
-				<div class="mb-3">
-					<label for="formFile" class="">Image</label>
-					{{form_widget(form.image.nom)}}
-					<div class="invalid-feedback">
-						
-					</div>
-					<small id="helpId" class="text-danger">
-						{{form_errors(form.image.nom)}}
-					</small>
-				</div>
-				<button type="submit" class="btn btn-primary " style="float:right">Enregistrer</button>
-				{{form_end(form)}}
-			</div>
-		</div>
+   <style>
+		body {
+			background-image: url("https://st2.depositphotos.com/3300441/11588/i/950/depositphotos_115884046-stock-photo-complements-set-background.jpg");
+			background-size: cover;
+			background-repeat: no repeat;
+		}
+	
+</style>
 
-	</div>
-
+ <div class="body">
+        <div class="container c1">
+            {{ form_start(form) }}
+               <div id="form" class="form">
+                   {#  {% if chambreMode is defined %}
+                         <h2>Modifier Chambre</h2>
+                    {% else %}
+                        <h2>Ajout complement</h2>
+                    {% endif %}
+                #}
+                        <div class="form-control">
+                            <label for="Nom_complement">Nom complement</label>
+                            {{ form_widget(form.nom) }}
+                            <small> </small>
+							 <div class="invalid-feedback">{{ form_errors(form.nom) }}</div>
+                        </div>
+                        <div class="form-control">
+                            <label for="Prix">Prix complement</label>
+                            {{ form_widget(form.prix) }}
+                            <small></small>
+							 <div class="invalid-feedback"> {{ form_errors(form.prix) }}</div>
+                        </div>
+                      
+						<div class="form-control">
+                            <label for="description">Image complement</label>
+                            {{ form_widget(form.image.nom) }}
+							 <small> {{ form_errors(form.image.nom) }}</small>
+							  <div class="invalid-feedback"></div>
+                        </div>
+                       {{ form_widget(form.Valider) }}
+               </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
 {% endblock %}
 {% block javascripts %}
     {{parent()}}

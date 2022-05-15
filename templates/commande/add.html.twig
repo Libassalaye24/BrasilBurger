@@ -1,0 +1,308 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CommandeController!
+{% endblock %}
+
+{% block body %}
+	<style>
+
+		html {
+			font-size: 62.5%;
+		}
+		.fa-star,
+		.fa-star-half-alt {
+			color: yellow;
+		}
+		.retour {
+			margin-top: 1%;
+
+		}
+		.retour a {
+			color: #e04218;
+		}
+		ul {
+			list-style-type: none;
+		}
+
+		li {
+			display: inline-block;
+		}
+
+		input[type="checkbox"][id^="cb"] {
+			display: none;
+		}
+
+		label:not(.q) {
+			border: 1px solid #fff;
+			padding: 8px;
+			display: block;
+			position: relative;
+			margin: 10px;
+			cursor: pointer;
+			-webkit-touch-callout: none;
+			-webkit-user-select: none;
+			-khtml-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+		}
+
+		label::before {
+			background-color: white;
+			color: white;
+			content: " ";
+			display: block;
+			border-radius: 50%;
+			border: 1px solid grey;
+			position: absolute;
+			top: -5px;
+			left: -5px;
+			width: 25px;
+			height: 25px;
+			text-align: center;
+			line-height: 28px;
+			transition-duration: 0.4s;
+			transform: scale(0);
+		}
+
+		label img {
+			height: 100px;
+			width: 100px;
+			transition-duration: 0.2s;
+			transform-origin: 50% 50%;
+		}
+
+		:checked+label {
+			border-color: #ddd;
+		}
+
+		:checked+label::before {
+			content: "✓";
+			background-color: grey;
+			transform: scale(1);
+		}
+
+		:checked+label img {
+			transform: scale(0.9);
+			box-shadow: 0 0 5px #333;
+			z-index: -1;
+		}
+	</style>
+	<!-- home section starts  -->
+	<section class="retour" id="">
+		<a href="{{path('details',{id: details.id})}}">
+			<i class="fa-solid fa-reply fa-1x"></i>
+		</a>
+	</section>
+	<section class="home" id="home"></div>
+
+	<div class="content">
+		<span>Valider la commande</span>
+		<h3>{{details.nom}}
+			😋</h3>
+		<p>
+			{% if details.type == 'menu' %}
+				{{details.burger.nom}}
+				{% for item in details.complements %}
+					/
+					{{item.nom}}
+
+				{% endfor %}
+
+			{% else %}
+				{{details.description}}
+				/
+			{% endif %}
+
+
+			Omnis unde dolores temporibus hic quam debitis tenetur harum nemo.</p>
+
+		<form method="POST" >
+			<div class="form-control">
+				<label for="description" class="q">Quantite</label>
+				<input type="number" value='{{quantite}}' class="input" name="quantite" id="" aria-describedby="helpId" placeholder="quantite">
+				<div class="invalid-feedback">
+					{% if error is defined %}
+						{{error}}
+					{% endif %}
+				</div>
+			</div>
+
+			{% if complements|length > 0 %}
+				<div class="form-control">
+					<label for="description" class="q">complements</label>
+				</div>
+				<ul>
+					{% for key, item in complements %}
+
+						<li>
+							<input type="checkbox" name="complements[]" value="{{item.id}}" id="cb{{key +1 }}"/>
+							<label for="cb{{key +1 }}">{{item.prix}}
+								fcfa<img src="{{asset('img/uploads/' ~ item.image.nom)}}"/></label>
+						</li>
+					{% endfor %}
+
+				</ul>
+			{% endif %}
+			{# <a href="{{path('add_commande',{id:details.id})}}" class="btn" id="myBtn">Valider</a> #}
+			<button type="submit" name="valider" style="border:none" class="btn ">Valider</button>
+
+		</form>
+
+	</div>
+	<div class="image">
+		<img src="{{asset('img/uploads/' ~ details.image.nom)}}" alt="" class="home-img">
+
+	</div>
+
+
+</section>
+<!-- banner section starts  -->
+
+<section class="banner">
+
+	<div class="row-banner">
+		<div class="content">
+			<span>double cheese</span>
+			<h3>burger</h3>
+			<p>with cococola and fries</p>
+			<a href="#" class="btn">order now</a>
+		</div>
+	</div>
+
+</section>
+
+<!-- banner section ends -->
+<!-- order section starts  -->
+
+<section class="order" id="order">
+
+	<div class="heading">
+		<span>order now</span>
+		<h3>fastest home delivery</h3>
+	</div>
+
+	<div class="icons-container">
+
+		<div class="icons">
+			<img src="{{asset('img/image/icon-1.png')}}" alt="">
+			<h3>7:00am to 10:30pm</h3>
+		</div>
+
+		<div class="icons">
+			<img src="{{asset('img/image/icon-2.png')}}" alt="">
+			<h3>+123-456-7890</h3>
+		</div>
+
+		<div class="icons">
+			<img src="{{asset('img/image/icon-3.png')}}" alt="">
+			<h3>mumbai, india - 400104</h3>
+		</div>
+
+	</div>
+
+	<iframe src="https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d63612502.52014224!2d-11.285175924981752!3d13.312969429018338!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m0!4m5!1s0xec173c21564c333%3A0x504d9e7bb5384f5a!2sEcole%20221%2C%20Dieuppeul%201%20Villa%20en%20face!3m2!1d14.716926299999999!2d-17.45194!5e0!3m2!1sfr!2ssn!4v1652188228495!5m2!1sfr!2ssn" width="1240" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+</section>
+
+
+<!-- order section ends -->
+<!-- footer section starts  -->
+
+<section class="footer">
+
+
+	<div class="box-container">
+
+		<div class="box">
+			<h3>our menu</h3>
+			<a href="#">
+				<i class="fas fa-arrow-right"></i>
+				pizza</a>
+			<a href="#">
+				<i class="fas fa-arrow-right"></i>
+				burger</a>
+			<a href="#">
+				<i class="fas fa-arrow-right"></i>
+				chicken</a>
+			<a href="#">
+				<i class="fas fa-arrow-right"></i>
+				pasta</a>
+			<a href="#">
+				<i class="fas fa-arrow-right"></i>
+				and more...</a>
+		</div>
+
+		<div class="box">
+			<h3>quick links</h3>
+			<a href="#home">
+				<i class="fas fa-arrow-right"></i>
+				home</a>
+			<a href="#about">
+				<i class="fas fa-arrow-right"></i>
+				about</a>
+			<a href="#popular">
+				<i class="fas fa-arrow-right"></i>
+				popular</a>
+			<a href="#menu">
+				<i class="fas fa-arrow-right"></i>
+				menu</a>
+			<a href="#order">
+				<i class="fas fa-arrow-right"></i>
+				order</a>
+			<a href="#blogs">
+				<i class="fas fa-arrow-right"></i>
+				blogs</a>
+		</div>
+
+		<div class="box">
+			<h3>extra links</h3>
+			<a href="#">
+				<i class="fas fa-arrow-right"></i>
+				my order</a>
+			<a href="#">
+				<i class="fas fa-arrow-right"></i>
+				my account</a>
+			<a href="#">
+				<i class="fas fa-arrow-right"></i>
+				my favorite</a>
+			<a href="#">
+				<i class="fas fa-arrow-right"></i>
+				terms of use</a>
+			<a href="#">
+				<i class="fas fa-arrow-right"></i>
+				privary policy</a>
+		</div>
+
+		<div class="box">
+			<h3>opening hours</h3>
+			<p>monday : 7:00am to 10:00pm</p>
+			<p>tuesday : 7:00am to 10:00pm</p>
+			<p>wednesday : 7:00am to 10:00pm</p>
+			<p>friday : 7:00am to 10:00pm</p>
+			<p>saturday and sunday closed</p>
+		</div>
+
+	</div>
+
+	<div class="bottom">
+
+		<div class="share">
+			<a href="#" class="fab fa-facebook-f"></a>
+			<a href="#" class="fab fa-twitter"></a>
+			<a href="#" class="fab fa-instagram"></a>
+			<a href="#" class="fab fa-linkedin"></a>
+			<a href="#" class="fab fa-pinterest"></a>
+		</div>
+
+		<div class="credit">
+			created
+			<span>mr. Libasse Laye Mbaye</span>
+			| all rights reserved!
+		</div>
+
+	</div>
+
+</section>
+
+<!-- footer section ends -->{% endblock %}{% block javascripts %}
+{{parent()}}{% endblock %}

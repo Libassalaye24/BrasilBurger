@@ -4,131 +4,117 @@
 {% endblock %}
 
 {% block body %}
+	<style>
+		html {
+			font-size: 62.5%;
+		}
+	</style>
+
 	<div class="container">
-		<div class="row mt-5 mb-2">
-			<div class="col-md-2 mt-2">
-				<h4>
-					Filtrer par :
-				</h4>
-			</div>
-			<div class="col-md-2 mb-1">
-				<select class="form-select" style="border:#E04218 2px solid" aria-label="Default select example">
-					<option selected>burger ou menu</option>
-					<option value="1">Burger</option>
-					<option value="2">Menu</option>
-				</select>
-			</div>
-			<div class="col-md-2 mb-1">
-				<select class="form-select" id="etat" style="border:#E04218 2px solid" aria-label="Default select example">
-					<option selected>etat</option>
-					<option value="1">en cours</option>
-					<option value="2">valider</option>
-				</select>
-			</div>
-			<div class="col-md-2 mb-1">
-				<select class="form-select" id="select-client" style="border:#E04218 2px solid" aria-label="Default select example">
-					<option selected>Client</option>
-					{% for client in clients %}
-						<option 
-						{% if clientSelected is defined %} {% if clientSelected == client.id %} selected="selected" {% endif %} {% endif %}
-							data-path="{{ path('commande_filtre_by_client',{id:client.id})}}"
-							 value="{{client.id}}">
-							{{client.email}}
-						</option>
-						{% else %}
+		<div class="column">
 
-					{% endfor %}
-				</select>
-			</div>
-			<div class="col-md-2 mb-1">
-				<input type="date" class="form-control" name="date" style="border:#E04218 2px solid" id="date" aria-describedby="helpId" placeholder="">
-			</div>
+			<div class="card">
+				<div class="form-filtre">
+					<form method="POST" action="{{path('commande_filtre_by_etat')}}">
+						<div class="col-md-2">
+							<label>Filter les commandes :</label>
+							<select class="form-select" id="select-etat" aria-label="Default select example">
+								<option value="encours" {% if etatSelected is defined %} {% if etatSelected == 'encours' %} selected="selected" {% endif %} {% endif %} data-path="{{ path('commande_filtre_by_etat',{etat:'encours'})}}">En cours</option>
+								<option value="valider" {% if etatSelected is defined %} {% if etatSelected == 'valider' %} selected="selected" {% endif %} {% endif %} data-path="{{ path('commande_filtre_by_etat',{etat:'valider'})}}">Valider</option>
+								<option value="terminer" {% if etatSelected is defined %} {% if etatSelected == 'terminer' %} selected="selected" {% endif %} {% endif %} data-path="{{ path('commande_filtre_by_etat',{etat:'terminer'})}}">Terminer</option>
+							</select>
+						</div>
 
-		</div>
-		<div class="shadow p-4">
+					</form>
+				</div>
+				{% for message in app.flashes('success') %}
+					<div class="alert alert-danger" style="background-color: #adeace;padding:10px;text-align:center;border-radius:5px;margin-bottom:5px;">
+						{{ message }}
+					</div>
+				{% endfor %}
 
-			<table class="  table border-none">
-				<thead>
-					<tr>
+				<div style="overflow-x:auto;">
+					<table>
+						<thead>
+							<tr>
+								<th scope="col">Commande</th>
+								<th scope="col">details</th>
+								<th scope="col">Date</th>
+								<th scope="col">Etat</th>
+								<th scope="col">Montant</th>
+								<th scope="col">Payement</th>
 
-						<th>Commande</th>
-						<th>Etat</th>
-						<th>Montant</th>
-						<th>Action</th>
-					</tr>
-				</thead>
+								<th scope="col">Action</th>
+							</tr>
+						</thead>
+						{% for commande in commandes %}
+							<tr>
 
-				<tbody>
-					{% for commande in commandes %}
-
-						<tr>
-							{# <td>{{commande.date|date("d/m/Y")}}</td> #}
-
-							<td>{{commande.quantite}}x{{commande.burger.nom}}
-
-								{% if commande.burger.complements %}
-									{% for complement in commande.burger.complements %}
-										+
-										{{complement.nom}}
-
-									{% endfor %}
-								{% endif %}
-							</td>
-							<td>
-								{% if commande.etat == false %}
-									En cours
-								{% else %}
-									Terminer
-								{% endif %}
-							</td>
-							<td>{{commande.montant}}
-								fcfa</td>
-							<td>
-								{% if commande.etat == false %}
-									<a href="{{path('valider_commande',{'id':commande.id})}}" class="">
-										<span class="badge bc-primary">Valider</span>
+								<td class="thbottom">
+									{% if commande.burger %}
+										{{commande.burger.nom}}
+									{% else %}
+										{{commande.menu.nom}}
+									{% endif %}
+								</td>
+								<td class="thbottom">
+									<a href="" class="btnajout">
+										<i class="fas fa-plus"></i>
+										voir
 									</a>
-								{% else %}
-									<a href="{{path('valider_commande',{'id':commande.id})}}" class="">
-										<span class="badge bg-danger">Annuler</span>
-									</a>
-								{% endif %}
-							</td>
-						</tr>
-
-					{% endfor %}
-
-				</tbody>
-			</table>
-			<div class="row ">
-			 {% if clientSelected is not defined %}
-                 {{ knp_pagination_render(commandes,'./pagination.twig') }}
-            {% endif %}
+								</td>
+								<td class="thbottom">{{commande.date|date("d/m/Y")}}</td>
+								<td class="thbottom">{{commande.etat}}</td>
+								<td class="thbottom">{{commande.montant}}
+									FCFA</td>
+								<td class="thbottom">
+									{% if commande.paiement %}
+									<i class="fas fa-check-double  " style="color:green;"></i>
+									{% else %}
+									<i class="fa fa-exclamation-circle c-primary" aria-hidden="true"></i>
+									{% endif %}
+								</td>
+								<td class="thbottom">
+									{% if commande.etat == 'encours' %}
+										<a href="{{path('valider_commande',{id:commande.id})}}" onclick="return confirm('Voulez-vous valider cette commande?');" class="btnSuccess">
+											valider
+										</a>
+										<a href="{{path('valider_commande',{id:commande.id})}}" onclick="return confirm('Voulez-vous annuler cette commande?');" class="btnRed">
+											annuler
+										</a>
+									{% endif %}
+								</td>
+							</tr>
+						{% endfor %}
+					</table>
+				</div>
 			</div>
+
+			{# <div class="p">
+							<div class="pagination">
+								{{ knp_pagination_render(commandes,'./pagination.twig') }}
+							</div>
+						</div> #}
 		</div>
 	</div>
 {% endblock %}
 {% block javascripts %}
 	<script>
-		const select =document.querySelector('#select-client');
-                   select.addEventListener("change",function(event){
-                       console.log('true');
-                         const option=event.target.options[select.selectedIndex];
-                         const path=option.getAttribute('data-path')
-                         fetch(path,{
-                           method: 'GET',
-                           headers: {
-                             'Content-Type': 'application/json'
-                           }
-                         }).then(response => response.json())
-                           .then(promesse => {
-                                 window.location.href=promesse;  
-                             })
-                           .catch(err => console.log(err)) 
-                             
-                  
-                   });
+		const select = document.querySelector('#select-etat');
+select.addEventListener("change", function (event) {
+console.log('true');
+const option = event.target.options[select.selectedIndex];
+const path = option.getAttribute('data-path')
+fetch(path, {
+method: 'GET',
+headers: {
+'Content-Type': 'application/json'
+}
+}).then(response => response.json()).then(promesse => {
+window.location.href = promesse;
+}).catch(err => console.log(err))
 
-				   
+
+});
 	</script>
 {% endblock %}

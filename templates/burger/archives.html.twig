@@ -4,35 +4,26 @@
 {% endblock %}
 
 {% block body %}
-<style>
-		body {
-			background-image: url("https://st2.depositphotos.com/3300441/11588/i/950/depositphotos_115884046-stock-photo-burgers-set-background.jpg");
-			background-size: cover;
-			background-repeat: no repeat;
-		}
-	
-</style>
+
+
 	<div class="container">
-		<div class="column">
-			<div class="card2">
-				<div class="row">
-					
-					<h4 style="margin-top:2%">Liste des burgers</h4>
-					<a href="{{path('add_burger')}}" class="btnajout">
-						<i class="fas fa-plus "></i>Ajout
-					</a>
-				</div>
-			</div>
+		<div
+			class="column">
+			{# <div class="card2">
+							<div class="row">
+								
+								<h4 style="margin-top:2%">Liste des burgers</h4>
+								<a href="{{path('add_burger')}}" class="btnajout">
+									<i class="fas fa-plus "></i>Ajout
+								</a>
+							</div>
+						</div> #}
 			<div class="card">
-				{% for message in app.flashes('success') %}
-					<div class="alert alert-danger" style="background-color: #adeace;padding:10px;text-align:center;border-radius:5px;margin-bottom:5px;">
-						{{ message }}
-					</div>
-				{% endfor %}
-				<div class="row" style=" margin-bottom: 14px;">
-					<a href="{{path('add_burger')}}" class="link">
-						Liste des archives
-						<i class="fas fa-arrow-right "></i>
+				<div class="row">
+					<a href="{{path('list_burger')}}" style="margint-top:1.2%;" class="link2">
+						<i class="fas fa-arrow-left "></i>
+						Liste des burgers
+
 					</a>
 				</div>
 				<div style="overflow-x:auto;">
@@ -50,7 +41,7 @@
 								<td class="thbottom">#</td>
 								<td class="thbottom">{{burger.nom}}</td>
 								<td class="thbottom">{{burger.prix}}</td>
-								
+
 								<td class="thbottom">
 									<a href="{{path('edit_burger',{'id':burger.id})}}" class="">
 										<i class="fas fa-edit edit c-edit"></i>

@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CommandeController!
+{% endblock %}
+
+{% block body %}
+	<style>
+        .retour {
+			margin-top: 1%;
+
+		}
+		.retour a {
+			color: #e04218;
+		}
+    </style>
+	<section class="retour" id="">
+		<a href="{{path('mes_commandes')}}">
+			<i class="fa-solid fa-reply fa-1x"></i>
+		</a>
+	</section>
+    
+	<div class="body">
+		<div class="container c1">
+			<div id="form" class="form">
+                <h2>Paiement Commande Num: {{commande.id}}</h2>
+				<form method="post" action="{{path('payer',{id:commande.id})}}">
+					<div class="form-control">
+						<label for="Nom_complement">Saiair Le montant</label>
+						<input type="text" class="input" name="montant" id="montant" aria-describedby="helpId" placeholder="">
+						<small></small>
+						<div class="invalid-feedback">
+                            {% if erreur is defined %}
+                                {{erreur}}
+                            {% endif %}
+                        </div>
+					</div>
+                    <button type="submit" name="valider" value="ok" style="border:none" class="btn ">payer</button>
+
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+{% block javascripts %}
+	{{parent()}}
+	<script src="{{asset('js/paiement.js')}}"></script>
+{% endblock %}

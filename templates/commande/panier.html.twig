@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CommandeController!
+{% endblock %}
+
+{% block body %}
+	<style>
+		.retour {
+			margin-top: 1%;
+
+		}
+		.retour a {
+			color: #e04218;
+		}
+		.box .fa-times {
+			cursor: pointer;
+		}
+	</style>
+	<section class="retour" id="">
+		<a href="{{path('mes_commandes')}}">
+			<i class="fa-solid fa-reply fa-1x"></i>
+		</a>
+	</section>
+
+	<section class="shopping-cart-container active">
+		{% for message in app.flashes('produitremove') %}
+			<div class="alert alert-danger" style="background-color: #adeace;padding:10px;text-align:center;border-radius:5px;margin-bottom:5px;">
+				{{ message }}
+			</div>
+		{% endfor %}
+		<div class="products-container">
+
+			<h3 class="title">your products</h3>
+
+			<div class="box-container">
+
+				{% for item in panierWithData %}
+
+					<div class="box">
+
+						<a class="a-remove" href="{{path('remove_panier',{id:item.product.id})}}">
+							<i class="fas fa-times"></i>
+							<a/>
+
+							<img src="{{asset('img/uploads/' ~ item['product'].image.nom)}}" alt="">
+							<div class="content">
+								<h3>{{item['product'].nom}}</h3>
+								<span>
+									quantity :
+								</span>
+								<input type="number" name="" value="{{item['quantite']}}" id="">
+								<br>
+								<span>
+									price :
+								</span>
+								<span class="price">
+									{% if item['product'].type == 'menu' %}
+										{% set montant = 0 %}
+										{% for complement in item['product'].complements %}
+											{% set montant = montant + complement.prix %}
+										{% endfor %}
+										{{item['product'].burger.prix + montant}}
+									{% else %}
+										{{item['product'].prix}}
+									{% endif %}
+								</span>
+							</div>
+						</div>
+
+					{% endfor %}
+
+				</div>
+
+			</div>
+
+			<div class="cart-total">
+
+				<h3 class="title">
+					cart total
+				</h3>
+
+				<div class="box">
+
+					<h3 class="subtotal">
+						subtotal :
+						<span>{{total}} FCFA</span>
+					</h3>
+					<h3 class="total">
+						total :
+						<span>{{total}} FCFA</span>
+					</h3>
+
+					<a href="{{path('checkOut')}}" class="btn">Finalise ta commande</a>
+
+				</div>
+
+			</div>
+
+		</section>
+	{% endblock %}
+	{% block javascripts %}
+		{{parent()}}
+		{# <script src="{{asset('js/paiement.js')}}"></script> #}
+	{% endblock %}

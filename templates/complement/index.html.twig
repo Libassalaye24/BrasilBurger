@@ -6,15 +6,7 @@
 {% block body %}
 	<div class="container">
 		<div class="column">
-			<div class="card2">
-				<div class="row">
-					
-					<h4 style="margin-top:2%">Liste des complements</h4>
-					<a href="{{path('add_complement')}}" class="btnajout">
-						<i class="fas fa-plus "></i>Ajout
-					</a>
-				</div>
-			</div>
+			
 			<div class="card">
 				{% for message in app.flashes('success') %}
 					<div class="alert alert-danger" style="background-color: #adeace;padding:10px;text-align:center;border-radius:5px;margin-bottom:5px;">
@@ -22,7 +14,10 @@
 					</div>
 				{% endfor %}
 				<div class="row" style=" margin-bottom: 14px;">
-					<a href="{{path('add_complement')}}" class="link">
+					<a href="{{path('add_complement')}}" class="btnajout">
+						<i class="fas fa-plus "></i>Ajout
+					</a>
+					<a href="{{path('list_complement_archive')}}"  style="margint-top:1.2%;" class="link">
 						Liste des archives
 						<i class="fas fa-arrow-right "></i>
 					</a>

@@ -15,12 +15,11 @@
 					</div>
 				{% endfor %}
 				<div class="row" style=" margin-bottom: 14px;">
-					<a href="{{path('add_menu')}}" class="btnajout">
-						<i class="fas fa-plus "></i>Ajout
-					</a>
-					<a href="{{path('list_menu_archive')}}" style="margint-top:1.2%;" class="link">
-						Liste des archives
-						<i class="fas fa-arrow-right "></i>
+					
+					<a href="{{path('list_menu')}}" style="margint-top:1.2%;" class="link2">
+					
+						<i class="fas fa-arrow-left "></i>
+                        	Liste des Menus
 					</a>
 				</div>
 				<div style="overflow-x:auto;">
@@ -51,7 +50,7 @@
 									</a>
 									<a href="{{path('change_etat',{'id':menu.id})}}" class="">
 										<i class="fa-solid fa-file-zipper c-primary"></i>
-										archiver
+										desarchiver
 									</a>
 								</td>
 							</tr>
