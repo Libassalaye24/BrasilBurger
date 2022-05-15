@@ -38,17 +38,19 @@ class Burger
     #[ORM\ManyToMany(targetEntity: Complement::class)]
     private $complements;
 
-    #[ORM\OneToMany(mappedBy: 'burger', targetEntity: Commande::class)]
-    private $commandes;
-
+   
     #[ORM\Column(type: 'string', length: 255)]
     private $type;
+
+    #[ORM\ManyToMany(targetEntity: Commande::class, mappedBy: 'burger')]
+    private $commandes;
 
     public function __construct()
     {
         $this->menus = new ArrayCollection();
         $this->etat = false;
         $this->complements = new ArrayCollection();
+        $this->type = 'burger';
         $this->commandes = new ArrayCollection();
     }
     public function __toString()
@@ -177,6 +179,20 @@ class Burger
         return $this;
     }
 
+   
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Commande>
      */
@@ -189,7 +205,7 @@ class Burger
     {
         if (!$this->commandes->contains($commande)) {
             $this->commandes[] = $commande;
-            $commande->setBurger($this);
+            $commande->addBurger($this);
         }
 
         return $this;
@@ -198,23 +214,8 @@ class Burger
     public function removeCommande(Commande $commande): self
     {
         if ($this->commandes->removeElement($commande)) {
-            // set the owning side to null (unless already changed)
-            if ($commande->getBurger() === $this) {
-                $commande->setBurger(null);
-            }
+            $commande->removeBurger($this);
         }
-
-        return $this;
-    }
-
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    public function setType(string $type): self
-    {
-        $this->type = $type;
 
         return $this;
     }

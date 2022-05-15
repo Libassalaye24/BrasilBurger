@@ -6,6 +6,7 @@ use App\Repository\MenuRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
 
 #[ORM\Entity(repositoryClass: MenuRepository::class)]
 class Menu
@@ -30,18 +31,22 @@ class Menu
     #[ORM\Column(type: 'boolean')]
     private $etat;
 
-    #[ORM\OneToMany(mappedBy: 'menu', targetEntity: Commande::class)]
-    private $commandes;
+   
 
     #[ORM\Column(type: 'string', length: 255)]
     private $type;
+
+    #[ORM\ManyToMany(targetEntity: Commande::class, mappedBy: 'menu')]
+    private $commandes;
 
     public function __construct()
     {
         $this->complements = new ArrayCollection();
         $this->etat = false;
+        $this->type = 'menu';
         $this->commandes = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
@@ -122,6 +127,20 @@ class Menu
         return $this;
     }
 
+   
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Commande>
      */
@@ -134,7 +153,7 @@ class Menu
     {
         if (!$this->commandes->contains($commande)) {
             $this->commandes[] = $commande;
-            $commande->setMenu($this);
+            $commande->addMenu($this);
         }
 
         return $this;
@@ -143,23 +162,8 @@ class Menu
     public function removeCommande(Commande $commande): self
     {
         if ($this->commandes->removeElement($commande)) {
-            // set the owning side to null (unless already changed)
-            if ($commande->getMenu() === $this) {
-                $commande->setMenu(null);
-            }
+            $commande->removeMenu($this);
         }
-
-        return $this;
-    }
-
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    public function setType(string $type): self
-    {
-        $this->type = $type;
 
         return $this;
     }

@@ -28,7 +28,7 @@ class MenuFormType extends AbstractType
         $builder
             ->add('nom',TextType::class,[
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'input'
                 ],
                 'constraints' => [
                     new NotBlank([
@@ -39,7 +39,7 @@ class MenuFormType extends AbstractType
             ->add('burger',EntityType::class,[
                 'class' => Burger::class,
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'input'
                 ],
                 'choice_label' => 'nom',
                 'placeholder' => 'Selectionnez Le burger',
@@ -59,9 +59,7 @@ class MenuFormType extends AbstractType
                 'choice_label' => 'nom',
                 'multiple' => true,
                 'expanded' => true,
-                'attr' => [
-                    'class' => 'form-control'
-                ],
+                
                 'constraints' => [
                     new NotBlank([
                         'message'=>$this->translator->trans('burger.blank')

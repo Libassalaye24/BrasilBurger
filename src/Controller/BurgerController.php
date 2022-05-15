@@ -100,7 +100,7 @@ class BurgerController extends AbstractController
                 $manager->flush();
                 
             }
-            $this->redirectToRoute('list_burger');
+           return $this->redirectToRoute('list_burger');
         }
             return $this->render('burger/add.html.twig', [
                 'controller_name' => 'BurgerController',

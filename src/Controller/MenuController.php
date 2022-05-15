@@ -36,7 +36,7 @@ class MenuController extends AbstractController
         $menus = $paginatorInterface->paginate(
             $data,$request->query->getInt('page', 1),5
         );
-        return $this->render('menu/index.html.twig', [
+        return $this->render('menu/archives.html.twig', [
             'controller_name' => 'MenuController',
             'menus' => $menus,
         ]);

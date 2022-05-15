@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CommandeRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -18,9 +19,7 @@ class Commande
     #[ORM\Column(type: 'datetime')]
     private $date;
 
-    #[ORM\Column(type: 'string')]
-    private $etat;
-
+   
     #[ORM\Column(type: 'integer')]
     private $montant;
 
@@ -30,21 +29,26 @@ class Commande
     #[ORM\OneToOne(targetEntity: Paiement::class, cascade: ['persist', 'remove'])]
     private $paiement;
 
-  
-    #[ORM\Column(type: 'integer')]
-    private $quantite;
 
-    #[ORM\ManyToOne(targetEntity: Burger::class, inversedBy: 'commandes')]
+    #[ORM\Column(type: 'string', length: 255)]
+    private $etat;
+
+    #[ORM\ManyToMany(targetEntity: Burger::class, inversedBy: 'commandes')]
     private $burger;
 
-    #[ORM\ManyToOne(targetEntity: Menu::class, inversedBy: 'commandes')]
+    #[ORM\ManyToMany(targetEntity: Menu::class, inversedBy: 'commandes')]
     private $menu;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $numero;
 
 
 
     public function __construct()
     {
-        $this->etat = 'en cours';
+        $this->burger = new ArrayCollection();
+        $this->menu = new ArrayCollection();
+        $this->date = new DateTime();
     }
 
     public function getId(): ?int
@@ -64,18 +68,7 @@ class Commande
         return $this;
     }
 
-    public function getEtat(): ?bool
-    {
-        return $this->etat;
-    }
-
-    public function setEtat(string $etat): self
-    {
-        $this->etat = $etat;
-
-        return $this;
-    }
-
+   
     public function getMontant(): ?int
     {
         return $this->montant;
@@ -114,38 +107,77 @@ class Commande
 
   
    
-    public function getQuantite(): ?int
+  
+   
+
+    public function getEtat(): ?string
     {
-        return $this->quantite;
+        return $this->etat;
     }
 
-    public function setQuantite(int $quantite): self
+    public function setEtat(string $etat): self
     {
-        $this->quantite = $quantite;
+        $this->etat = $etat;
 
         return $this;
     }
 
-    public function getBurger(): ?Burger
+    /**
+     * @return Collection<int, Burger>
+     */
+    public function getBurger(): Collection
     {
         return $this->burger;
     }
 
-    public function setBurger(?Burger $burger): self
+    public function addBurger(Burger $burger): self
     {
-        $this->burger = $burger;
+        if (!$this->burger->contains($burger)) {
+            $this->burger[] = $burger;
+        }
 
         return $this;
     }
 
-    public function getMenu(): ?Menu
+    public function removeBurger(Burger $burger): self
+    {
+        $this->burger->removeElement($burger);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Menu>
+     */
+    public function getMenu(): Collection
     {
         return $this->menu;
     }
 
-    public function setMenu(?Menu $menu): self
+    public function addMenu(Menu $menu): self
     {
-        $this->menu = $menu;
+        if (!$this->menu->contains($menu)) {
+            $this->menu[] = $menu;
+        }
+
+        return $this;
+    }
+
+    public function removeMenu(Menu $menu): self
+    {
+        $this->menu->removeElement($menu);
+
+        return $this;
+    }
+
+    public function getNumero(): ?string
+    {
+        return $this->numero;
+    }
+
+    public function setNumero(string $numero): self
+    {
+        $this->numero = $numero;
 
         return $this;
     }
