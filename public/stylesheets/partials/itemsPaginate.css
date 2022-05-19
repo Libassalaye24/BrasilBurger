@@ -7,37 +7,38 @@
 
 /* line 7, ../../sass/partials/itemsPaginate.scss */
 .pagination {
-  display: inline-block;
+  display: flex;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
-/* line 12, ../../sass/partials/itemsPaginate.scss */
+/* line 13, ../../sass/partials/itemsPaginate.scss */
 .pagination a {
   float: left;
+  display: flex;
   padding: 10px 18px;
   text-decoration: none;
   border: 2px solid #ddd;
 }
 
-/* line 18, ../../sass/partials/itemsPaginate.scss */
+/* line 21, ../../sass/partials/itemsPaginate.scss */
 .pagination a:not(.laquo) {
   color: #000;
 }
 
-/* line 21, ../../sass/partials/itemsPaginate.scss */
+/* line 24, ../../sass/partials/itemsPaginate.scss */
 .laquo {
   background: #e04218;
   color: #fff;
 }
 
-/* line 26, ../../sass/partials/itemsPaginate.scss */
+/* line 29, ../../sass/partials/itemsPaginate.scss */
 .pagination .active {
   background-color: #e04218;
   color: white;
   border: 2px solid #e04218;
 }
 
-/* line 33, ../../sass/partials/itemsPaginate.scss */
+/* line 36, ../../sass/partials/itemsPaginate.scss */
 .pagination a:hover:not(.active) {
   background-color: #e04218;
   color: #fff;

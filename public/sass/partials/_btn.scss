@@ -41,6 +41,7 @@
   }
   .btnajout{
       @extend .btn;
+      
      &hover{
          background-color: $color2;
      }

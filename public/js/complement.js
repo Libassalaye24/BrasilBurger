@@ -3,25 +3,21 @@
 const nom = document.getElementById("complement_nom");
 const prix = document.getElementById("complement_prix");
 const image = document.getElementById("complement_image_nom");
-let isValid = false;
+let isValid = [];
 //Functions-------------------------------------------------------------
-function showError(input, message) {
-  //Afficher les messages d'erreur
-  const formControl = input.parentElement;
-  formControl.className = "mb-3 invalid";
-  if (formControl.classList.contains("invalid") == true) {
-    formControl.querySelector("input").classList.add("is-invalid");
-  }
-  const small = formControl.querySelector(".invalid-feedback");
-  small.innerText = message;
+function showError(input, message) {//Afficher les messages d'erreur
+    const formControl = input.parentElement;
+    formControl.className = 'form-control error';
+    const small = formControl.querySelector('small');
+    small.innerText = message;
+    isValid.push(false);
 }
 //
 function showSuccess(input) {
-  const formControl = input.parentElement;
-  formControl.className = "mb-3 valid";
-  if (formControl.classList.contains("valid") == true) {
-    formControl.querySelector("input").classList.add("is-valid");
-  }
+    const formControl = input.parentElement;
+    formControl.className = 'form-control success';
+   
+    isValid.push(true);
 }
 //
 /* function checknbrEtage(input) {//Tester si l'nbrEtage est valide :  javascript : valid nbrEtage
@@ -106,14 +102,16 @@ function checkPasswordMatch(input1, input2) {
 //Even listeners--------------------------------------------------------
 form.addEventListener("submit", function (e) {
   // var nb = CheckNumberMatch(nbrEtage);
-  if (isValid) {
-  } else {
-    e.preventDefault();
+  
     checkRequired([nom, prix, image]);
     checkLength(nom, 3, 30);
-    checkLength(description, 3, 30);
+  
+  for (let i = 0; i < isValid.length; i++) {
+    if (isValid[i]  == false) {
+       e.preventDefault();
+    }
+    
   }
-
   //  var str = checkNameStringMatch(nomPavillon);
   //  var lg = checkLength(nomPavillon,4,20);
 

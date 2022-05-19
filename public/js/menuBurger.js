@@ -5,26 +5,22 @@
  const complement1 = document.getElementById('menu_form_complements_1');
  const complement2 = document.getElementById('menu_form_complements_2');
  const image = document.getElementById('menu_form_image_nom');
- let isValid = false;
+ let isValid = [];
  //Functions-------------------------------------------------------------
- function showError(input, message) {
-    //Afficher les messages d'erreur
-    const formControl = input.parentElement;
-    formControl.className = "mb-3 invalid";
-    if (formControl.classList.contains("invalid") == true) {
-      formControl.querySelector("input").classList.add("is-invalid");
-    }
-    const small = formControl.querySelector(".invalid-feedback");
-    small.innerText = message;
-  }
-  //
-  function showSuccess(input) {
-    const formControl = input.parentElement;
-    formControl.className = "mb-3 valid";
-    if (formControl.classList.contains("valid") == true) {
-      formControl.querySelector("input").classList.add("is-valid");
-    }
-  }
+ function showError(input, message) {//Afficher les messages d'erreur
+     const formControl = input.parentElement;
+     formControl.className = 'form-control error';
+     const small = formControl.querySelector('small');
+     small.innerText = message;
+     isValid.push(false);
+ }
+ //
+ function showSuccess(input) {
+     const formControl = input.parentElement;
+     formControl.className = 'form-control success';
+    
+     isValid.push(true);
+ }
  //
  /* function checknbrEtage(input) {//Tester si l'nbrEtage est valide :  javascript : valid nbrEtage
      const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -107,14 +103,21 @@
  //Even listeners--------------------------------------------------------
  form.addEventListener('submit',function(e){    
    // var nb = CheckNumberMatch(nbrEtage);
-     if (isValid) {} else {
-         e.preventDefault();
+    
+       
          checkRequired([nom,burger,image]);
          if (complement1 === "" && complement2==="") {
+             console.log('true');
              showError(complement1,"Veiller cocher une case")
          }
          checkLength(nom,3,30);
-     }
+     
+     for (let i = 0; i < isValid.length; i++) {
+        if (isValid[i]  == false) {
+           e.preventDefault();
+        }
+        
+      }
   
  
  

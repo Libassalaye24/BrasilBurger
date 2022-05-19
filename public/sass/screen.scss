@@ -8,7 +8,7 @@
 @import "partials/burgerDesign";
 @import "partials/cadreShadow";
 @import "partials/form";
-
+@import "partials/itemsPaginate.scss";
 /* @import "partials/menu";
 @import "partials/cadreShadow";
 @import "partials/burgerDesign";
@@ -20,6 +20,7 @@
  */
 
 @import "partials/variables";
+
  .product-container{
     background-color: $product-container-color;
     .card-product{
@@ -107,6 +108,9 @@ ol,ul,li,a
 .c-primary{
     color: $colorPrimary;
 }
+.c-green{
+    color: green;
+}
 .c-edit{
     color: $colorYellow;
 }
@@ -138,6 +142,15 @@ nav .pagination{
         &:hover{
             background-color: $colorPrimary;
             color: #fff;
+        }
+    }
+    .active2{
+        background-color: $product-container-color;
+        color: $colorPrimary;
+        border: $colorPrimary 2px solid;
+        &:hover{
+            background-color: $product-container-color;
+            color:$colorPrimary;
         }
     }
     .notactive{

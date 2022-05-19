@@ -51,14 +51,10 @@
 							<tr>
 
 								<td class="thbottom">
-									{% if commande.burger %}
-										{{commande.burger.nom}}
-									{% else %}
-										{{commande.menu.nom}}
-									{% endif %}
+								N° {{commande.numero}}
 								</td>
 								<td class="thbottom">
-									<a href="" class="btnajout">
+									<a href="{{path('details_commande',{id:commande.id})}}" class="btnajout">
 										<i class="fas fa-plus"></i>
 										voir
 									</a>

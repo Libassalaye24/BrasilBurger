@@ -1,5 +1,17 @@
 @import "mixins";
 @import "variables";
+
+.form-filtre{
+    margin-bottom: 18px;
+    select{
+        width: 22%;
+        height: 40px;
+        border: $colorPrimary 2px solid;
+        background-color: #fff;
+        box-shadow: $shadow;
+        font-size: 16px;
+    }
+}
 .rowLine{
     display: flex;
     justify-content: space-between;
@@ -95,6 +107,10 @@
             color: $colorPrimary;
             float: right;
         }
+        .link2{
+            color: $colorPrimary;
+            float: left;
+        }
         .row{
             display: flex;
             justify-content: space-between;
@@ -178,6 +194,7 @@
          }
          .btnajout{
              @extend .btn;
+             margin-top: -1%;
              &hover{
                 background-color: $colorPrimary;
             }
@@ -203,7 +220,7 @@
          .btnRed{
             @extend .btn;
             width: 70px;
-            background-color: $error;
+            background-color: $colorPrimary;
         }
       
      

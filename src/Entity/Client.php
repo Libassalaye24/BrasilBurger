@@ -17,9 +17,13 @@ class Client extends User
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Commande::class)]
     private $commandes;
 
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Panier::class)]
+    private $paniers;
+
     public function __construct()
     {
         $this->commandes = new ArrayCollection();
+        $this->paniers = new ArrayCollection();
         
     }
 
@@ -59,6 +63,36 @@ class Client extends User
             // set the owning side to null (unless already changed)
             if ($commande->getClient() === $this) {
                 $commande->setClient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Panier>
+     */
+    public function getPaniers(): Collection
+    {
+        return $this->paniers;
+    }
+
+    public function addPanier(Panier $panier): self
+    {
+        if (!$this->paniers->contains($panier)) {
+            $this->paniers[] = $panier;
+            $panier->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removePanier(Panier $panier): self
+    {
+        if ($this->paniers->removeElement($panier)) {
+            // set the owning side to null (unless already changed)
+            if ($panier->getClient() === $this) {
+                $panier->setClient(null);
             }
         }
 

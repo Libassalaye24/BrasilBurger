@@ -24,53 +24,88 @@
         .box-container{
             margin-bottom:8px;
         }
+        .annuler{
+            position:absolute;
+            top:241px;
+            right:120px;
+           
+        }
 	</style>
+	
 	<!-- home section starts  -->
 	<section class="retour" id="">
-		<a href="{{path('mes_commandes')}}">
-			<i class="fa-solid fa-reply fa-1x"></i>
-		</a>
+		{% if roles[0] == 'ROLE_GESTIONNAIRE' %}
+			<a href="{{path('list_commande')}}">
+				<i class="fa-solid fa-reply fa-1x"></i>
+			</a>
+		{% else %}
+			<a href="{{path('mes_commandes')}}">
+				<i class="fa-solid fa-reply fa-1x"></i>
+			</a>
+		{% endif %}
+		
 	</section>
 
 <section class="menu" id="menu">
 
     <div class="heading">
-        <span>our menu</span>
-        <h3>our top dishes</h3>
+        <span>Details Commande</span>
     </div>
-								
-    {% for burger in details.burger %}
+
+     <div class="box-container">
+
+        <div href="" class="box">
+        <img src="" alt="">
+            <div class="content">
+                <h3>Commande Num: {{details.numero}}</h3>
+                <h4>Date : {{details.date|date('d/m/Y')}}</h4>
+                <h4>Etat : {{details.etat}}</h4>
+                <div class="price">Montant : {{details.montant}} FCFA</div>
+            </div>
+           {#  <a href="" class="btn annuler">annuler</a> #}
+        </div>
+    </div>						
+    {% for Cburger in details.commandesBurgers %}
     <div class="box-container">
 
         <div href="" class="box">
-            <img src="{{asset('img/uploads/' ~ burger.image.nom)}}" alt="">
+            <img src="{{asset('img/uploads/' ~ Cburger.burger.image.nom)}}" alt="">
             <div class="content">
-                <h3>{{burger.nom}}</h3>
-                <div class="price">{{burger.prix}}</div>
+                <h3>{{Cburger.quantity}}x {{Cburger.burger.nom}}</h3>
+                <div class="price">{{Cburger.burger.prix * Cburger.quantity}} FCFA</div>
             </div>
-            <a href="" class="btn">annuler</a>
         </div>
     </div>
     {% endfor %}
-    {% for menu in details.menu %}
+    {% for Cmenu in details.commandesMenuses %}
      <div class="box-container">
 
         <div  class="box">
-            <img src="{{asset('img/uploads/' ~ menu.image.nom)}}" alt="">
+            <img src="{{asset('img/uploads/' ~ Cmenu.menu.image.nom)}}" alt="">
             <div class="content">
-                <h3>{{menu.nom}}</h3>
+                <h3> {{Cmenu.quantity}}x {{Cmenu.menu.nom}}</h3>
                 <div class="price">
                     {% set montant = 0 %}
-                    {% for item in menu.complements %}
+					{% set montantTotal = 0 %}
+                    {% for item in Cmenu.menu.complements %}
                         {% set montant = montant + item.prix %}                   
                     {% endfor %}
-                    {{montant + menu.burger.prix}}
+                    {{(montant + Cmenu.menu.burger.prix) * Cmenu.quantity}} FCFA
+					{% set montantTotal = montant + Cmenu.menu.burger.prix * Cmenu.quantity %}
                 </div>
             </div>
-              <a href="" class="btn">annuler</a>
         </div>
     </div>
     {% endfor %}
+	{# {% if details.etat == 'encours' %}
+										<a href="{{path('valider_commande',{id:details.id})}}" onclick="return confirm('Voulez-vous valider cette commande?');" class="btnSuccess">
+											valider
+										</a>
+										<a href="{{path('valider_commande',{id:details.id})}}" onclick="return confirm('Voulez-vous annuler cette commande?');" class="btnRed">
+											annuler
+										</a>
+									{% endif %} #}
+	
 </section>
 
 <!-- banner section starts  -->

@@ -32,14 +32,29 @@ class PanierService
         }
         $this->session->set('panier', $panier);
     }
-
-    public function remove($id)
+    public function retire($id)
     {
         $panier = $this->session->get('panier', []);
         if (!empty($panier[$id])) {
-            unset($panier[$id]);
-        } 
+            if ($panier[$id] > 1) {
+                $panier[$id]--;
+            }else{
+                unset($panier);
+            }
+        }
         $this->session->set('panier', $panier);
+    }
+    public function remove($id,SessionInterface $session)
+    {
+        $panier = $this->session->get('panier', []);
+        if (!empty($panier[$id])) {
+            if ($panier[$id] > 1) {
+                $panier[$id]--;
+            }else{
+                unset($panier);
+            }
+        }
+        $session->set('panier', $panier);
     }
     public function getPanier():array
     {

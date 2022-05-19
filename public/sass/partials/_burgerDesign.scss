@@ -1,4 +1,4 @@
- @import "variables";
+@import "variables";
 // .card {
 //     box-shadow: $shadow;
 //     background-color: #fff;
@@ -20,7 +20,7 @@
 //         .card-text-price{
 //             color: rgb(183, 181, 181);
 //         }
-       
+
 //     }
 // }
 // .card-active{
@@ -31,7 +31,7 @@
 //             background-color: #fff;
 //             color: $colorPrimary
 //         }
-    
+
 // }
 // .card-img{
 //     padding: 5px;
@@ -43,170 +43,186 @@
 //     }
 // }
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Satisfy&display=swap");
 
-*{
-  font-family: 'Poppins', sans-serif;
-  margin:0; padding:0;
+* {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
-  outline: none; border:none;
-  text-decoration: none;
+  outline: none;
+  n: none;
   text-transform: capitalize;
-  transition: .2s linear;
+  transition: 0.2s linear;
 }
 
 /* $colorPrimary:#27ae60; */
-$black:#130f40;
-$white:#fff;
-$light-color:#666;
-$light-bg:#f7f7f7;
-$border:.1rem solid rgba(0,0,0,.2);
-$box-shadow:0 1rem 1rem rgba(0,0,0,.05);
+$black: #130f40;
+$white: #fff;
+$light-color: #666;
+$light-bg: #f7f7f7;
+$border: 0.1rem solid rgba(0, 0, 0, 0.2);
+$box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.05);
 
 @mixin grid($val) {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax($val, 1fr));
-  gap:1.5rem;
+  gap: 1.5rem;
 }
 
 @mixin font($size) {
-  font-family: 'Satisfy', cursive;
+  font-family: "Satisfy", cursive;
   font-size: $size;
-  color:$colorPrimary;
+  color: $colorPrimary;
 }
 
-html{
+html {
   overflow-x: hidden;
   scroll-behavior: smooth;
   font-size: 62.5%;
   scroll-padding-top: 8.5rem;
 
-  &::-webkit-scrollbar{
+  &::-webkit-scrollbar {
     width: 1rem;
   }
 
-  &::-webkit-scrollbar-track{
+  &::-webkit-scrollbar-track {
     background: $white;
   }
 
-  &::-webkit-scrollbar-thumb{
+  &::-webkit-scrollbar-thumb {
     background: $colorPrimary;
     border-radius: 5rem;
   }
 }
 
-section{
-  padding:2rem 9%;
+section {
+  padding: 2rem 9%;
 }
 
-.heading{
+.heading {
   text-align: center;
   padding-bottom: 2rem;
 
-  span{
+  span {
     @include font(3rem);
   }
 
-  h3{
+  h3 {
     font-size: 3rem;
-    color:$black;
+    color: $black;
   }
 }
 
-.btn{
+.btn {
   display: inline-block;
   margin-top: 1rem;
-  padding:.7rem 1.8rem;
+  padding: 0.7rem 1.8rem;
   font-size: 1.7rem;
   cursor: pointer;
-  color:$white;
+  color: $white;
   background: $colorPrimary;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
 
-  &:hover{
+  &:hover {
     background: $black;
   }
 }
 
-.header{
+.header {
   position: sticky;
-  top:0; left:0; right:0;
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 1000;
   background: $white;
   box-shadow: $box-shadow;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding:2rem 9%;
-
-  .logo{
+  padding: 2rem 9%;
+  .number {
+    position: absolute;
+    top: 8px;
+    background: $colorPrimary;
+    color: #f7f7f7;
+    border-radius: 5px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+  }
+  .logo {
     font-size: 2.5rem;
     font-weight: bolder;
-    color:$black;
+    color: $black;
 
-    i{
-      padding-right: .5rem;
-      color:$colorPrimary;
+    i {
+      padding-right: 0.5rem;
+      color: $colorPrimary;
     }
   }
 
-  .navbar{
-
-    a{
+  .navbar {
+    a {
       font-size: 1.7rem;
-      margin:0 1rem;
-      color:$light-color;
+      margin: 0 1rem;
+      color: $light-color;
 
-      &:hover{
-        color:$colorPrimary;
+      &:hover {
+        color: $colorPrimary;
       }
     }
   }
 
-  .icons div{
+  .icons div {
     height: 4.5rem;
     width: 4.5rem;
     line-height: 4.5rem;
     font-size: 2rem;
     background: $light-bg;
-    color:$black;
-    border-radius: .5rem;
-    margin-left: .3rem;
+    color: $black;
+    border-radius: 0.5rem;
+    margin-left: 0.3rem;
     cursor: pointer;
     text-align: center;
 
-    &:hover{
-      color:$white;
+    &:hover {
+      color: $white;
       background: $colorPrimary;
     }
   }
 }
 
-#menu-btn{
+#menu-btn {
   display: none;
 }
 
-@keyframes fadeUp{
-  0%{
+@keyframes fadeUp {
+  0% {
     transform: translateY(5rem);
     opacity: 0;
   }
 }
 
-.search-form-container{
+.search-form-container {
   position: fixed;
-  top:8.5rem; left:0; right:0;
+  top: 8.5rem;
+  left: 0;
+  right: 0;
   height: calc(100vh - 8.5rem);
   background: $white;
   z-index: 1000;
   display: none;
 
-  &.active{
+  &.active {
     display: block;
   }
 
- /*  form{
+  /*  form{
     height: 7rem;
     border-bottom: .2rem solid $black;
     width: 100%;
@@ -235,9 +251,11 @@ section{
   } */
 }
 
-.shopping-cart-container{
+.shopping-cart-container {
   position: fixed;
-  top:8.5rem; left:0; right:0;
+  top: 8.5rem;
+  left: 0;
+  right: 0;
   z-index: 1000;
   height: calc(100vh - 8.5rem);
   background: $white;
@@ -245,185 +263,187 @@ section{
   padding-bottom: 8rem;
   display: none;
 
-  &.active{
+  &.active {
     display: block;
   }
 
-  &::-webkit-scrollbar{
+  &::-webkit-scrollbar {
     width: 1rem;
   }
 
-  &::-webkit-scrollbar-track{
+  &::-webkit-scrollbar-track {
     background: $white;
   }
 
-  &::-webkit-scrollbar-thumb{
+  &::-webkit-scrollbar-thumb {
     background: $black;
     border-radius: 5rem;
   }
 
-  .title{
+  .title {
     font-size: 2.5rem;
-    padding:1rem;
-    color:$black;
+    padding: 1rem;
+    color: $black;
     border-bottom: $border;
     text-align: center;
   }
 
-  .products-container{
-    border:$border;
-    border-radius: .5rem;    
-    animation: fadeUp .4s linear;
+  .products-container {
+    border: $border;
+    border-radius: 0.5rem;
+    animation: fadeUp 0.4s linear;
 
-    .box-container{
+    .box-container {
       @include grid(30rem);
-      padding:1.5rem;
+      padding: 1.5rem;
 
-      .box{
-        border-radius: .5rem;
-        background:$light-bg;
+      .box {
+        border-radius: 0.5rem;
+        background: $light-bg;
         display: flex;
         align-items: center;
-        gap:1.5rem;
-        padding:2rem;
+        gap: 1.5rem;
+        padding: 2rem;
         position: relative;
 
-        .fa-times{
+        .a-remove {
           position: absolute;
-          top:.7rem; right: 1rem;
+          top: 0.7rem;
+          right: 1rem;
           font-size: 2rem;
           cursor: pointer;
-          color:$black;
+          color: $black;
 
-          &:hover{
-            color:$colorPrimary;
+          &:hover {
+            color: $colorPrimary;
           }
         }
 
-        img{
-          height:8rem;
+        img {
+          height: 8rem;
         }
 
-        .content{
-
-          h3{
+        .content {
+          h3 {
             font-size: 2rem;
-            color:$black;
+            color: $black;
           }
 
-          span{
+          span {
             font-size: 1.5rem;
-            color:$light-color;
+            color: $light-color;
 
-            &.price{
-              color:$colorPrimary;
+            &.price {
+              color: $colorPrimary;
               font-size: 1.7rem;
             }
           }
 
-          input{
+          input {
             width: 8rem;
-            padding:.5rem 1.2rem;
+            padding: 0.5rem 1.2rem;
             font-size: 1.5rem;
-            color:$black;
-            margin:.7rem 0;
+            color: $black;
+            margin: 0.7rem 0;
           }
         }
       }
     }
   }
 
-  .cart-total{
+  .cart-total {
     margin-top: 2rem;
-    border:$border;
-    border-radius: .5rem;    
-    animation: fadeUp .4s linear .4s backwards;
+    border: $border;
+    border-radius: 0.5rem;
+    animation: fadeUp 0.4s linear 0.4s backwards;
 
-    .box{
-      padding:1.5rem;
+    .box {
+      padding: 1.5rem;
 
-      h3{
-        color:$black;
+      h3 {
+        color: $black;
         font-size: 2rem;
-        padding-bottom: .7rem;
+        padding-bottom: 0.7rem;
 
-        span{
-          color:$colorPrimary;
+        span {
+          color: $colorPrimary;
         }
       }
     }
   }
 }
 
-.login-form-container{
+.login-form-container {
   position: fixed;
-  top:8.5rem; left:0; right:0;
+  top: 8.5rem;
+  left: 0;
+  right: 0;
   z-index: 1000;
   height: calc(100vh - 8.5rem);
   background: $white;
-  padding:0 2rem;
+  padding: 0 2rem;
   display: none;
 
-  &.active{
+  &.active {
     display: block;
   }
 
-  form{
-    margin:2rem auto;
+  form {
+    margin: 2rem auto;
     max-width: 40rem;
     box-shadow: $box-shadow;
-    border:$border;
+    border: $border;
     padding: 2rem;
-    border-radius: .5rem;
-    animation: fadeUp .4s linear;
+    border-radius: 0.5rem;
+    animation: fadeUp 0.4s linear;
 
-    h3{
+    h3 {
       padding-bottom: 1rem;
       font-size: 2.5rem;
       text-transform: uppercase;
       color: $black;
     }
 
-    .box{
-      margin:.7rem 0;
-      border-radius: .5rem;
+    .box {
+      margin: 0.7rem 0;
+      border-radius: 0.5rem;
       background: $light-bg;
-      padding:1rem 1.2rem;
+      padding: 1rem 1.2rem;
       font-size: 1.6rem;
-      color:$black;
+      color: $black;
       text-transform: none;
       width: 100%;
     }
 
-    .remember{
-      padding:1rem 0;
+    .remember {
+      padding: 1rem 0;
       display: flex;
       align-items: center;
-      gap:.5rem;
+      gap: 0.5rem;
 
-      label{
+      label {
         font-size: 1.5rem;
         cursor: pointer;
-        color:$light-color;
+        color: $light-color;
       }
     }
 
-    .btn{
-      margin:1rem 0;
+    .btn {
+      margin: 1rem 0;
       width: 100%;
       text-align: center;
     }
 
-    p{
+    p {
       padding-top: 1rem;
       font-size: 1.5rem;
       color: $light-color;
 
-      a{
-        color:$colorPrimary;
+      a {
+        color: $colorPrimary;
 
-        &:hover{
-          color:$black;
+        &:hover {
+          color: $black;
           text-decoration: underline;
         }
       }
@@ -431,205 +451,206 @@ section{
   }
 }
 
-.home{
+.home {
   display: flex;
   align-items: center;
   flex-wrap: wrap-reverse;
-  gap:2rem;
+  gap: 2rem;
   position: relative;
   overflow: hidden;
 
-  .content{
-    flex:1 1 41rem;
+  .content {
+    flex: 1 1 41rem;
 
-    span{
+    span {
       font-size: 2rem;
-      color:$colorPrimary;
+      color: $colorPrimary;
     }
 
-    h3{
+    h3 {
       font-size: 4rem;
-      color:$black;
+      color: $black;
       padding-top: 1rem;
     }
 
-    p{
+    p {
       font-size: 1.4rem;
-      color:$light-color;
+      color: $light-color;
       line-height: 2;
-      padding:1rem 0;
+      padding: 1rem 0;
     }
   }
 
-  .image{
-    flex:1 1 41rem;
-    margin:2rem 0;
+  .image {
+    flex: 1 1 41rem;
+    margin: 2rem 0;
     pointer-events: none;
 
-    .home-img{
+    .home-img {
       width: 100%;
       margin-top: 5rem;
+      animation: bounce 3s linear infinite; /* referring directly to the animation's @keyframe declaration */
     }
   }
 
-  .home-parallax-img{
+  .home-parallax-img {
     position: absolute;
-    top:-10rem; right: -10rem;
+    top: -10rem;
+    right: -10rem;
     width: 80vw;
   }
 }
 
-.category{
+.category {
   @include grid(16rem);
   padding-bottom: 5rem;
 
-  .box{
-    padding:2rem;
+  .box {
+    padding: 2rem;
     text-align: center;
-    border-radius: .5rem;
+    border-radius: 0.5rem;
     background: $product-container-color;
 
-    &:hover{
+    &:hover {
       background: $colorPrimary;
 
-      h3{
-        color:$white;
+      h3 {
+        color: $white;
       }
     }
 
-    img{
+    img {
       height: 7rem;
     }
 
-    h3{
+    h3 {
       font-size: 1.8rem;
-      color:$black;
+      color: $black;
     }
   }
 }
 
-.about{
+.about {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap:2rem;
+  gap: 2rem;
   background: $light-bg;
 
-  .image{
-    flex:1 1 40rem;
+  .image {
+    flex: 1 1 40rem;
 
-    img{
+    img {
       width: 100%;
     }
   }
 
-  .content{
-    flex:1 1 40rem;
+  .content {
+    flex: 1 1 40rem;
 
-    span{
+    span {
       @include font(3rem);
     }
 
-    .title{
+    .title {
       font-size: 3rem;
-      padding-top: .5rem;
-      color:$black;
+      padding-top: 0.5rem;
+      color: $black;
     }
 
-    p{
-      padding:1rem 0;
+    p {
+      padding: 1rem 0;
       line-height: 2;
       font-size: 1.4rem;
-      color:$light-color;
+      color: $light-color;
     }
 
-    .icons-container{
+    .icons-container {
       margin-top: 2rem;
       display: flex;
       flex-wrap: wrap;
-      gap:1.5rem;
+      gap: 1.5rem;
 
-      .icons{
-        flex:1 1 20rem;
-        border-radius: .5rem;
+      .icons {
+        flex: 1 1 20rem;
+        border-radius: 0.5rem;
         background: $white;
         box-shadow: $box-shadow;
         display: flex;
         align-items: center;
-        gap:2rem;
-        padding:2rem;
+        gap: 2rem;
+        padding: 2rem;
 
-        h3{
+        h3 {
           font-size: 1.7rem;
-          color:$black;
+          color: $black;
         }
       }
     }
   }
 }
-.popular{
-    background-color: $product-container-color;
+.popular {
+  background-color: #fff;
 }
 
-.popular .box-container{
-    
+.popular .box-container {
   @include grid(25rem);
 
-  .box{
-    border-radius: .5rem;
+  .box {
+    border-radius: 0.5rem;
     position: relative;
     background: $light-bg;
-    padding:2rem;
+    padding: 2rem;
     text-align: center;
-    background-color: #FFFF;
+    background-color:  $product-container-color;
 
-    .fa-heart{
+    .fa-heart {
       position: absolute;
-      top:1.5rem; right:1.5rem;
+      top: 1.5rem;
+      right: 1.5rem;
       font-size: 2.5rem;
-      color:$light-color;
+      color: $light-color;
       cursor: pointer;
 
-      &:hover{
-        color:$colorPrimary;
+      &:hover {
+        color: $colorPrimary;
       }
     }
 
-    .image{
-      margin:1rem 0;
+    .image {
+      margin: 1rem 0;
 
-      img{
+      img {
         height: 15rem;
       }
     }
-    
-    .content{
 
-      h3{
+    .content {
+      h3 {
         font-size: 2rem;
-        color:$black;
+        color: $black;
       }
 
-      .stars{
-        padding:1rem 0;
+      .stars {
+        padding: 1rem 0;
         font-size: 1.7rem;
 
-        i{
-          color:gold;
+        i {
+          color: gold;
         }
 
-        span{
-          color:$light-color;
+        span {
+          color: $light-color;
         }
       }
-      
-      .price{
-        font-size: 2rem;
-        color:$black;
 
-        span{
+      .price {
+        font-size: 2rem;
+        color: $black;
+
+        span {
           font-size: 1.5rem;
-          color:$light-color;
+          color: $light-color;
           text-decoration: line-through;
         }
       }
@@ -637,282 +658,279 @@ section{
   }
 }
 
-.banner{
-
-  .row-banner{
+.banner {
+  .row-banner {
     background: url(../../img/image/row-banner.png) no-repeat;
     height: 45rem;
     background-size: cover;
     background-position: center;
     position: relative;
 
-    .content{
+    .content {
       position: absolute;
-      top:50%; left:7%;
+      top: 50%;
+      left: 7%;
       transform: translateY(-50%);
 
-      span{
+      span {
         @include font(4rem);
-        color:$black;
+        color: $black;
       }
 
-      h3{
+      h3 {
         font-size: 6rem;
-        color:red;
+        color: red;
         text-transform: uppercase;
       }
 
-      p{
+      p {
         font-size: 2rem;
         padding-bottom: 1rem;
       }
     }
   }
 
-  .grid-banner{
+  .grid-banner {
     @include grid(30rem);
 
-    .grid{
+    .grid {
       position: relative;
       border-radius: 1rem;
-      overflow:hidden;
+      overflow: hidden;
       height: 45rem;
 
-      &:hover img{
+      &:hover img {
         transform: scale(1.2);
       }
 
-      img{
+      img {
         height: 100%;
         width: 100%;
         object-fit: cover;
       }
 
-      .content{
+      .content {
         position: absolute;
-        top:2rem;
-        padding:0 2rem;
+        top: 2rem;
+        padding: 0 2rem;
 
-        &.center{
+        &.center {
           text-align: center;
           width: 100%;
 
-          span{
-            color:$light-color;
+          span {
+            color: $light-color;
           }
 
-          h3{
+          h3 {
             color: $black;
           }
         }
 
-        span{
+        span {
           font-size: 2.5rem;
-          color:$white;
+          color: $white;
         }
-        
-        h3{
+
+        h3 {
           font-size: 3rem;
-          color:$white;
-          padding-top: .5rem;
+          color: $white;
+          padding-top: 0.5rem;
         }
       }
     }
   }
 }
 
-.menu .box-container{
+.menu .box-container {
   @include grid(30rem);
 
-  .box{
-    border-radius: .5rem;
+  .box {
+    border-radius: 0.5rem;
     background: $light-bg;
-    padding:2rem;
+    padding: 2rem;
     display: flex;
     align-items: center;
-    gap:1.5rem;
+    gap: 1.5rem;
 
-    &:hover{
-      background:$black;
+    &:hover {
+      background: $black;
 
-      .content h3{
-        color:$white;
+      .content h3 {
+        color: $white;
       }
-
     }
 
-    img{
-      height:10rem;
+    img {
+      height: 10rem;
     }
 
-    .content{
-
-      h3{
+    .content {
+      h3 {
         font-size: 2rem;
-        color:$black;
-        padding-bottom: .5rem;
+        color: $black;
+        padding-bottom: 0.5rem;
       }
 
-      .price{
+      .price {
         font-size: 1.8rem;
-        color:$colorPrimary;
+        color: $colorPrimary;
       }
     }
   }
 }
 
-.order{
-
-  .icons-container{
+.order {
+  .icons-container {
     @include grid(30rem);
     margin-bottom: 2rem;
 
-    .icons{
-      border-radius: .5rem;
-      padding:2rem;
+    .icons {
+      border-radius: 0.5rem;
+      padding: 2rem;
       text-align: center;
       background: $product-container-color;
 
-      img{
+      img {
         height: 10rem;
       }
 
-      h3{
+      h3 {
         font-size: 2rem;
-        color:$black;
-        margin-top: .5rem;
+        color: $black;
+        margin-top: 0.5rem;
       }
     }
   }
 
-  form{
-    background:$light-bg;
-    padding:2rem;
-    border-radius: .5rem;
+  form {
+    background: $light-bg;
+    padding: 2rem;
+    border-radius: 0.5rem;
 
-    .flex{
+    .flex {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
 
-      .inputBox{
-        width:49%;
-        padding:.7rem 0;
+      .inputBox {
+        width: 49%;
+        padding: 0.7rem 0;
       }
 
-      span{
+      span {
         font-size: 1.7rem;
-        color:$light-color;
+        color: $light-color;
       }
 
-      input, textarea{
-        width:100%;
-        margin-top: .5rem;
-        padding:1rem 1.2rem;
-        width:100%;
-        border-radius: .5rem;
+      input,
+      textarea {
+        width: 100%;
+        margin-top: 0.5rem;
+        padding: 1rem 1.2rem;
+        width: 100%;
+        border-radius: 0.5rem;
         font-size: 1.6rem;
         text-transform: none;
-        color:$black;
+        color: $black;
       }
 
-      textarea{
-        height:20rem;
+      textarea {
+        height: 20rem;
         resize: none;
       }
 
-      .map{
-        height:100%;
-        width:100%;
-        border-radius: .5rem;
+      .map {
+        height: 100%;
+        width: 100%;
+        border-radius: 0.5rem;
       }
     }
   }
 }
 
-.blogs{
-
-  .box-container{
+.blogs {
+  .box-container {
     @include grid(30rem);
 
-    .box{
-      border-radius: .5rem;
+    .box {
+      border-radius: 0.5rem;
       overflow: hidden;
 
-      &:hover{
-        .image{
-
-          h3{
-            left:1.5rem;
+      &:hover {
+        .image {
+          h3 {
+            left: 1.5rem;
           }
 
-          img{
+          img {
             transform: scale(1.1);
           }
         }
       }
 
-      .image{
+      .image {
         position: relative;
         height: 25rem;
         overflow: hidden;
         width: 100%;
 
-        h3{
+        h3 {
           position: absolute;
           z-index: 10;
-          top:1rem; left:-100%;
-          border-radius: .5rem;
-          padding:.5rem 1rem;
+          top: 1rem;
+          left: -100%;
+          border-radius: 0.5rem;
+          padding: 0.5rem 1rem;
           background: $white;
-          color:$black;
+          color: $black;
           font-size: 1.5rem;
 
-          i{
-            padding-right: .5rem;
-            color:$colorPrimary;
+          i {
+            padding-right: 0.5rem;
+            color: $colorPrimary;
           }
         }
 
-        img{
+        img {
           height: 100%;
           width: 100%;
           object-fit: cover;
         }
       }
 
-      .content{
-        padding:2rem 1.5rem;
+      .content {
+        padding: 2rem 1.5rem;
         background: $light-bg;
 
-        .tags{
+        .tags {
           padding-bottom: 1rem;
 
-          a{
+          a {
             font-size: 1.5rem;
-            color:$light-color;
-            padding-right: .5rem;
+            color: $light-color;
+            padding-right: 0.5rem;
 
-            &:hover{
-              color:$colorPrimary;
+            &:hover {
+              color: $colorPrimary;
             }
-            
-            i{
-              color:$colorPrimary;
-              padding-right: .5rem;
+
+            i {
+              color: $colorPrimary;
+              padding-right: 0.5rem;
             }
           }
         }
 
-        h3{
+        h3 {
           font-size: 2rem;
-          color:$black;
+          color: $black;
         }
 
-        p{
+        p {
           font-size: 1.4rem;
-          color:$light-color;
-          padding:1rem 0;
+          color: $light-color;
+          padding: 1rem 0;
           line-height: 2;
         }
       }
@@ -920,222 +938,197 @@ section{
   }
 }
 
-.footer{
-  background:$product-container-color;
+.footer {
+  background: $product-container-color;
 
-  .newsletter{
+  .newsletter {
     text-align: center;
     margin-bottom: 2rem;
 
-    h3{
+    h3 {
       font-size: 2.5rem;
-      color:$black;
+      color: $black;
       padding-bottom: 1rem;
     }
-    
-    form{
-      max-width:70rem;
-      margin:1rem auto;
+
+    form {
+      max-width: 70rem;
+      margin: 1rem auto;
       max-width: 70rem;
       display: flex;
-      border-radius: .5rem;
+      border-radius: 0.5rem;
       overflow: hidden;
 
-      input[type="email"]{
+      input[type="email"] {
         height: 100%;
-        width:100%;
-        padding:1rem 1.2rem;
+        width: 100%;
+        padding: 1rem 1.2rem;
         font-size: 1.6rem;
-        color:$black;
+        color: $black;
         text-transform: none;
       }
 
-      input[type="submit"]{
-        padding:0 2rem;
+      input[type="submit"] {
+        padding: 0 2rem;
         font-size: 1.6rem;
-        color:$white;
-        background:$colorPrimary;
+        color: $white;
+        background: $colorPrimary;
         cursor: pointer;
 
-        &:hover{
+        &:hover {
           background: $black;
         }
       }
     }
   }
 
-  .box-container{
+  .box-container {
     @include grid(25rem);
 
-    .box{
-
-      h3{
+    .box {
+      h3 {
         font-size: 2.2rem;
-        color:$black;
-        padding:1rem 0;
+        color: $black;
+        padding: 1rem 0;
       }
 
-      p{
+      p {
         font-size: 1.4rem;
-        color:$light-color;
-        padding:1rem 0;
+        color: $light-color;
+        padding: 1rem 0;
       }
 
-      a{
+      a {
         display: block;
         font-size: 1.4rem;
-        color:$light-color;
-        padding:1rem 0;
+        color: $light-color;
+        padding: 1rem 0;
 
-        &:hover{
-          color:$colorPrimary;
+        &:hover {
+          color: $colorPrimary;
 
-          i{
+          i {
             padding-right: 2rem;
           }
         }
 
-        i{
-          padding-right: .5rem;
-          color:$colorPrimary;
+        i {
+          padding-right: 0.5rem;
+          color: $colorPrimary;
         }
       }
     }
   }
 
-  .bottom{
+  .bottom {
     padding-top: 1rem;
     text-align: center;
 
-    .share{
-      margin:1.5rem 0;
+    .share {
+      margin: 1.5rem 0;
 
-      a{
-        height:4.5rem;
-        width:4.5rem;
-        line-height:4.5rem;
-        font-size:2rem;
-        border-radius: .5rem;
-        margin:0 .3rem;
-        color:$white;
+      a {
+        height: 4.5rem;
+        width: 4.5rem;
+        line-height: 4.5rem;
+        font-size: 2rem;
+        border-radius: 0.5rem;
+        margin: 0 0.3rem;
+        color: $white;
         background: $colorPrimary;
 
-        &:hover{
+        &:hover {
           background: $black;
         }
       }
     }
 
-    .credit{
+    .credit {
       font-size: 2rem;
-      color:$light-color;
-      padding:1rem;
+      color: $light-color;
+      padding: 1rem;
 
-      span{
-        color:$colorPrimary;
+      span {
+        color: $colorPrimary;
       }
     }
   }
 }
 
+// media queries
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// media queries 
-
-@media (max-width:991px){
-
-  html{
+@media (max-width: 991px) {
+  html {
     font-size: 55%;
   }
 
-  .header{
-    padding:2rem;
+  .header {
+    padding: 2rem;
   }
 
-  section{
-    padding:2rem;
+  section {
+    padding: 2rem;
   }
-
 }
 
-@media (max-width:768px){
-
-  #menu-btn{
+@media (max-width: 768px) {
+  #menu-btn {
     display: inline-block;
   }
 
-  .header .navbar{
+  .header .navbar {
     position: absolute;
-    top:99%; left:0; right: 0;
+    top: 99%;
+    left: 0;
+    right: 0;
     background: $white;
     border-top: $border;
     border-bottom: $border;
     clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
 
-    &.active{
+    &.active {
       clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
     }
 
-    a{
+    a {
       font-size: 2rem;
-      margin:2rem;
+      margin: 2rem;
       display: block;
     }
   }
 
-  .home .home-parallax-img{
-      top:0; right:0;
-      width: 130%;
-    }
+  .home .home-parallax-img {
+    top: 0;
+    right: 0;
+    width: 130%;
+  }
 
-    .order form .flex .inputBox{
-      width: 100%;
-    }
-
+  .order form .flex .inputBox {
+    width: 100%;
+  }
 }
 
-@media (max-width:450px){
-
-  html{
+@media (max-width: 450px) {
+  html {
     font-size: 50%;
   }
 
-  .shopping-cart-container .cart-total{
-
-    .box{
+  .shopping-cart-container .cart-total {
+    .box {
       text-align: center;
 
-      .btn{
+      .btn {
         width: 100%;
       }
     }
   }
 
-  .home .content{
-    h3{
+  .home .content {
+    h3 {
       font-size: 3rem;
     }
-    p{
+    p {
       font-size: 1.5rem;
     }
   }
-
 }

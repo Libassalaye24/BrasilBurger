@@ -42,8 +42,9 @@ class Burger
     #[ORM\Column(type: 'string', length: 255)]
     private $type;
 
-    #[ORM\ManyToMany(targetEntity: Commande::class, mappedBy: 'burger')]
-    private $commandes;
+
+    #[ORM\OneToMany(mappedBy: 'burger', targetEntity: CommandesBurgers::class,cascade: ['persist'])]
+    private $commandesBurgers;
 
     public function __construct()
     {
@@ -51,7 +52,7 @@ class Burger
         $this->etat = false;
         $this->complements = new ArrayCollection();
         $this->type = 'burger';
-        $this->commandes = new ArrayCollection();
+        $this->commandesBurgers = new ArrayCollection();
     }
     public function __toString()
     {
@@ -193,28 +194,32 @@ class Burger
         return $this;
     }
 
+   
     /**
-     * @return Collection<int, Commande>
+     * @return Collection<int, CommandeBurger>
      */
-    public function getCommandes(): Collection
+    public function getcommandesBurgers(): Collection
     {
-        return $this->commandes;
+        return $this->commandesBurgers;
     }
 
-    public function addCommande(Commande $commande): self
+    public function addCommandeBurger(CommandesBurgers $commandeBurger): self
     {
-        if (!$this->commandes->contains($commande)) {
-            $this->commandes[] = $commande;
-            $commande->addBurger($this);
+        if (!$this->commandesBurgers->contains($commandeBurger)) {
+            $this->commandesBurgers[] = $commandeBurger;
+            $commandeBurger->setBurger($this);
         }
 
         return $this;
     }
 
-    public function removeCommande(Commande $commande): self
+    public function removeCommandeBurger(CommandesBurgers $commandeBurger): self
     {
-        if ($this->commandes->removeElement($commande)) {
-            $commande->removeBurger($this);
+        if ($this->commandesBurgers->removeElement($commandeBurger)) {
+            // set the owning side to null (unless already changed)
+            if ($commandeBurger->getBurger() === $this) {
+                $commandeBurger->setBurger(null);
+            }
         }
 
         return $this;

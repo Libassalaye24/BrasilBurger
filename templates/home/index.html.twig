@@ -24,7 +24,7 @@
 	<section class="home" id="home">
 		
 		<div class="content">
-			<span>welcome foodies</span>
+			<span>welcome to brasil Burger</span>
 			<h3>different spices for the different tastes 😋</h3>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis unde dolores temporibus hic quam debitis tenetur harum nemo.</p>
 			<a href="#" class="btn">order now</a>
@@ -123,12 +123,10 @@
 						</div>
 
 						<a href="{{path('details',{id: product.id})}}" class="btn">voir details</a>
-						{% if is_granted('ROLE_CLIENT') %}
-							<a href="{{path('add_panier',{id: product.id})}}" class="btn panier">
+							<a href="{{path('add_panier',{id: product.id})}}" id="{{product.id}}" class="btn ">
 								<i class="fa-solid fa-cart-plus"></i>
 								ajouter
 							</a>
-						{% endif %}
 					</div>
 				</div>
 			{% endfor %}
@@ -317,4 +315,5 @@ window.location.href = promesse;
 
 });
 	</script>
+	<script src="{{asset('js/panier.js')}}"></script> 
 {% endblock %}

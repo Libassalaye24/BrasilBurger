@@ -33,22 +33,22 @@ class Commande
     #[ORM\Column(type: 'string', length: 255)]
     private $etat;
 
-    #[ORM\ManyToMany(targetEntity: Burger::class, inversedBy: 'commandes')]
-    private $burger;
-
-    #[ORM\ManyToMany(targetEntity: Menu::class, inversedBy: 'commandes')]
-    private $menu;
-
     #[ORM\Column(type: 'string', length: 255)]
     private $numero;
+
+    #[ORM\OneToMany(mappedBy: 'commande', targetEntity: CommandesBurgers::class,cascade: ['persist'])]
+    private $commandesBurgers;
+
+    #[ORM\OneToMany(mappedBy: 'commande', targetEntity: CommandesMenus::class,cascade: ['persist'])]
+    private $commandesMenuses;
 
 
 
     public function __construct()
     {
-        $this->burger = new ArrayCollection();
-        $this->menu = new ArrayCollection();
         $this->date = new DateTime();
+        $this->commandesBurgers = new ArrayCollection();
+        $this->commandesMenuses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -122,54 +122,8 @@ class Commande
         return $this;
     }
 
-    /**
-     * @return Collection<int, Burger>
-     */
-    public function getBurger(): Collection
-    {
-        return $this->burger;
-    }
-
-    public function addBurger(Burger $burger): self
-    {
-        if (!$this->burger->contains($burger)) {
-            $this->burger[] = $burger;
-        }
-
-        return $this;
-    }
-
-    public function removeBurger(Burger $burger): self
-    {
-        $this->burger->removeElement($burger);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Menu>
-     */
-    public function getMenu(): Collection
-    {
-        return $this->menu;
-    }
-
-    public function addMenu(Menu $menu): self
-    {
-        if (!$this->menu->contains($menu)) {
-            $this->menu[] = $menu;
-        }
-
-        return $this;
-    }
-
-    public function removeMenu(Menu $menu): self
-    {
-        $this->menu->removeElement($menu);
-
-        return $this;
-    }
-
+  
+   
     public function getNumero(): ?string
     {
         return $this->numero;
@@ -178,6 +132,66 @@ class Commande
     public function setNumero(string $numero): self
     {
         $this->numero = $numero;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CommandesBurgers>
+     */
+    public function getCommandesBurgers(): Collection
+    {
+        return $this->commandesBurgers;
+    }
+
+    public function addCommandesBurger(CommandesBurgers $commandesBurger): self
+    {
+        if (!$this->commandesBurgers->contains($commandesBurger)) {
+            $this->commandesBurgers[] = $commandesBurger;
+            $commandesBurger->setCommande($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommandesBurger(CommandesBurgers $commandesBurger): self
+    {
+        if ($this->commandesBurgers->removeElement($commandesBurger)) {
+            // set the owning side to null (unless already changed)
+            if ($commandesBurger->getCommande() === $this) {
+                $commandesBurger->setCommande(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CommandesMenus>
+     */
+    public function getCommandesMenuses(): Collection
+    {
+        return $this->commandesMenuses;
+    }
+
+    public function addCommandesMenus(CommandesMenus $commandesMenus): self
+    {
+        if (!$this->commandesMenuses->contains($commandesMenus)) {
+            $this->commandesMenuses[] = $commandesMenus;
+            $commandesMenus->setCommande($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommandesMenus(CommandesMenus $commandesMenus): self
+    {
+        if ($this->commandesMenuses->removeElement($commandesMenus)) {
+            // set the owning side to null (unless already changed)
+            if ($commandesMenus->getCommande() === $this) {
+                $commandesMenus->setCommande(null);
+            }
+        }
 
         return $this;
     }

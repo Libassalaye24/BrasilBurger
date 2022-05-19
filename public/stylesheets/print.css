@@ -165,11 +165,21 @@ nav .pagination .active:hover {
   color: #fff;
 }
 /* line 143, ../sass/print.scss */
+nav .pagination .active2 {
+  background-color: #f9f7ec;
+  color: #e04218;
+}
+/* line 146, ../sass/print.scss */
+nav .pagination .active2:hover {
+  background-color: #e04218;
+  color: #fff;
+}
+/* line 151, ../sass/print.scss */
 nav .pagination .notactive {
   background-color: #fff;
   color: #e04218;
 }
-/* line 146, ../sass/print.scss */
+/* line 154, ../sass/print.scss */
 nav .pagination .notactive:hover {
   background-color: #fff;
   color: #e04218;

@@ -29,6 +29,16 @@ class MenuController extends AbstractController
         ]);
     }
 
+    #[Route('/dashboard', name: 'dashboard')]
+    public function dashboard(MenuRepository $menuRepository,Request $request,PaginatorInterface $paginatorInterface): Response
+    {
+        
+        return $this->render('menu/dashboard.html.twig', [
+           
+        ]);
+    }
+
+
     #[Route('/menu/archives', name: 'list_menu_archive')]
     public function archives(MenuRepository $menuRepository,Request $request,PaginatorInterface $paginatorInterface): Response
     {

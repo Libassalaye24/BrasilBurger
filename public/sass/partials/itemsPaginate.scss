@@ -5,12 +5,15 @@
     margin-top: 2%;
 }
 .pagination {
-  display: inline-block;
+  display: flex;
+
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
 .pagination a {
   float: left;
+  display: flex;
+
   padding: 10px 18px;
   text-decoration: none;
   border: 2px solid #ddd;

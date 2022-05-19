@@ -140,6 +140,14 @@ nav .pagination{
             color: #fff;
         }
     }
+    .active2{
+        background-color: $product-container-color;
+        color: $colorPrimary;
+        &:hover{
+            background-color: $colorPrimary;
+            color: #fff;
+        }
+    }
     .notactive{
         background-color: #fff;
         color: $colorPrimary;

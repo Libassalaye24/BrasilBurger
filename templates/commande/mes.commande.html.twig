@@ -10,7 +10,7 @@
 			margin-top: 1%;
 
 		}
-		.retour a {
+		.retour a:not(.payer) {
 			color: #e04218;
 		}
 		h3 {
@@ -24,12 +24,21 @@
 			background:#ddd;
 			font-size:15px;
 		}
+		.payer{
+			float:right;
+			color:#fff;
+			margin-top: -0.5%;
+		}
 	</style>
 	<!-- popular section starts  -->
 	<section class="retour" id="">
 		<a href="{{path('catalogue')}}">
 			<i class="fa-solid fa-reply fa-1x"></i>
 			catalogue
+		</a>
+		<a class="payer btn" href="{{path('catalogue')}}">
+			Payer une commande
+			<i class="fa-solid fa-reply fa-1x"></i>
 		</a>
 	</section>
 	<section class="popular" id="popular">
@@ -58,96 +67,87 @@
 		
 		<div
 			class="box-container">
-		
+			
 			 			{% for commande in commandes %}
-								{% for burger in commande.burger %}
+						 
+								{% for Cburger in commande.commandesBurgers %}
 									
 								<div class="box">
 									<div class="image">
-										<img src="{{asset('img/uploads/' ~ burger.image.nom)}}" class="animate__backInUp" alt="">	
+										<img src="{{asset('img/uploads/' ~ Cburger.burger.image.nom)}}" class="animate__backInUp" alt="">	
 									</div>
 									<div class="content">
-											<h3>{{burger.nom}}</h3>
+											<h3>{{Cburger.quantity}}x {{Cburger.burger.nom}}</h3>
 										<div class="etat">
-											{{commande.etat}}
+											{{Cburger.commande.etat}}
 										</div>
 										
 										<div class="stars">
 											commande :
-											{{commande.numero}}
+											{{Cburger.commande.numero}}
 										</div>
 										<div >
 											le 
-											{{commande.date|date('d/m/Y')}}
+											{{Cburger.commande.date|date('d/m/Y')}}
 											
 										</div>
-										<a href="{{path('details_commande',{id:commande.id})}}" disabled class="btn">Details</a>
-										{# {% if commande.etat == "encours" %}
-											<a href="" class="btn">
-												annuler
-											</a>
-				
-										{% endif %} #}
-										{% if commande.etat == "valider" %}
-											<a href="{{path('payer',{id: commande.id})}}" class="btn">
+										<a href="{{path('details_commande',{id:Cburger.commande.id})}}" disabled class="btn">Details</a>
+										
+										{% if Cburger.commande.etat == "valider" %}
+											<a href="{{path('payer',{id: Cburger.commande.id})}}" class="btn">
 												payer
 												<i class="fa-solid fa-money-bill-transfer"></i>
 											</a>
 										{% endif %}
-										{% if commande.etat == "terminer" %}
-											<a href="{{path('payer',{id: commande.id})}}" class="btn">
+										{% if Cburger.commande.etat == "terminer" %}
+											<a href="{{path('payer',{id: Cburger.commande.id})}}" class="btn">
 												terminer
 											</a>
 										{% endif %}
 				
 									</div>
-								</div>
-								{% endfor %}
-									{% for menu in commande.menu %}
-									
-								<div class="box">
-									<div class="image">
-										<img src="{{asset('img/uploads/' ~ menu.image.nom)}}" class="animate__backInUp" alt="">	
-									</div>
-									<div class="content">
-											<h3>{{menu.nom}}</h3>
-										<div class="etat">
-											{{commande.etat}}
-										</div>
-										
-										<div class="stars">
-											commande :
-											{{commande.numero}}
-										</div>
-										<div >
-											le 
-											{{commande.date|date('d/m/Y')}}
-											
-										</div>
-										
-										<a href="{{path('details_commande',{id:commande.id})}}" disabled class="btn">Details</a>
-										{# {% if commande.etat == "encours" %}
-											<a href="" class="btn">
-												annuler
-											</a>
-				
-										{% endif %} #}
-										{% if commande.etat == "valider" %}
-											<a href="{{path('payer',{id: commande.id})}}" class="btn">
-												payer
-												<i class="fa-solid fa-money-bill-transfer"></i>
-											</a>
-										{% endif %}
-										{% if commande.etat == "terminer" %}
-											<a href="{{path('payer',{id: commande.id})}}" class="btn">
-												terminer
-											</a>
-										{% endif %}
-				
-									</div>
-								</div>
+								</div> 
 								{% endfor %}
 
+								{% for CMenu in commande.commandesMenuses %}
+									
+								<div class="box">
+									<div class="image">
+										<img src="{{asset('img/uploads/' ~ CMenu.menu.image.nom)}}" class="animate__backInUp" alt="">	
+									</div>
+									<div class="content">
+											<h3>{{CMenu.quantity}}x {{CMenu.menu.nom}}</h3>
+										<div class="etat">
+											{{CMenu.commande.etat}}
+										</div>
+										
+										<div class="stars">
+											commande :
+											{{CMenu.commande.numero}}
+										</div>
+										<div >
+											le 
+											{{CMenu.commande.date|date('d/m/Y')}}
+											
+										</div>
+										<a href="{{path('details_commande',{id:CMenu.commande.id})}}" disabled class="btn">Details</a>
+										
+										{% if CMenu.commande.etat == "valider" %}
+											<a href="{{path('payer',{id: CMenu.commande.id})}}" class="btn">
+												payer
+												<i class="fa-solid fa-money-bill-transfer"></i>
+											</a>
+										{% endif %}
+										{% if CMenu.commande.etat == "terminer" %}
+											<a href="{{path('payer',{id: CMenu.commande.id})}}" class="btn">
+												terminer
+											</a>
+										{% endif %}
+				
+									</div>
+								</div> 
+								{% endfor %}
+							
 							{% else %}
 								tableau vide .........
 							{% endfor %}
