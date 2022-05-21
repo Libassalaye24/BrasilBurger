@@ -34,10 +34,10 @@
 	
 	<!-- home section starts  -->
 	<section class="retour" id="">
-		{% if roles[0] == 'ROLE_GESTIONNAIRE' %}
+		{% if is_granted('ROLE_GESTIONNAIRE') %}
 			<a href="{{path('list_commande')}}">
 				<i class="fa-solid fa-reply fa-1x"></i>
-			</a>
+			</a>			
 		{% else %}
 			<a href="{{path('mes_commandes')}}">
 				<i class="fa-solid fa-reply fa-1x"></i>

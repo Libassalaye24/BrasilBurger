@@ -34,7 +34,10 @@
 						</thead>
 						{% for menu in menus %}
 							<tr>
-								<td class="thbottom">#</td>
+								<td class="thbottom">
+									<img
+										src="{{asset('img/uploads/' ~ menu.image.nom)}}" alt="" class="" style="width:55px;height:55px">
+								</td>
 								<td class="thbottom">{{menu.nom}}</td>
 								<td class="thbottom">
 									<a href="{{path('edit_menu',{'id':menu.id})}}" class="btnajout">
@@ -48,7 +51,7 @@
 										<i class="fas fa-edit edit c-edit"></i>
 										update
 									</a>
-									<a href="{{path('change_etat',{'id':menu.id})}}" class="">
+									<a href="{{path('change_etat_menu',{'id':menu.id})}}" class="">
 										<i class="fa-solid fa-file-zipper c-primary"></i>
 										desarchiver
 									</a>

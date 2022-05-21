@@ -21,6 +21,9 @@ class Paiement
     #[ORM\Column(type: 'datetime')]
     private $date;
 
+    #[ORM\OneToOne(targetEntity: Commande::class, cascade: ['persist', 'remove'])]
+    private $commande;
+
     public function __construct()
     {
         $this->date = new DateTime();
@@ -51,6 +54,18 @@ class Paiement
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getCommande(): ?Commande
+    {
+        return $this->commande;
+    }
+
+    public function setCommande(?Commande $commande): self
+    {
+        $this->commande = $commande;
 
         return $this;
     }

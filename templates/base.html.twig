@@ -13,7 +13,8 @@
 		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
 		{% block stylesheets %}
 			<link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+{# 			<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/botman-web-widget@0/build/assets/css/chat.min.css">
+ #}			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 			<link rel="stylesheet" href="{{ asset('stylesheets/screen.css') }}"/>
 		{% endblock %}
@@ -52,8 +53,13 @@
 
 						<a href="{{path('list_panier')}}">
 							<div id="cart-btn" class="fas fa-shopping-cart">
+								
 								{% if app.session.get('panier')|length > 0 %}
-									<p class="number">{{app.session.get('panier')|length}}</p>
+									{% set var = 0 %}
+									{% for item in app.session.get('panier') %}
+										{% set var = var + item %}
+									{% endfor %}
+									<p class="number">{{var}}</p>
 								{% endif %}
 							</div>
 						</a>
@@ -74,13 +80,20 @@
 				</div>
 
 			</header>
-
+								
 			<!-- header section ends  -->
 
 		{% endblock %}
 		{% block body %}{% endblock %}
 		{% block javascripts %}
 			<script src="{{asset('js/menu.js')}}"></script>
+		{# 	<script>
+				var botmanWidget = {
+					frameEndpoint: '/iFrameUrl'    
+				};
+			</script>
+			<script src='https://cdn.jsdelivr.net/npm/botman-web-widget@0/build/js/widget.js'></script> #}
+
 		{% endblock %}
 
 	</body>

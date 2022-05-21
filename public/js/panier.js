@@ -1,19 +1,51 @@
-let panier = document.getElementsByClassName("panier")
-/* (function($){
-    $(".panier").click(function (e) { 
-        e.preventDefault();
-        $.get($(this).attr('href'),{},function (param) 
-        {
-            location.href = 'home/index.html.twig'
-        })
+
+
+const panierAdd = document.getElementsByClassName('addPanier');
+let countPanier = 0;
+let productData = []; 
+for (let i = 0; i < panierAdd.length; i++) {
+
+    panierAdd[i].addEventListener("click",(e)=>{
+        countPanier++;
+        localStorage.setItem('panier',countPanier);
+         addPanier(panierAdd[i]); 
+      /*   if (productData[0] ==  panierAdd[i].getAttribute("id")) {
+            
+        }
+        productData.push(
+            panierAdd[i].getAttribute("id"),
+        ); */
+       // localStorage.setItem('productData',productData);
     });
-}) */
-for (let i = 0; i < panier.length; i++) {
-    panier[i].addEventListener('click', (e)=> {
-       e.preventDefault();
-    });
+}
+
+function addPanier(id) 
+{
+    panier = localStorage.getItem('productData');
+    if (!panier[0]) {
+        panier[0]++;
+    }else{
+        productData.push(
+            id.getAttribute("id"),
+        );
+    }
+   /*  productData.push(
+        {product:product.getAttribute("id"),quantity:1}
+    ); */
+    localStorage.setItem('productData',panier);
+}
+function updatePanier(params=null) {
+    let value = 0;
+    if (params == null) {
+        value++;
+    }else{
+        value--;
+    }
+    localStorage.setItem('value',value);
    
 }
+/* panierNumber.innerText = '1';
+ */// 
 //event
    /*  panier.addEventListener('click',function(e){ 
        console.log(true); 
@@ -50,15 +82,15 @@ let lasturl     = sessionStorage.getItem("last_url");
 
 }
   */
-function getPanier() {
+/* function getPanier() {
     let panier = localStorage.getItem('panierData');
     if (panier == null) {
         return [];
     }else{
         return JSON.parse(panier);
     }
-}
-function addPanier(product) {
+} */
+/* function addPanier(product) {
     let panier = getPanier();
     let panierFound = panier.find(p => p.id == product.id);
     if (panierFound != undefined) {
@@ -67,8 +99,6 @@ function addPanier(product) {
         panierFound.quantity =1;
         panier.push(product);
     }
-}
+} */
 
-function remove() {
-    
-}
+

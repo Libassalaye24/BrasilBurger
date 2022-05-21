@@ -42,6 +42,9 @@ class Commande
     #[ORM\OneToMany(mappedBy: 'commande', targetEntity: CommandesMenus::class,cascade: ['persist'])]
     private $commandesMenuses;
 
+    #[ORM\Column(type: 'date')]
+    private $dateCommande;
+
 
 
     public function __construct()
@@ -192,6 +195,18 @@ class Commande
                 $commandesMenus->setCommande(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDateCommande(): ?\DateTimeInterface
+    {
+        return $this->dateCommande;
+    }
+
+    public function setDateCommande(\DateTimeInterface $dateCommande): self
+    {
+        $this->dateCommande = $dateCommande;
 
         return $this;
     }

@@ -17,6 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class BurgerController extends AbstractController
 {
@@ -147,17 +148,25 @@ class BurgerController extends AbstractController
         ]);
     }
     #[Route('burger/changeEtat/{id}',name:'change_etat')]
-    public function changeEtat(Burger $burger,Request $request,EntityManagerInterface $manager):Response
+    public function changeEtat(Burger $burger,Request $request,EntityManagerInterface $manager,Session $session):Response
     {
         $etat = $burger->getEtat();
+        
         if ($etat == false) {
             $burger->setEtat(true);
+            $session->getFlashBag()->set('archive', 'Burger archivé avec succes');
         }else {
             $burger->setEtat(false);
+            $session->getFlashBag()->set('desarchive', 'Burger desarchivé avec succes');
         }
         $manager->persist($burger);
         $manager->flush();
-        return $this->redirectToRoute('list_burger');
+        if ($etat == false) {
+            return $this->redirectToRoute('list_burger');
+        }else{
+            return $this->redirectToRoute('list_burger_archive');
+        }
+        
         
     }
 

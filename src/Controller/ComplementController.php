@@ -2,17 +2,17 @@
 
 namespace App\Controller;
 
-use App\Entity\Complement;
 use App\Entity\Image;
+use App\Entity\Complement;
 use App\Form\ComplementType;
-use App\Repository\ComplementRepository;
 use App\Service\FileUploader;
+use App\Repository\ComplementRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ComplementController extends AbstractController
 {

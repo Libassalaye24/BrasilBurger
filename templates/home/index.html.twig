@@ -14,13 +14,11 @@
 		}
 	</style>
 	<!-- home section starts  -->
-	<section>
 		{% for message in app.flashes('produit') %}
-			<div class="alert alert-danger" style="background-color: #adeace;padding:10px;text-align:center;border-radius:5px;margin-bottom:5px;">
+			<div class="alert alert-danger" id="produit" style="background-color: #adeace;padding:10px;text-align:center;border-radius:5px;margin-bottom:5px;">
 				{{ message }}
 			</div>
 		{% endfor %}
-	</section>
 	<section class="home" id="home">
 		
 		<div class="content">
@@ -123,7 +121,7 @@
 						</div>
 
 						<a href="{{path('details',{id: product.id})}}" class="btn">voir details</a>
-							<a href="{{path('add_panier',{id: product.id})}}" id="{{product.id}}" class="btn ">
+							<a href="{{path('add_panier',{id: product.id ~ product.type})}}" id="{{product.id ~ product.type}}" class="btn ">
 								<i class="fa-solid fa-cart-plus"></i>
 								ajouter
 							</a>
@@ -297,23 +295,29 @@
 {% endblock %}
 {% block javascripts %}
 	{{parent()}}
+	{# <script src="{{asset('js/panier.js')}}"></script>  #}
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
 	<script>
 		const select = document.querySelector('#select-type');
-select.addEventListener("change", function (event) {
-console.log('true');
-const option = event.target.options[select.selectedIndex];
-const path = option.getAttribute('data-path')
-fetch(path, {
-method: 'GET',
-headers: {
-'Content-Type': 'application/json'
-}
-}).then(response => response.json()).then(promesse => {
-window.location.href = promesse;
-}).catch(err => console.log(err))
+		select.addEventListener("change", function (event) {
+			console.log('true');
+			const option = event.target.options[select.selectedIndex];
+			const path = option.getAttribute('data-path')
+			fetch(path, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).then(response => response.json()).then(promesse => {
+				window.location.href = promesse;
+			}).catch(err => console.log(err))
 
 
-});
+		});
+setTimeout(function() {
+    $('#produit').fadeOut('fast');
+}, 1000); 
 	</script>
-	<script src="{{asset('js/panier.js')}}"></script> 
+	
 {% endblock %}

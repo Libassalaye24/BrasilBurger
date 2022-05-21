@@ -5,7 +5,7 @@
 
 {% block body %}
 	<style>
-		
+
 		.retour {
 			margin-top: 1%;
 
@@ -16,37 +16,44 @@
 		h3 {
 			color: #000;
 		}
-		.etat{
-			position:absolute;
-			top:0px;
-			padding:5px;
-			left:1px;
-			background:#ddd;
-			font-size:15px;
+		.etat {
+			position: absolute;
+			top: 0;
+			padding: 5px;
+			left: 1px;
+			background: #ddd;
+			font-size: 15px;
 		}
-		.payer{
-			float:right;
-			color:#fff;
+		.payer {
+			float: right;
+			color: #fff;
 			margin-top: -0.5%;
 		}
 	</style>
 	<!-- popular section starts  -->
+		{% for message in app.flashes('add_commande') %}
+			<div class="alert alert-danger" id="add_commande" style="background-color: #adeace;padding:10px;text-align:center;border-radius:5px;margin-bottom:5px;">
+				{{ message }}
+			</div>
+		{% endfor %}
+		{% for message in app.flashes('paiement') %}
+			<div class="alert alert-danger" id="add_commande" style="background-color: #adeace;padding:10px;text-align:center;border-radius:5px;margin-bottom:5px;">
+				{{ message }}
+			</div>
+		{% endfor %}
 	<section class="retour" id="">
+
 		<a href="{{path('catalogue')}}">
 			<i class="fa-solid fa-reply fa-1x"></i>
 			catalogue
 		</a>
-		<a class="payer btn" href="{{path('catalogue')}}">
+		<a class="payer btn" href="{{path('payer')}}">
 			Payer une commande
 			<i class="fa-solid fa-reply fa-1x"></i>
 		</a>
 	</section>
 	<section class="popular" id="popular">
-		{% for message in app.flashes('add_commande') %}
-			<div class="alert alert-danger" style="background-color: #adeace;padding:10px;text-align:center;border-radius:5px;margin-bottom:5px;">
-				{{ message }}
-			</div>
-		{% endfor %}
+
 		<div class="heading">
 			<span>popular food</span>
 			<h3>Mes Commandes</h3>
@@ -64,103 +71,104 @@
 				</div>
 			</form>
 		</div>
-		
-		<div
-			class="box-container">
-			
-			 			{% for commande in commandes %}
-						 
-								{% for Cburger in commande.commandesBurgers %}
-									
-								<div class="box">
-									<div class="image">
-										<img src="{{asset('img/uploads/' ~ Cburger.burger.image.nom)}}" class="animate__backInUp" alt="">	
-									</div>
-									<div class="content">
-											<h3>{{Cburger.quantity}}x {{Cburger.burger.nom}}</h3>
-										<div class="etat">
-											{{Cburger.commande.etat}}
-										</div>
-										
-										<div class="stars">
-											commande :
-											{{Cburger.commande.numero}}
-										</div>
-										<div >
-											le 
-											{{Cburger.commande.date|date('d/m/Y')}}
-											
-										</div>
-										<a href="{{path('details_commande',{id:Cburger.commande.id})}}" disabled class="btn">Details</a>
-										
-										{% if Cburger.commande.etat == "valider" %}
-											<a href="{{path('payer',{id: Cburger.commande.id})}}" class="btn">
-												payer
-												<i class="fa-solid fa-money-bill-transfer"></i>
-											</a>
-										{% endif %}
-										{% if Cburger.commande.etat == "terminer" %}
-											<a href="{{path('payer',{id: Cburger.commande.id})}}" class="btn">
-												terminer
-											</a>
-										{% endif %}
-				
-									</div>
-								</div> 
-								{% endfor %}
 
-								{% for CMenu in commande.commandesMenuses %}
-									
-								<div class="box">
-									<div class="image">
-										<img src="{{asset('img/uploads/' ~ CMenu.menu.image.nom)}}" class="animate__backInUp" alt="">	
-									</div>
-									<div class="content">
-											<h3>{{CMenu.quantity}}x {{CMenu.menu.nom}}</h3>
-										<div class="etat">
-											{{CMenu.commande.etat}}
-										</div>
-										
-										<div class="stars">
-											commande :
-											{{CMenu.commande.numero}}
-										</div>
-										<div >
-											le 
-											{{CMenu.commande.date|date('d/m/Y')}}
-											
-										</div>
-										<a href="{{path('details_commande',{id:CMenu.commande.id})}}" disabled class="btn">Details</a>
-										
-										{% if CMenu.commande.etat == "valider" %}
-											<a href="{{path('payer',{id: CMenu.commande.id})}}" class="btn">
-												payer
-												<i class="fa-solid fa-money-bill-transfer"></i>
-											</a>
-										{% endif %}
-										{% if CMenu.commande.etat == "terminer" %}
-											<a href="{{path('payer',{id: CMenu.commande.id})}}" class="btn">
-												terminer
-											</a>
-										{% endif %}
-				
-									</div>
-								</div> 
-								{% endfor %}
-							
-							{% else %}
-								tableau vide .........
-							{% endfor %}
-				 
+		<div class="box-container">
+
+			{% for commande in commandes %}
+
+				{% for Cburger in commande.commandesBurgers %}
+
+					<div class="box">
+						<div class="image">
+							<img src="{{asset('img/uploads/' ~ Cburger.burger.image.nom)}}" class="animate__backInUp" alt="">
+						</div>
+						<div class="content">
+							<h3>{{Cburger.quantity}}x
+								{{Cburger.burger.nom}}</h3>
+							<div class="etat">
+								{{Cburger.commande.etat}}
+							</div>
+
+							<div class="stars">
+								commande :
+								{{Cburger.commande.numero}}
+							</div>
+							<div>
+								le
+								{{Cburger.commande.date|date('d/m/Y')}}
+
+							</div>
+							<a href="{{path('details_commande',{id:Cburger.commande.id})}}" disabled class="btn">Details</a>
+
+							{% if Cburger.commande.etat == "valider" %}
+								<a href="{{path('payer',{id: Cburger.commande.id})}}" class="btn">
+									payer
+									<i class="fa-solid fa-money-bill-transfer"></i>
+								</a>
+							{% endif %}
+							{% if Cburger.commande.etat == "terminer" %}
+								<a href="{{path('payer',{id: Cburger.commande.id})}}" class="btn">
+									terminer
+								</a>
+							{% endif %}
+
+						</div>
+					</div>
+				{% endfor %}
+
+				{% for CMenu in commande.commandesMenuses %}
+
+					<div class="box">
+						<div class="image">
+							<img src="{{asset('img/uploads/' ~ CMenu.menu.image.nom)}}" class="animate__backInUp" alt="">
+						</div>
+						<div class="content">
+							<h3>{{CMenu.quantity}}x
+								{{CMenu.menu.nom}}</h3>
+							<div class="etat">
+								{{CMenu.commande.etat}}
+							</div>
+
+							<div class="stars">
+								commande :
+								{{CMenu.commande.numero}}
+							</div>
+							<div>
+								le
+								{{CMenu.commande.date|date('d/m/Y')}}
+
+							</div>
+							<a href="{{path('details_commande',{id:CMenu.commande.id})}}" disabled class="btn">Details</a>
+
+							{% if CMenu.commande.etat == "valider" %}
+								<a href="{{path('payer',{id: CMenu.commande.id})}}" class="btn">
+									payer
+									<i class="fa-solid fa-money-bill-transfer"></i>
+								</a>
+							{% endif %}
+							{% if CMenu.commande.etat == "terminer" %}
+								<a href="{{path('payer',{id: CMenu.commande.id})}}" class="btn">
+									terminer
+								</a>
+							{% endif %}
+
+						</div>
+					</div>
+				{% endfor %}
+
+			{% else %}
+				tableau vide .........
+			{% endfor %}
+
 
 		</div>
 
 		{% if etatSelected is not defined %}
 			{# <div class="p" style="">
-																						<div class="pagination">
-																							{{ knp_pagination_render(commandes,'./pagination.twig') }}
-																						</div>
-																					</div> #}
+																									<div class="pagination">
+																										{{ knp_pagination_render(commandes,'./pagination.twig') }}
+																									</div>
+																								</div> #}
 		{% endif %}
 	</section>
 
@@ -315,6 +323,8 @@
 {% endblock %}
 {% block javascripts %}
 	{{parent()}}
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
 	<script>
 
 		const select = document.querySelector('#select-etat');
@@ -333,5 +343,8 @@ window.location.href = promesse;
 
 
 });
+setTimeout(function() {
+    $('#add_commande').fadeOut('fast');
+}, 1000); // <-- time in milliseconds
 	</script>
 {% endblock %}

@@ -4,72 +4,78 @@
 {% endblock %}
 
 {% block body %}
-<style>
-		{# body {
-			background-image: url({{asset('img/image/IMG17-0125-removebg-preview.png')}});
-			background-size: cover;
-			background-repeat: no repeat;
-		} #}
 
-	
-</style>
 
-	<div class="container">
-		<div class="column">
-		
-			<div class="card">
-				{% for message in app.flashes('success') %}
-					<div class="alert alert-danger" style="background-color: #adeace;padding:10px;text-align:center;border-radius:5px;margin-bottom:5px;">
-						{{ message }}
-					</div>
-				{% endfor %}
-				<div class="row">
-					
-					<a href="{{path('add_burger')}}" class="btnajout">
-						<i class="fas fa-plus "></i>Ajout
-					</a>
-					<a href="{{path('list_burger_archive')}}"  style="margint-top:1.2%;" class="link">
-						Liste des archives
-						<i class="fas fa-arrow-right "></i>
-					</a>
-				</div>
-				<div style="overflow-x:auto;">
-					<table>
-						<thead>
-							<tr>
-								<th scope="col">#</th>
-								<th scope="col">Nom</th>
-								<th scope="col">Prix</th>
-								<th scope="col">Action</th>
-							</tr>
-						</thead>
-						{% for burger in burgers %}
-							<tr>
-								<td class="thbottom">#</td>
-								<td class="thbottom">{{burger.nom}}</td>
-								<td class="thbottom">{{burger.prix}}</td>
-								
-								<td class="thbottom">
-									<a href="{{path('edit_burger',{'id':burger.id})}}" class="">
-										<i class="fas fa-edit edit c-edit"></i>
-										update
-									</a>
-									<a href="{{path('change_etat',{'id':burger.id})}}" class="">
-										<i class="fa-solid fa-file-zipper c-primary"></i>
-										archiver
-									</a>
-								</td>
-							</tr>
-						{% endfor %}
-					</table>
-				</div>
+<div class="container">
+	<div class="column">
+
+		<div class="card">
+			{% for message in app.flashes('archive') %}
+			<div class="alert alert-danger" id="archive" style="background-color: #adeace;padding:10px;text-align:center;border-radius:5px;margin-bottom:5px;">
+				{{ message }}
 			</div>
+		{% endfor %}
+			<div class="row">
 
-			<div class="p">
-				<div class="pagination">
-					{{ knp_pagination_render(burgers,'./pagination.twig') }}
-				</div>
+				<a href="{{path('add_burger')}}" class="btnajout">
+					<i class="fas fa-plus "></i>Ajout
+				</a>
+				<a href="{{path('list_burger_archive')}}" style="margint-top:1.2%;" class="link">
+					Liste des archives
+					<i class="fas fa-arrow-right "></i>
+				</a>
+			</div>
+			<div style="overflow-x:auto;">
+				<table>
+					<thead>
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">Nom</th>
+							<th scope="col">Prix</th>
+							<th scope="col">Action</th>
+						</tr>
+					</thead>
+					{% for burger in burgers %}
+						<tr>
+							<td class="thbottom">
+								<img src="{{asset('img/uploads/' ~ burger.image.nom)}}" alt="" class="" style="width:55px;height:55px">
+							</td>
+							<td class="thbottom">{{burger.nom}}</td>
+							<td class="thbottom">{{burger.prix}}</td>
+
+							<td class="thbottom">
+								<a href="{{path('edit_burger',{'id':burger.id})}}" class="">
+									<i class="fas fa-edit edit c-edit"></i>
+									update
+								</a>
+								<a href="{{path('change_etat',{'id':burger.id})}}" id="" class="">
+									<i class="fa-solid fa-file-zipper c-primary"></i>
+									archiver
+								</a>
+							</td>
+						</tr>
+						<!-- The Modal -->
+
+					{% endfor %}
+				</table>
+			</div>
+		</div>
+
+		<div class="p">
+			<div class="pagination">
+				{{ knp_pagination_render(burgers,'./pagination.twig') }}
 			</div>
 		</div>
 	</div>
+</div>
+{% endblock %}
+{% block javascripts %}
+{{parent()}}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script>
+setTimeout(function() {
+    $('#archive').fadeOut('fast');
+}, 1000); // <-- time in milliseconds
+</script>
 {% endblock %}

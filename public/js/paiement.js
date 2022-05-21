@@ -1,6 +1,8 @@
 /* const form = document.getElementById('form');
- */ const form = document.querySelector("form");
- const nom = document.getElementById("montant");
+ */ const form = document.querySelector("button");
+ const montant = document.getElementById("paiement_montant");
+ const select = document.getElementById("paiement_commande");
+
 
  let isValid = [];
  //Functions-------------------------------------------------------------
@@ -39,7 +41,6 @@
        showError(input, `${getFieldName(input)} est obligatoire`);
      } else {
        showSuccess(input);
-       isValid = true;
      }
    });
  }
@@ -86,7 +87,6 @@
      showError(input, "le Numero est invalide!!");
    } else {
      showSuccess(input);
-     isValid = true;
    }
  }
  //
@@ -95,12 +95,12 @@
      showError(input2, "Passwords do not match!");
    }
  }
- 
+ alert(true);
  //Even listeners--------------------------------------------------------
- form.addEventListener("submit", function (e) {
+ form.addEventListener("click", function (e) {
    // var nb = CheckNumberMatch(nbrEtage);
    
-     checkRequired([montant]);
+     checkRequired([montant,select]);
      CheckNumberMatch(montant);
    
    for (let i = 0; i < isValid.length; i++) {

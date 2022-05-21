@@ -30,7 +30,7 @@
 
 	<section class="shopping-cart-container active">
 		{% for message in app.flashes('produitremove') %}
-			<div class="alert alert-danger" style="background-color: #adeace;padding:10px;text-align:center;border-radius:5px;margin-bottom:5px;">
+			<div class="alert alert-danger" id="produitremove" style="background-color: #adeace;padding:10px;text-align:center;border-radius:5px;margin-bottom:5px;">
 				{{ message }}
 			</div>
 		{% endfor %}
@@ -50,7 +50,7 @@
 			
 								<div class="box">
 			
-									<a class="a-remove" href="{{path('remove_panier',{id:item.product.id})}}">
+									<a class="a-remove" href="{{path('remove_panier',{id:item.product.id ~ item.product.type})}}">
 										<i class="fas fa-times"></i>
 										<a/>
 			
@@ -60,9 +60,9 @@
 											<span>
 												quantite :
 											</span>
-											<a href="{{path('add_panier2',{id: item.product.id})}}" class="btn"><i class="fa fa-plus" aria-hidden="true"></i></a>
+											<a href="{{path('add_panier2',{id: item.product.id ~ item.product.type})}}" class="btn"><i class="fa fa-plus" aria-hidden="true"></i></a>
 											<span>{{item['quantite']}}</span>
-											 <a href="{{path('retire_panier',{id: item.product.id})}}" class="btn"><i class="fa fa-minus" aria-hidden="true"></i></a>
+											 <a href="{{path('retire_panier',{id: item.product.id ~ item.product.type })}}" class="btn"><i class="fa fa-minus" aria-hidden="true"></i></a>
 											<br>
 											<span>
 												prix :
@@ -118,7 +118,12 @@
 	{% endblock %}
 	{% block javascripts %}
 		{{parent()}}
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
 		 <script>
+		 setTimeout(function() {
+						$('#produitremove').fadeOut('fast');
+					}, 1000); 
 			document.addEventListener('DOMContentLoaded', function() {
 				var userRating = document.querySelector('.initdata');
 				var panier = userRating.dataset.isAuthenticated;
@@ -127,7 +132,7 @@
 				//var isAuthenticated = $('.js-user-rating').data('isAuthenticated');
 			});
 
-			
+					
 			{#  localStorage.setItem('panierData',"{{app.session.get('panier')}}")
 			 console.log(JSON.parse(localStorage.getItem('panierData'))); #}
 		 </script> 

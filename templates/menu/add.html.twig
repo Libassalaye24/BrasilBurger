@@ -10,6 +10,73 @@
 			background-size: cover;
 			background-repeat: no repeat;
 		}
+        ul {
+			list-style-type: none;
+		}
+
+		li {
+			display: inline-block;
+		}
+
+		input[type="checkbox"][id^="cb"] {
+			display: none;
+		}
+
+		label:not(.q) {
+			border: 1px solid #fff;
+			padding: 8px;
+			display: block;
+			position: relative;
+			margin: 10px;
+			cursor: pointer;
+			-webkit-touch-callout: none;
+			-webkit-user-select: none;
+			-khtml-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+		}
+
+		label::before {
+			background-color: white;
+			color: white;
+			content: " ";
+			display: block;
+			border-radius: 50%;
+			border: 1px solid grey;
+			position: absolute;
+			top: -5px;
+			left: -5px;
+			width: 25px;
+			height: 25px;
+			text-align: center;
+			line-height: 28px;
+			transition-duration: 0.4s;
+			transform: scale(0);
+		}
+
+		label img {
+			height: 100px;
+			width: 100px;
+			transition-duration: 0.2s;
+			transform-origin: 50% 50%;
+		}
+
+		:checked+label {
+			border-color: #ddd;
+		}
+
+		:checked+label::before {
+			content: "✓";
+			background-color: grey;
+			transform: scale(1);
+		}
+
+		:checked+label img {
+			transform: scale(0.9);
+			box-shadow: 0 0 5px #333;
+			z-index: -1;
+		}
 	
 </style>
 
@@ -23,14 +90,14 @@
                         <h2>Ajout complement</h2>
                     {% endif %}
                 #}
-                        <div class="form-control">
-                            <label for="Nom_complement">Nom Menu</label>
+                        <div class="form-control ">
+                            <label for="Nom_complement" class="q">Nom Menu</label>
                             {{ form_widget(form.nom) }}
                             <small> {{ form_errors(form.nom) }}</small>
 							 <div class="invalid-feedback"></div>
                         </div>
-						<div class="form-control">
-                            <label for="Prix">Burgers</label>
+						<div class="form-control ">
+                            <label for="Prix" class="q">Burgers</label>
                             {{ form_widget(form.burger) }}
                             <small> {{ form_errors(form.burger) }}</small>
 							 <div class="invalid-feedback"></div>
@@ -41,7 +108,7 @@
                             <small> {{ form_errors(form.complements) }}</small>
 							 <div class="invalid-feedback"></div>
                         </div> #}
-						 <div class="checkbox" id="affecter" >
+						 {# <div class="checkbox" id="affecter" >
 						 <label for="Prix">Complements</label>
                             <div class="check">
                               
@@ -50,10 +117,27 @@
                                 </label>
                               
                             </div>
-                        </div>
-                      
+                        </div> #}
+                        {% if complements|length > 0 %}
+                            <div class="form-control">
+                                <label for="description" class="q">complements</label>
+                            </div>
+                            <ul>
+                                {% for key, item in complements %}
+
+                                    <li>
+                                        <input type="checkbox" name="complement[]" value="{{item.id}}" id="cb{{key +1 }}"/>
+                                        <label for="cb{{key +1 }}">{{item.prix}}
+                                            fcfa<img src="{{asset('img/uploads/' ~ item.image.nom)}}"/></label>
+                                    </li>
+                                {% endfor %}
+
+                            </ul>
+                             <div class="invalid-feedback">{% if errorComplement is defined %} {{errorComplement}} {% endif %}
+                             </div>
+                        {% endif %}
 						<div class="form-control">
-                            <label for="description">Image </label>
+                            <label for="description" lass="q">Image </label>
                             {{ form_widget(form.image.nom) }}
 							 <small> </small>
 							  <div class="invalid-feedback">{{ form_errors(form.image.nom) }}</div>

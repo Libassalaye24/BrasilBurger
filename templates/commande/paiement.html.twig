@@ -5,43 +5,72 @@
 
 {% block body %}
 	<style>
-        .retour {
+		.retour {
 			margin-top: 1%;
-
+			padding : 5px;
 		}
-		.retour a {
+		section {
+			padding-right: 2rem;
+		}
+		.retour a,
+		.message {
 			color: #e04218;
 		}
-    </style>
-	<section class="retour" id="">
-		<a href="{{path('mes_commandes')}}">
-			<i class="fa-solid fa-reply fa-1x"></i>
-		</a>
-	</section>
-    
+	</style>
+
+
 	<div class="body">
+
 		<div class="container c1">
+			<div class="retour" id="">
+				<a href="{{path('mes_commandes')}}">
+					<i class="fa-solid fa-reply fa-1x"></i>
+					mes commandes
+				</a>
+			</div>
 			<div id="form" class="form">
-                <h2>Paiement Commande Num: {{commande.id}}</h2>
-				<form method="post" action="{{path('payer',{id:commande.id})}}">
+				{% if commande %}
+				<h2>Paiement Commande
+				</h2>
+			
+					{{form_start(form)}}
 					<div class="form-control">
-						<label for="Nom_complement">Saiair Le montant</label>
-						<input type="text" class="input" name="montant" id="montant" aria-describedby="helpId" placeholder="">
+						<label for="Nom_complement">Numero de commande</label>
+						<select class="" name="numero" id="">
+							<option value="0">Veillez selectionner</option>
+							{% for item in commande %}
+								<option {% if isSelected is defined and isSelected == item.id %} selected {% endif %} value="{{item.id}}">{{item.numero}}</option>
+							{% endfor %}
+						</select>
 						<small></small>
 						<div class="invalid-feedback">
-                            {% if erreur is defined %}
-                                {{erreur}}
-                            {% endif %}
-                        </div>
+							{% if error is defined %}
+								{{error}}
+							{% endif %}
+						</div>
 					</div>
-                    <button type="submit" name="valider" value="ok" style="border:none" class="btn ">payer</button>
-
-				</form>
+					<div class="form-control">
+						<label for="Nom_complement">Saiair Le montant</label>
+						{{form_widget(form.montant)}}
+						<small></small>
+						<div class="invalid-feedback">
+							{{form_errors(form.montant)}}
+							{% if errorMontant is defined %}
+								{{errorMontant}}
+							{% endif %}
+						</div>
+					</div>
+					<button type="submit" name="valider" value="ok" style="border:none" class="btn ">payer</button>
+					{{form_end(form)}}
+				{% else %}
+					<h2 class="message">Pour payer Veillez attendre que le gestionnaire valide votre commande</h2>
+				{% endif %}
 			</div>
 		</div>
 	</div>
 {% endblock %}
 {% block javascripts %}
-	{{parent()}}
 	<script src="{{asset('js/paiement.js')}}"></script>
+
+	{{parent()}}
 {% endblock %}
