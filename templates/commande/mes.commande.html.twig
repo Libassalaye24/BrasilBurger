@@ -31,16 +31,16 @@
 		}
 	</style>
 	<!-- popular section starts  -->
-		{% for message in app.flashes('add_commande') %}
-			<div class="alert alert-danger" id="add_commande" style="background-color: #adeace;padding:10px;text-align:center;border-radius:5px;margin-bottom:5px;">
-				{{ message }}
-			</div>
-		{% endfor %}
-		{% for message in app.flashes('paiement') %}
-			<div class="alert alert-danger" id="add_commande" style="background-color: #adeace;padding:10px;text-align:center;border-radius:5px;margin-bottom:5px;">
-				{{ message }}
-			</div>
-		{% endfor %}
+	{% for message in app.flashes('add_commande') %}
+		<div class="alert alert-danger" id="add_commande" style="background-color: #adeace;padding:10px;text-align:center;border-radius:5px;margin-bottom:5px;">
+			{{ message }}
+		</div>
+	{% endfor %}
+	{% for message in app.flashes('paiement') %}
+		<div class="alert alert-danger" id="add_commande" style="background-color: #adeace;padding:10px;text-align:center;border-radius:5px;margin-bottom:5px;">
+			{{ message }}
+		</div>
+	{% endfor %}
 	<section class="retour" id="">
 
 		<a href="{{path('catalogue')}}">
@@ -49,9 +49,10 @@
 		</a>
 		<a class="payer btn" href="{{path('payer')}}">
 			Payer une commande
-			<i class="fa-solid fa-reply fa-1x"></i>
+			<i class="fa-solid fa-money-bill-transfer"></i>
 		</a>
 	</section>
+
 	<section class="popular" id="popular">
 
 		<div class="heading">
@@ -59,98 +60,152 @@
 			<h3>Mes Commandes</h3>
 		</div>
 
-		<div class="form-filtre">
-			<form method="POST" action="{{path('commande_filtre_by_etat')}}">
-				<div class="col-md-2">
-					<label>Filter les commandes :</label>
-					<select class="form-select" id="select-etat" aria-label="Default select example">
-						<option value="encours" {% if etatSelected is defined %} {% if etatSelected == 'encours' %} selected="selected" {% endif %} {% endif %} data-path="{{ path('commande_filtre_by_etat',{etat:'encours'})}}">En cours</option>
-						<option value="valider" {% if etatSelected is defined %} {% if etatSelected == 'valider' %} selected="selected" {% endif %} {% endif %} data-path="{{ path('commande_filtre_by_etat',{etat:'valider'})}}">Valider</option>
-						<option value="annuler" {% if etatSelected is defined %} {% if etatSelected == 'annuler' %} selected="selected" {% endif %} {% endif %} data-path="{{ path('commande_filtre_by_etat',{etat:'annuler'})}}">Annuler</option>
-					</select>
-				</div>
-			</form>
+		<div
+			class="form-filtre">
+			{# <form method="POST" action="{{path('commande_filtre_by_etat')}}"> #}
+			<div class="col-md-2">
+				<label>Filter les commandes :</label>
+				<select class="form-select" id="select-etat" aria-label="Default select example">
+					<option value="encours" {% if etatSelected is defined %} {% if etatSelected == 'encours' %} selected="selected" {% endif %} {% endif %} data-path="{{ path('commande_filtre_by_etat',{etat:'encours'})}}">En cours</option>
+					<option value="valider" {% if etatSelected is defined %} {% if etatSelected == 'valider' %} selected="selected" {% endif %} {% endif %} data-path="{{ path('commande_filtre_by_etat',{etat:'valider'})}}">Valider</option>
+					<option value="annuler" {% if etatSelected is defined %} {% if etatSelected == 'annuler' %} selected="selected" {% endif %} {% endif %} data-path="{{ path('commande_filtre_by_etat',{etat:'annuler'})}}">Annuler</option>
+				</select>
+			</div>
+			{# </form> #}
 		</div>
 
 		<div class="box-container">
-
 			{% for commande in commandes %}
 
-				{% for Cburger in commande.commandesBurgers %}
+				{% for Cburger in commande.burger %}
 
-					<div class="box">
+					<div class="box" data-aos="fade-up" data-aos-duration="3000">
 						<div class="image">
-							<img src="{{asset('img/uploads/' ~ Cburger.burger.image.nom)}}" class="animate__backInUp" alt="">
+							<img src="{{asset('img/uploads/' ~ Cburger.image.nom)}}" class="animate__backInUp" alt="">
 						</div>
 						<div class="content">
-							<h3>{{Cburger.quantity}}x
-								{{Cburger.burger.nom}}</h3>
-							<div class="etat">
-								{{Cburger.commande.etat}}
-							</div>
+							<h3>{# {{Cburger.quantity}} #}x
+								{{Cburger.nom}}</h3>
+							{% if commande.etat == 'encours' %}
+								<div class="etat" style="background:yellow;">
+									{{commande.etat}}
+								</div>
+							{% endif %}
+							{% if commande.etat == 'valider' %}
+								<div class="etat" style="background:green;">
+									{{commande.etat}}
+								</div>
+							{% endif %}
+							{% if commande.etat == 'terminer' %}
+								<div class="etat" style="background:#ddd;">
+									{{commande.etat}}
+								</div>
+							{% endif %}
+							{% if commande.etat == 'annuler' %}
+								<div class="etat" style="background: red;">
+									{{commande.etat}}
+								</div>
+							{% endif %}
 
 							<div class="stars">
 								commande :
-								{{Cburger.commande.numero}}
+								{{commande.numero}}
 							</div>
 							<div>
 								le
-								{{Cburger.commande.date|date('d/m/Y')}}
+								{{commande.date|date('d/m/Y')}}
 
 							</div>
-							<a href="{{path('details_commande',{id:Cburger.commande.id})}}" disabled class="btn">Details</a>
+							<a href="{{path('details_commande',{id:commande.id})}}" disabled class="btn">Details</a>
 
-							{% if Cburger.commande.etat == "valider" %}
-								<a href="{{path('payer',{id: Cburger.commande.id})}}" class="btn">
-									payer
-									<i class="fa-solid fa-money-bill-transfer"></i>
-								</a>
-							{% endif %}
-							{% if Cburger.commande.etat == "terminer" %}
-								<a href="{{path('payer',{id: Cburger.commande.id})}}" class="btn">
-									terminer
-								</a>
-							{% endif %}
 
 						</div>
 					</div>
 				{% endfor %}
 
-				{% for CMenu in commande.commandesMenuses %}
+				{% for CMenu in commande.menu %}
 
-					<div class="box">
+					<div class="box" data-aos="fade-up" data-aos-duration="3000">
 						<div class="image">
-							<img src="{{asset('img/uploads/' ~ CMenu.menu.image.nom)}}" class="animate__backInUp" alt="">
+							<img src="{{asset('img/uploads/' ~ CMenu.image.nom)}}" class="animate__backInUp" alt="">
 						</div>
 						<div class="content">
-							<h3>{{CMenu.quantity}}x
-								{{CMenu.menu.nom}}</h3>
-							<div class="etat">
-								{{CMenu.commande.etat}}
-							</div>
-
+							<h3>{# {{CMenu.quantity}} #}x
+								{{CMenu.nom}}</h3>
+							{% if commande.etat == 'encours' %}
+								<div class="etat" style="background:yellow;">
+									{{commande.etat}}
+								</div>
+							{% endif %}
+							{% if commande.etat == 'valider' %}
+								<div class="etat" style="background:green;">
+									{{commande.etat}}
+								</div>
+							{% endif %}
+							{% if commande.etat == 'terminer' %}
+								<div class="etat" style="background:#ddd;">
+									{{commande.etat}}
+								</div>
+							{% endif %}
+							{% if commande.etat == 'annuler' %}
+								<div class="etat" style="background: red;">
+									{{commande.etat}}
+								</div>
+							{% endif %}
 							<div class="stars">
 								commande :
-								{{CMenu.commande.numero}}
+								{{commande.numero}}
 							</div>
 							<div>
 								le
-								{{CMenu.commande.date|date('d/m/Y')}}
+								{{commande.date|date('d/m/Y')}}
 
 							</div>
-							<a href="{{path('details_commande',{id:CMenu.commande.id})}}" disabled class="btn">Details</a>
+							<a href="{{path('details_commande',{id:commande.id})}}" disabled class="btn">Details</a>
 
-							{% if CMenu.commande.etat == "valider" %}
-								<a href="{{path('payer',{id: CMenu.commande.id})}}" class="btn">
-									payer
-									<i class="fa-solid fa-money-bill-transfer"></i>
-								</a>
+						</div>
+					</div>
+				{% endfor %}
+				{% for CComp in commande.complement %}
+
+					<div class="box" data-aos="fade-up" data-aos-duration="3000">
+						<div class="image">
+							<img src="{{asset('img/uploads/' ~ CComp.image.nom)}}" class="animate__backInUp" alt="">
+						</div>
+						<div class="content">
+							<h3>{# {{CMenu.quantity}} #}x
+								{{CComp.nom}}</h3>
+							{% if commande.etat == 'encours' %}
+								<div class="etat" style="background:yellow;">
+									{{commande.etat}}
+								</div>
 							{% endif %}
-							{% if CMenu.commande.etat == "terminer" %}
-								<a href="{{path('payer',{id: CMenu.commande.id})}}" class="btn">
-									terminer
-								</a>
+							{% if commande.etat == 'valider' %}
+								<div class="etat" style="background:green;">
+									{{commande.etat}}
+								</div>
 							{% endif %}
+							{% if commande.etat == 'terminer' %}
+								<div class="etat" style="background:#ddd;">
+									{{commande.etat}}
+								</div>
+							{% endif %}
+							{% if commande.etat == 'annuler' %}
+								<div class="etat" style="background: red;">
+									{{commande.etat}}
+								</div>
+							{% endif %}
+							<div class="stars">
+								commande :
+								{{commande.numero}}
+							</div>
+							<div>
+								le
+								{{commande.date|date('d/m/Y')}}
+
+							</div>
+							<a href="{{path('details_commande',{id:commande.id})}}" disabled class="btn">Details</a>
+
 
 						</div>
 					</div>
@@ -165,10 +220,10 @@
 
 		{% if etatSelected is not defined %}
 			{# <div class="p" style="">
-																									<div class="pagination">
-																										{{ knp_pagination_render(commandes,'./pagination.twig') }}
-																									</div>
-																								</div> #}
+																																		<div class="pagination">
+																																			{{ knp_pagination_render(commandes,'./pagination.twig') }}
+																																		</div>
+																																	</div> #}
 		{% endif %}
 	</section>
 
@@ -323,28 +378,24 @@
 {% endblock %}
 {% block javascripts %}
 	{{parent()}}
-			<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 	<script>
 
-		const select = document.querySelector('#select-etat');
-select.addEventListener("change", function (event) {
-console.log('true');
-const option = event.target.options[select.selectedIndex];
-const path = option.getAttribute('data-path')
-fetch(path, {
-method: 'GET',
-headers: {
-'Content-Type': 'application/json'
+		$(function () {
+$(document).on('change', '#select-etat', function () {
+const path = $(this).find(':selected').data('path');
+$.ajax({
+url: path, type: "GET", dataType: 'JSON', // or html or whatever you want
+success: function (data) {
+window.location.href = data
 }
-}).then(response => response.json()).then(promesse => {
-window.location.href = promesse;
-}).catch(err => console.log(err))
-
-
 });
-setTimeout(function() {
-    $('#add_commande').fadeOut('fast');
+
+})
+});
+setTimeout(function () {
+$('#add_commande').fadeOut('fast');
 }, 1000); // <-- time in milliseconds
 	</script>
 {% endblock %}

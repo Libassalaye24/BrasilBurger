@@ -6,18 +6,23 @@
 {% block body %}
 	<div class="container">
 		<div class="column">
-			
+
 			<div class="card">
-				{% for message in app.flashes('success') %}
-					<div class="alert alert-danger" style="background-color: #adeace;padding:10px;text-align:center;border-radius:5px;margin-bottom:5px;">
+				{% for message in app.flashes('archiveC') %}
+					<div class="alert alert-danger" id="archive" style="background-color: #adeace;padding:10px;text-align:center;border-radius:5px;margin-bottom:8px;">
 						{{ message }}
 					</div>
 				{% endfor %}
-				<div class="row" style=" margin-bottom: 14px;">
+				{% for message in app.flashes('errorArchiveC') %}
+					<div class="alert alert-danger" id="archive" style="background-color: #e04218;padding:10px;text-align:center;border-radius:5px;margin-bottom:8px;color:#fff">
+						{{ message }}
+					</div>
+				{% endfor %}
+				<div class="row" style="margin-top: 1.5%;">
 					<a href="{{path('add_complement')}}" class="btnajout">
 						<i class="fas fa-plus "></i>Ajout
 					</a>
-					<a href="{{path('list_complement_archive')}}"  style="margint-top:1.2%;" class="link">
+					<a href="{{path('list_complement_archive')}}" style="margint-top:1.2%;" class="link">
 						Liste des archives
 						<i class="fas fa-arrow-right "></i>
 					</a>
@@ -27,7 +32,7 @@
 						<thead>
 							<tr>
 								<th scope="col">
-								#
+									#
 								</th>
 								<th scope="col">Nom</th>
 								<th scope="col">Prix</th>
@@ -37,18 +42,17 @@
 						{% for complement in complements %}
 							<tr>
 								<td class="thbottom">
-									<img
-										src="{{asset('img/uploads/' ~ complement.image.nom)}}" alt="" class="" style="width:55px;height:55px">
+									<img src="{{asset('img/uploads/' ~ complement.image.nom)}}" alt="" class="" style="width:55px;height:55px">
 								</td>
 								<td class="thbottom">{{complement.nom}}</td>
 								<td class="thbottom">{{complement.prix}}</td>
-								
+
 								<td class="thbottom">
 									<a href="{{path('edit_complement',{'id':complement.id})}}" class="">
 										<i class="fas fa-edit edit c-edit"></i>
 										update
 									</a>
-									<a href="{{path('change_etat_cmpl',{'id':complement.id})}}" class="">
+									<a href="{{path('archive_complement',{'id':complement.id})}}" class="">
 										<i class="fa-solid fa-file-zipper c-primary"></i>
 										archiver
 									</a>
@@ -57,13 +61,14 @@
 						{% endfor %}
 					</table>
 				</div>
-			</div>
-
-			<div class="p">
-				<div class="pagination">
-					{{ knp_pagination_render(complements,'./pagination.twig') }}
+				<div class="p">
+					<div class="pagination">
+						{{ knp_pagination_render(complements,'./pagination.twig') }}
+					</div>
 				</div>
 			</div>
+
+
 		</div>
 	</div>
 {% endblock %}

@@ -33,8 +33,9 @@
 	</style>
 	
 	<!-- home section starts  -->
+
 	<section class="retour" id="">
-		{% if is_granted('ROLE_GESTIONNAIRE') %}
+		{% if role[0] =="ROLE_CLIENT" %}
 			<a href="{{path('list_commande')}}">
 				<i class="fa-solid fa-reply fa-1x"></i>
 			</a>			
@@ -65,33 +66,45 @@
            {#  <a href="" class="btn annuler">annuler</a> #}
         </div>
     </div>						
-    {% for Cburger in details.commandesBurgers %}
+    {% for Cburger in details.burger %}
     <div class="box-container">
 
         <div href="" class="box">
-            <img src="{{asset('img/uploads/' ~ Cburger.burger.image.nom)}}" alt="">
+            <img src="{{asset('img/uploads/' ~ Cburger.image.nom)}}" alt="">
             <div class="content">
-                <h3>{{Cburger.quantity}}x {{Cburger.burger.nom}}</h3>
-                <div class="price">{{Cburger.burger.prix * Cburger.quantity}} FCFA</div>
+                <h3>{# {{Cburger.quantity}} #}x {{Cburger.nom}}</h3>
+                <div class="price">{{Cburger.prix}} FCFA</div>
             </div>
         </div>
     </div>
     {% endfor %}
-    {% for Cmenu in details.commandesMenuses %}
+	 {% for CCompl in details.complement %}
+    <div class="box-container">
+
+        <div href="" class="box">
+            <img src="{{asset('img/uploads/' ~ CCompl.image.nom)}}" alt="">
+            <div class="content">
+                <h3>{# {{Cburger.quantity}} #}x {{CCompl.nom}}</h3>
+                <div class="price">{{CCompl.prix}} FCFA</div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% for Cmenu in details.menu %}
      <div class="box-container">
 
         <div  class="box">
-            <img src="{{asset('img/uploads/' ~ Cmenu.menu.image.nom)}}" alt="">
+            <img src="{{asset('img/uploads/' ~ Cmenu.image.nom)}}" alt="">
             <div class="content">
-                <h3> {{Cmenu.quantity}}x {{Cmenu.menu.nom}}</h3>
+                <h3> {# {{Cmenu.quantity}} #}x {{Cmenu.nom}}</h3>
                 <div class="price">
                     {% set montant = 0 %}
 					{% set montantTotal = 0 %}
-                    {% for item in Cmenu.menu.complements %}
+                    {% for item in Cmenu.complements %}
                         {% set montant = montant + item.prix %}                   
                     {% endfor %}
-                    {{(montant + Cmenu.menu.burger.prix) * Cmenu.quantity}} FCFA
-					{% set montantTotal = montant + Cmenu.menu.burger.prix * Cmenu.quantity %}
+                    {{(montant + Cmenu.burger.prix)}} FCFA
+					{% set montantTotal = montant + Cmenu.burger.prix  %}
                 </div>
             </div>
         </div>

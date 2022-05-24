@@ -8,26 +8,47 @@
 		html {
 			font-size: 62.5%;
 		}
+	
 	</style>
 
 	<div class="container">
 		<div class="column">
 
 			<div class="card">
-				<div class="form-filtre">
-					<form method="POST" action="{{path('commande_filtre_by_etat')}}">
-						<div class="col-md-2">
-							<label>Filter les commandes :</label>
-							<select class="form-select" id="select-etat" aria-label="Default select example">
-								<option value="encours" {% if etatSelected is defined %} {% if etatSelected == 'encours' %} selected="selected" {% endif %} {% endif %} data-path="{{ path('commande_filtre_by_etat',{etat:'encours'})}}">En cours</option>
-								<option value="valider" {% if etatSelected is defined %} {% if etatSelected == 'valider' %} selected="selected" {% endif %} {% endif %} data-path="{{ path('commande_filtre_by_etat',{etat:'valider'})}}">Valider</option>
-								<option value="terminer" {% if etatSelected is defined %} {% if etatSelected == 'terminer' %} selected="selected" {% endif %} {% endif %} data-path="{{ path('commande_filtre_by_etat',{etat:'terminer'})}}">Terminer</option>
-							</select>
-						</div>
+				<div class="statistic">
+					<a href="#" class="btn" style="background-color: #fff;border:red 2px solid;color:red">
+						Commandes non validees & payees
+						<i class="fa fa-exclamation-circle c-primary" aria-hidden="true"></i>
+					</a>
+					<a href="#" class="btn" style="background-color: #fff;border:green 2px solid;color:green">
+						Commandes validees & payees
+						<i class="fas fa-check-double  " style="color:green;"></i>
+					</a>
 
-					</form>
 				</div>
-				{% for message in app.flashes('success') %}
+				<div class="form-filtre">
+					<div class="form-inline" >
+						<label for="email">Etat:</label>
+						<select class="form-select" id="select-etat" aria-label="Default select example">
+							<option value="encours" {% if etatSelected is defined %} {% if etatSelected == 'encours' %} selected="selected" {% endif %} {% endif %} data-path="{{ path('commande_filtre_by_etat',{etat:'encours'})}}">En cours</option>
+							<option value="valider" {% if etatSelected is defined %} {% if etatSelected == 'valider' %} selected="selected" {% endif %} {% endif %} data-path="{{ path('commande_filtre_by_etat',{etat:'valider'})}}">Valider</option>
+							<option value="annuler" {% if etatSelected is defined %} {% if etatSelected == 'annuler' %} selected="selected" {% endif %} {% endif %} data-path="{{ path('commande_filtre_by_etat',{etat:'annuler'})}}">Annuler</option>
+							<option value="terminer" {% if etatSelected is defined %} {% if etatSelected == 'terminer' %} selected="selected" {% endif %} {% endif %} data-path="{{ path('commande_filtre_by_etat',{etat:'terminer'})}}">Terminer</option>
+						</select>
+						<label for="pwd">Client:</label>
+						<select class="form-select" id="select-client" aria-label="Default select example">
+							<option value="0" >Selectionner</option>
+							{% for item in clients %}
+								<option value="{{item.id}}" {% if clientSelected is defined %} {% if clientSelected == item.id %} selected="selected" {% endif %} {% endif %} data-path="{{ path('commande_filtre_by_client',{client: item.id })}}">{{item.email}} </option>
+							{% endfor %}
+						</select>
+					
+
+					</div>
+					
+				</div>
+
+				{% for message in app.flashes('valideCommande') %}
 					<div class="alert alert-danger" style="background-color: #adeace;padding:10px;text-align:center;border-radius:5px;margin-bottom:5px;">
 						{{ message }}
 					</div>
@@ -51,7 +72,8 @@
 							<tr>
 
 								<td class="thbottom">
-								N° {{commande.numero}}
+									N°
+									{{commande.numero}}
 								</td>
 								<td class="thbottom">
 									<a href="{{path('details_commande',{id:commande.id})}}" class="btnajout">
@@ -65,9 +87,9 @@
 									FCFA</td>
 								<td class="thbottom">
 									{% if commande.paiement %}
-									<i class="fas fa-check-double  " style="color:green;"></i>
+										<i class="fas fa-check-double  " style="color:green;"></i>
 									{% else %}
-									<i class="fa fa-exclamation-circle c-primary" aria-hidden="true"></i>
+										<i class="fa fa-exclamation-circle c-primary" aria-hidden="true"></i>
 									{% endif %}
 								</td>
 								<td class="thbottom">
@@ -75,7 +97,7 @@
 										<a href="{{path('valider_commande',{id:commande.id})}}" onclick="return confirm('Voulez-vous valider cette commande?');" class="btnSuccess">
 											valider
 										</a>
-										<a href="{{path('valider_commande',{id:commande.id})}}" onclick="return confirm('Voulez-vous annuler cette commande?');" class="btnRed">
+										<a href="{{path('annuler_commande',{id:commande.id})}}" onclick="return confirm('Voulez-vous annuler cette commande?');" class="btnRed">
 											annuler
 										</a>
 									{% endif %}
@@ -84,33 +106,116 @@
 						{% endfor %}
 					</table>
 				</div>
-			</div>
+				{% if isPaginated is defined and commandes %}
+					<div class="p">
+						<div class="pagination">
+							<nav aria-label="Page navigation example " class=" ">
+								<ul class="pagination float-end  d-flex gap-2">
+									{% if page != 1 %}
+										<li class="page-item rounded-1 ">
+											<a class="page-link border active2 border-danger border-1 " href="{{ path('list_commande', {page : page - 1 ,nbr : nbr }) }}" aria-label="Next">
+												<span aria-hidden="true">&laquo;</span>
+											</a>
+										</li>
+									{% endif %}
+									{% for i in range (1 , nbrPage) %}
+										{% if i != 0 %}
+											{# <a class="a" href="{{ path(route, query|merge({(pageParameterName): page})) }}">{{ page }}</a> #}
+											<li class="page-item rounded-1 ">
+												<a class="page-link border border-danger border-1 notactive" href="{{ path('list_commande', {page : i ,nbr : nbr }) }}">{{i}}</a>
+											</li>
 
-			{# <div class="p">
-							<div class="pagination">
-								{{ knp_pagination_render(commandes,'./pagination.twig') }}
-							</div>
-						</div> #}
+										{% endif %}
+									{% endfor %}
+									{% if page != nbrPage %}
+										<li class="page-item rounded-1 ">
+											<a class="page-link border border-danger border-1 active2" href="{{ path('list_commande', {page : page + 1 ,nbr : nbr }) }}" aria-label="Previous">
+												<span aria-hidden="true">&raquo;</span>
+											</a>
+										</li>
+									{% endif %}
+
+								</ul>
+							</nav>
+						</div>
+					</div>
+				{% endif %}
+			</div>
 		</div>
 	</div>
 {% endblock %}
 {% block javascripts %}
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
 	<script>
-		const select = document.querySelector('#select-etat');
-select.addEventListener("change", function (event) {
-console.log('true');
-const option = event.target.options[select.selectedIndex];
-const path = option.getAttribute('data-path')
-fetch(path, {
-method: 'GET',
-headers: {
-'Content-Type': 'application/json'
-}
-}).then(response => response.json()).then(promesse => {
-window.location.href = promesse;
-}).catch(err => console.log(err))
+
+		 $(function(){
+             $(document).on('change', '#select-etat', function(){
+                  const path = $(this).find(':selected').data('path');
+                 $.ajax({
+                   url:  path,
+                   type: "GET",
+                   dataType: 'JSON', //or html or whatever you want
+                   success:function(data) {
+                       window.location.href=data
+                   }
+                 });
+             
+            })
+           });
+		    $(function(){
+             $(document).on('change', '#select-client', function(){
+                  const path = $(this).find(':selected').data('path');
+                 $.ajax({
+                   url:  path,
+                   type: "GET",
+                   dataType: 'JSON', //or html or whatever you want
+                   success:function(data) {
+                       window.location.href=data
+                   }
+                 });
+             
+            })
+           });
+		{# const select = document.querySelector('#select-etat');
+			select.addEventListener("change", function (event) {
+
+			console.log('true');
+			const option = event.target.options[select.selectedIndex];
+			const path = option.getAttribute('data-path')
+			fetch(path, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+
+				}
+
+			}).then(response => response.json())
+			  .then(promesse => {
+					window.location.href = promesse;
+			  }).catch(err => console.log(err))
 
 
-});
+			}); #}
+			{# const select = document.querySelector('#select-client');
+			select.addEventListener("change", function (event) {
+				alert(true);
+			console.log('true');
+			const option = event.target.options[select.selectedIndex];
+			const path = option.getAttribute('data-path')
+			fetch(path, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+
+				}
+
+			}).then(response => response.json())
+			  .then(promesse => {
+					window.location.href = promesse;
+			  }).catch(err => console.log(err))
+
+
+			}); #}
 	</script>
 {% endblock %}

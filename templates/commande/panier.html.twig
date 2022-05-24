@@ -15,11 +15,79 @@
 		.box .fa-times {
 			cursor: pointer;
 		}
-		.fa-plus{
-			color:white;
+		.fa-plus {
+			color: white;
 		}
-		.fa-minus{
-			color:white;
+		.fa-minus {
+			color: white;
+		}
+		ul {
+			list-style-type: none;
+		}
+
+		li {
+			display: inline-block;
+		}
+
+		input[type="checkbox"][id^="cb"] {
+			display: none;
+		}
+
+		label:not(.q) {
+			border: 1px solid #fff;
+			padding: 8px;
+			display: block;
+			position: relative;
+			color: black;
+			margin: 2% 10px 10px;
+			cursor: pointer;
+			-webkit-touch-callout: none;
+			-webkit-user-select: none;
+			-khtml-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+		}
+
+		label::before {
+			background-color: white;
+			color: white;
+			content: " ";
+			display: block;
+			border-radius: 50%;
+			border: 1px solid grey;
+			position: absolute;
+			top: -5px;
+			left: -5px;
+			width: 25px;
+			height: 25px;
+			text-align: center;
+			line-height: 28px;
+			transition-duration: 0.4s;
+			transform: scale(0);
+		}
+
+		label img {
+			height: 100px;
+			width: 100px;
+			transition-duration: 0.2s;
+			transform-origin: 50% 50%;
+		}
+
+		:checked+label {
+			border-color: #ddd;
+		}
+
+		:checked+label::before {
+			content: "✓";
+			background-color: grey;
+			transform: scale(1);
+		}
+
+		:checked+label img {
+			transform: scale(0.9);
+			box-shadow: 0 0 5px #333;
+			z-index: -1;
 		}
 	</style>
 	<section class="retour" id="">
@@ -36,61 +104,84 @@
 		{% endfor %}
 		<div class="products-container">
 			{% if app.user %}
-			{% else %}
-				{% set panierWithData = "<script>localStorage.getItem('panierData');</script>" %}	
-				<script>
-				localStorage.removeItem('panierData');
-				</script>
+				{% else %}
+					{% set panierWithData = "<script>localStorage.getItem('panierData');</script>" %}
+					<script>
+						localStorage.removeItem('panierData');
+					</script>
 			{% endif %}
-			<h3 class="title">Votre Panier {% if panierWithData|length == 0  %} est vide! {% endif %}</h3>
+			<h3 class="title">Votre Panier
+				{% if panierWithData|length == 0  %}
+					est vide!
+				{% endif %}
+			</h3>
 			{% if panierWithData %}
-			 	<div id="" data-is-authenticated="{{panierWithData|json_encode}}"  class="box-container initdata">
-			
-							{% for item in panierWithData %}
-			
-								<div class="box">
-			
-									<a class="a-remove" href="{{path('remove_panier',{id:item.product.id ~ item.product.type})}}">
-										<i class="fas fa-times"></i>
-										<a/>
-			
-										<img src="{{asset('img/uploads/' ~ item['product'].image.nom)}}" alt="">
-										<div class="content">
-											<h3>{{item['product'].nom}}</h3>
-											<span>
-												quantite :
-											</span>
-											<a href="{{path('add_panier2',{id: item.product.id ~ item.product.type})}}" class="btn"><i class="fa fa-plus" aria-hidden="true"></i></a>
-											<span>{{item['quantite']}}</span>
-											 <a href="{{path('retire_panier',{id: item.product.id ~ item.product.type })}}" class="btn"><i class="fa fa-minus" aria-hidden="true"></i></a>
-											<br>
-											<span>
-												prix :
-											</span>
-											<span class="price">
-												{% if item['product'].type == 'menu' %}
-													{% set montant = 0 %}
-													{% for complement in item['product'].complements %}
-														{% set montant = montant + complement.prix %}
-													{% endfor %}
-													{{(item['product'].burger.prix + montant) * item['quantite']}}
-												{% else %}
-													{{item['product'].prix * item['quantite']}}
-												{% endif %}
-											</span>
-										</div>
-									</div>
-			
-								{% endfor %}
-			
+				<div id="" data-is-authenticated="{{panierWithData|json_encode}}" class="box-container initdata">
+
+					{% for item in panierWithData %}
+
+						<div class="box">
+
+							<a class="a-remove" href="{{path('remove_panier',{id:item.product.id ~ item.product.type})}}">
+								<i class="fas fa-times"></i>
+								<a/>
+
+								<img src="{{asset('img/uploads/' ~ item['product'].image.nom)}}" alt="">
+								<div class="content">
+									<h3>{{item['product'].nom}}</h3>
+									<span>
+										quantite :
+									</span>
+									<a href="{{path('add_panier2',{id: item.product.id ~ item.product.type})}}" class="btn">
+										<i class="fa fa-plus" aria-hidden="true"></i>
+									</a>
+									<span>{{item['quantite']}}</span>
+									<a href="{{path('retire_panier',{id: item.product.id ~ item.product.type })}}" class="btn">
+										<i class="fa fa-minus" aria-hidden="true"></i>
+									</a>
+									<br>
+									<span>
+										prix :
+									</span>
+									<span class="price">
+										{% if item['product'].type == 'menu' %}
+											{% set montant = 0 %}
+											{% for complement in item['product'].complements %}
+												{% set montant = montant + complement.prix %}
+											{% endfor %}
+											{{(item['product'].burger.prix + montant) * item['quantite']}}
+										{% else %}
+											{{item['product'].prix * item['quantite']}}
+										{% endif %}
+									</span>
+								</div>
 							</div>
-			
-						</div> 
-			
+
+						{% endfor %}
+
+
+					</div>
+
+				</div>
+				<div class="form-control" style="margin-top:2%">
+					<label for="description" class="q">complements</label>
+				</div>
+				<form method="POST" action="{{path('checkOut')}}">
+				<ul>
+					{% for key, item in complements %}
+
+						<li>
+							<input type="checkbox" name="complement[]" class="checked" data-path="{{ path('checkOutComplements',{prix: item.prix})}}" value="{{item.id}}" id="cb{{key +1 }}"/>
+							<label for="cb{{key +1 }}">{{item.prix}}
+								fcfa<img src="{{asset('img/uploads/' ~ item.image.nom)}}"/></label>
+						</li>
+					{% endfor %}
+
+				</ul>
 				<div class="cart-total">
 
 					<h3 class="title">
-						 total panier
+						total panier
 					</h3>
 
 					<div class="box">
@@ -106,9 +197,10 @@
 								FCFA</span>
 						</h3>
 
-						<a href="{{path('checkOut')}}" class="btn">Finalise ta commande</a>
+						<button type="submit" name="commander"  class="btn " style="border:none">Finalise ta commande</a>
 
 					</div>
+					</form>
 
 				</div>
 			{% endif %}
@@ -120,20 +212,20 @@
 		{{parent()}}
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-		 <script>
-		 setTimeout(function() {
-						$('#produitremove').fadeOut('fast');
-					}, 1000); 
-			document.addEventListener('DOMContentLoaded', function() {
-				var userRating = document.querySelector('.initdata');
-				var panier = userRating.dataset.isAuthenticated;
-				  localStorage.setItem('panierData',panier)
-				// or with jQuery
-				//var isAuthenticated = $('.js-user-rating').data('isAuthenticated');
-			});
+		<script>
+			setTimeout(function () {
+$('#produitremove').fadeOut('fast');
+}, 1000);
+document.addEventListener('DOMContentLoaded', function () {
+var userRating = document.querySelector('.initdata');
+var panier = userRating.dataset.isAuthenticated;
+localStorage.setItem('panierData', panier)
+// or with jQuery
+// var isAuthenticated = $('.js-user-rating').data('isAuthenticated');
+});
 
-					
-			{#  localStorage.setItem('panierData',"{{app.session.get('panier')}}")
-			 console.log(JSON.parse(localStorage.getItem('panierData'))); #}
-		 </script> 
+
+
+		</script>
+
 	{% endblock %}

@@ -4,19 +4,20 @@
 {% endblock %}
 
 {% block body %}
-<div class="container">
+	<div class="container">
 		<div class="column">
-			
+
 			<div class="card">
-				{% for message in app.flashes('success') %}
-					<div class="alert alert-danger" style="background-color: #adeace;padding:10px;text-align:center;border-radius:5px;margin-bottom:5px;">
+				{% for message in app.flashes('desarchiveC') %}
+					<div class="alert alert-danger" id="archive" style="background-color: #adeace;padding:10px;text-align:center;border-radius:5px;margin-bottom:8px;">
 						{{ message }}
 					</div>
 				{% endfor %}
-				<div class="row" style=" margin-bottom: 14px;">
-					
-					<a href="{{path('list_complement')}}"  style="margint-top:1.2%;" class="link2">
-						
+			
+				<div class="row" style="margin-top: 1.5%;">
+
+					<a href="{{path('list_complement')}}" style="margint-top:1.2%;" class="link2">
+
 						<i class="fas fa-arrow-left "></i>
 						Liste des archives
 					</a>
@@ -34,18 +35,17 @@
 						{% for complement in complements %}
 							<tr>
 								<td class="thbottom">
-									<img
-										src="{{asset('img/uploads/' ~ complement.image.nom)}}" alt="" class="" style="width:55px;height:55px">
+									<img src="{{asset('img/uploads/' ~ complement.image.nom)}}" alt="" class="" style="width:55px;height:55px">
 								</td>
 								<td class="thbottom">{{complement.nom}}</td>
 								<td class="thbottom">{{complement.prix}}</td>
-								
+
 								<td class="thbottom">
 									<a href="{{path('edit_complement',{'id':complement.id})}}" class="">
 										<i class="fas fa-edit edit c-edit"></i>
 										update
 									</a>
-									<a href="{{path('change_etat_cmpl',{'id':complement.id})}}" class="">
+									<a href="{{path('desarchive_complement',{'id':complement.id})}}" class="">
 										<i class="fa-solid fa-file-zipper c-primary"></i>
 										desarchiver
 									</a>
@@ -54,13 +54,14 @@
 						{% endfor %}
 					</table>
 				</div>
-			</div>
-
-			<div class="p">
-				<div class="pagination">
-					{{ knp_pagination_render(complements,'./pagination.twig') }}
+				<div class="p">
+					<div class="pagination">
+						{{ knp_pagination_render(complements,'./pagination.twig') }}
+					</div>
 				</div>
 			</div>
+
+
 		</div>
 	</div>
 {% endblock %}

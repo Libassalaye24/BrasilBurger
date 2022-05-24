@@ -12,27 +12,27 @@
 		.home {
 			margin-top: -2%;
 		}
-	</style>
+		</style>
 	<!-- home section starts  -->
-		{% for message in app.flashes('produit') %}
-			<div class="alert alert-danger" id="produit" style="background-color: #adeace;padding:10px;text-align:center;border-radius:5px;margin-bottom:5px;">
-				{{ message }}
-			</div>
-		{% endfor %}
+	{% for message in app.flashes('produit') %}
+		<div class="alert alert-danger" id="produit" style="background-color: #adeace;padding:10px;text-align:center;border-radius:5px;margin-bottom:5px;">
+			{{ message }}
+		</div>
+	{% endfor %}
 	<section class="home" id="home">
-		
+
 		<div class="content">
-			<span>welcome to brasil Burger</span>
+			<span>Welcome to brasil Burger</span>
 			<h3>different spices for the different tastes 😋</h3>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis unde dolores temporibus hic quam debitis tenetur harum nemo.</p>
-			<a href="#" class="btn">order now</a>
+			<a href="#popular" class="btn">Commander maintenant</a>
 		</div>
 
 		<div class="image">
 			<img
 			src="{{asset('img/image/home-b-img.png')}}" alt="" class="home-img">
 		{#         <img src="{{asset('img/image/home-parallax-img.png')}}" alt="" class="home-parallax-img">
-																					 #}
+																									 #}
 		</div>
 
 	</section>
@@ -62,7 +62,38 @@
 		</a>
 
 	</section>
+	<section class="about" id="about">
 
+    <div class="image">
+        <img src="{{asset('img/burgerImages/i153782-burger-largejpg-removebg-preview.png')}}" alt="">
+    </div>
+
+    <div class="content">
+        <span>why choose us?</span>
+        <h3 class="title">what's make our food delicious!</h3>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos ut explicabo, numquam iusto est a ipsum assumenda tempore esse corporis?</p>
+        <a href="#" class="btn">read more</a>
+        <div class="icons-container">
+            <div class="icons">
+                <img src="{{asset('img/image/serv-1.png')}}" alt="">
+                <h3>fast delivery</h3>
+            </div>  
+            <div class="icons">
+                <img src="{{asset('img/image/serv-2.png')}}" alt="">
+                <h3>fresh food</h3>
+            </div>   
+            <div class="icons">
+                <img src="{{asset('img/image/serv-3.png')}}" alt="">
+                <h3>best quality</h3>
+            </div>  
+            <div class="icons">
+                <img src="{{asset('img/image/serv-4.png')}}" alt="">
+                <h3>24/7 support</h3>
+            </div>           
+        </div>
+    </div>
+
+</section>
 	<!-- popular section starts  -->
 
 	<section class="popular" id="popular">
@@ -86,9 +117,7 @@
 		<div class="box-container">
 			{% for product in products %}
 
-
-				<div class="box">
-
+				<div class="box" data-aos="fade-up" data-aos-duration="3000">
 					<div class="image">
 						<img src="{{asset('img/uploads/' ~ product.image.nom)}}" class="animate__backInUp" alt="">
 					</div>
@@ -121,15 +150,20 @@
 						</div>
 
 						<a href="{{path('details',{id: product.id})}}" class="btn">voir details</a>
-							<a href="{{path('add_panier',{id: product.id ~ product.type})}}" id="{{product.id ~ product.type}}" class="btn ">
-								<i class="fa-solid fa-cart-plus"></i>
-								ajouter
-							</a>
+						<a href="{{path('add_panier',{id: product.id ~ product.type})}}" id="{{product.id ~ product.type}}" class="btn ">
+							<i class="fa-solid fa-cart-plus"></i>
+							ajouter
+						</a>
 					</div>
 				</div>
 			{% endfor %}
 
 
+		</div>
+		<div class="loader-spiner">
+			<div class="circle"></div>
+			<div class="circle"></div>
+			<div class="circle"></div>
 		</div>
 
 		{% if typeSelected is not defined %}
@@ -295,29 +329,30 @@
 {% endblock %}
 {% block javascripts %}
 	{{parent()}}
-	{# <script src="{{asset('js/panier.js')}}"></script>  #}
+	<script src="{{asset('js/catalogue.js')}}"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 	<script>
+
 		const select = document.querySelector('#select-type');
-		select.addEventListener("change", function (event) {
-			console.log('true');
-			const option = event.target.options[select.selectedIndex];
-			const path = option.getAttribute('data-path')
-			fetch(path, {
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			}).then(response => response.json()).then(promesse => {
-				window.location.href = promesse;
-			}).catch(err => console.log(err))
+select.addEventListener("change", function (event) {
+console.log('true');
+const option = event.target.options[select.selectedIndex];
+const path = option.getAttribute('data-path')
+fetch(path, {
+method: 'GET',
+headers: {
+'Content-Type': 'application/json'
+}
+}).then(response => response.json()).then(promesse => {
+window.location.href = promesse;
+}).catch(err => console.log(err))
 
 
-		});
-setTimeout(function() {
-    $('#produit').fadeOut('fast');
-}, 1000); 
+});
+setTimeout(function () {
+$('#produit').fadeOut('fast');
+}, 1000);
 	</script>
-	
+
 {% endblock %}

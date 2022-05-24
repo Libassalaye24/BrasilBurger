@@ -13,8 +13,12 @@
 		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
 		{% block stylesheets %}
 			<link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-{# 			<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/botman-web-widget@0/build/assets/css/chat.min.css">
- #}			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+			<link
+			href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+			{# 			<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/botman-web-widget@0/build/assets/css/chat.min.css">
+						 #}
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 			<link rel="stylesheet" href="{{ asset('stylesheets/screen.css') }}"/>
 		{% endblock %}
@@ -30,7 +34,7 @@
 			<header class="header">
 
 				<a href="{{path('catalogue')}}" class="logo">
-					<i class="fa-solid fa-burger"></i>
+					Brasil<i class="fa-solid fa-burger"></i>Burger
 				</a>
 
 				<nav class="navbar">
@@ -50,10 +54,10 @@
 
 				<div class="icons">
 					<div id="menu-btn" class="fas fa-bars"></div>
-
+					{% if not is_granted('ROLE_GESTIONNAIRE') %}
 						<a href="{{path('list_panier')}}">
 							<div id="cart-btn" class="fas fa-shopping-cart">
-								
+
 								{% if app.session.get('panier')|length > 0 %}
 									{% set var = 0 %}
 									{% for item in app.session.get('panier') %}
@@ -63,6 +67,7 @@
 								{% endif %}
 							</div>
 						</a>
+					{% endif %}
 
 					{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 						<a href="{{path('logout')}}">
@@ -80,22 +85,32 @@
 				</div>
 
 			</header>
-								
+
 			<!-- header section ends  -->
 
 		{% endblock %}
 		{% block body %}{% endblock %}
 		{% block javascripts %}
 			<script src="{{asset('js/menu.js')}}"></script>
-		{# 	<script>
-				var botmanWidget = {
-					frameEndpoint: '/iFrameUrl'    
-				};
+			<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+			<script>
+				AOS.init();
 			</script>
-			<script src='https://cdn.jsdelivr.net/npm/botman-web-widget@0/build/js/widget.js'></script> #}
+			<script>
+				setTimeout(function () {
+				$('#archive').fadeOut('fast');
+				}, 1100); // <-- time in milliseconds
+			</script>
+			{# 	<script>
+										var botmanWidget = {
+											frameEndpoint: '/iFrameUrl'    
+										};
+									</script>
+									<script src='https://cdn.jsdelivr.net/npm/botman-web-widget@0/build/js/widget.js'></script> #}
 
 		{% endblock %}
 
 	</body>
 </html>
-
