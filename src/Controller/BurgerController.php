@@ -22,11 +22,13 @@ use Symfony\Component\HttpFoundation\Session\Session;
 class BurgerController extends AbstractController
 {
     #[Route('/burger', name: 'list_burger')]
-    public function index(BurgerRepository $burgerRepository,Request $request,PaginatorInterface $paginatorInterface): Response
+    public function index(BurgerRepository $burgerRepository, Request $request, PaginatorInterface $paginatorInterface): Response
     {
-        $data = $burgerRepository->findBy(['etat' => false]);
+        $data = $burgerRepository->findBy(['etat' => false], ['id' => 'DESC']);
         $burgers = $paginatorInterface->paginate(
-            $data,$request->query->getInt('page', 1),5
+            $data,
+            $request->query->getInt('page', 1),
+            4
         );
         return $this->render('burger/index.html.twig', [
             'controller_name' => 'BurgerController',
@@ -36,12 +38,11 @@ class BurgerController extends AbstractController
 
 
     #[Route('/burger/details/{id}', name: 'burger_details')]
-    public function burgerDetails(int $id,Request $request,BurgerRepository $burgerRepository):Response
+    public function burgerDetails(int $id, Request $request, BurgerRepository $burgerRepository): Response
     {
         if ($id) {
             $burger = $burgerRepository->find($id);
-        }else{
-
+        } else {
         }
         return $this->render('burger/details.html.twig', [
             'burger' => $burger,
@@ -49,12 +50,14 @@ class BurgerController extends AbstractController
     }
 
     #[Route('/burger/archives', name: 'list_burger_archive')]
-    public function archives(BurgerRepository $burgerRepository,Request $request,PaginatorInterface $paginatorInterface): Response
+    public function archives(BurgerRepository $burgerRepository, Request $request, PaginatorInterface $paginatorInterface): Response
     {
-       
-        $data = $burgerRepository->findBy(['etat' => true]);
+
+        $data = $burgerRepository->findBy(['etat' => true], ['id' => 'DESC']);
         $burgers = $paginatorInterface->paginate(
-            $data,$request->query->getInt('page', 1),5
+            $data,
+            $request->query->getInt('page', 1),
+            5
         );
         return $this->render('burger/archives.html.twig', [
             'controller_name' => 'BurgerController',
@@ -63,23 +66,23 @@ class BurgerController extends AbstractController
     }
 
     #[Route('/burger/add', name: 'add_burger')]
-    public function addBurger(Request $request,EntityManagerInterface $manager,SluggerInterface $slugger): Response
+    public function addBurger(Request $request, EntityManagerInterface $manager, SluggerInterface $slugger, Session $session): Response
     {
-     
+
         $burger = new Burger();
-        $form = $this->createForm(BurgerType::class,$burger);
+        $form = $this->createForm(BurgerType::class, $burger);
         $form->handleRequest($request);
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
             $brochureFile = $form->get('image')->get('nom')->getData();
-           // dd($brochureFile);
+            // dd($brochureFile);
             // this condition is needed because the 'brochure' field is not required
             // so the PDF file must be processed only when a file is uploaded
             if ($brochureFile) {
                 $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
                 $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$brochureFile->guessExtension();
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $brochureFile->guessExtension();
 
                 // Move the file to the directory where brochures are stored
                 try {
@@ -99,47 +102,8 @@ class BurgerController extends AbstractController
                 $burger->setImage($image);
                 $manager->persist($burger);
                 $manager->flush();
-                
+                $session->getFlashBag()->set('archive', 'Burger Num : ' . $burger->getId() . ' ajouté avec succes');
             }
-           return $this->redirectToRoute('list_burger');
-        }
-            return $this->render('burger/add.html.twig', [
-                'controller_name' => 'BurgerController',
-                'form' => $form->createView(),
-            ]);
-        
-
-
-    }
-    #[Route('/burger/edit/{id}', name: 'edit_burger')]
-    public function editBurger(int $id,Request $request, FileUploader $fileUploader,EntityManagerInterface $manager,BurgerRepository $burgerRepository):Response
-    {
-        if (!$id) {
-           
-        }else {
-            $burger = $burgerRepository->find($id);
-        }
-       
-        $form = $this->createForm(BurgerType::class,$burger);
-       // $image = new Image();
-            //dd( $form->get('image')->get('nom')->getData());
-          //  $image->setNom(new File($this->getParameter('images_avatars').'/'.$form->get('image')->get('nom')->getData()));
-           // $pictureFile = new File($oldFileNamePath);
-          //  $burger->setImage($image);
-        $form->handleRequest($request);
-        
-        if ($form->isSubmitted() && $form->isValid()) {
-            $imageFile = $form->get('image')->get('nom')->getData();
-            $image = new Image();
-          
-            if ($imageFile) {
-                $imageFileName = $fileUploader->upload($imageFile);
-                $image->setNom($imageFileName);
-            }
-            $burger->setImage($image);
-            $manager->persist($burger);
-            $manager->flush();
-    
             return $this->redirectToRoute('list_burger');
         }
         return $this->render('burger/add.html.twig', [
@@ -147,15 +111,63 @@ class BurgerController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-    #[Route('burger/changeEtat/{id}',name:'change_etat')]
-    public function changeEtat(Burger $burger,Request $request,EntityManagerInterface $manager,Session $session):Response
+    #[Route('/burger/edit/{id}', name: 'edit_burger')]
+    public function editBurger(int $id, Request $request, FileUploader $fileUploader, EntityManagerInterface $manager, BurgerRepository $burgerRepository, Session $session): Response
     {
+        if (!$id) {
+        } else {
+            $burger = $burgerRepository->find($id);
+        }
+
+        $form = $this->createForm(BurgerType::class, $burger);
+        // $image = new Image();
+        //dd( $form->get('image')->get('nom')->getData());
+        //  $image->setNom(new File($this->getParameter('images_avatars').'/'.$form->get('image')->get('nom')->getData()));
+        // $pictureFile = new File($oldFileNamePath);
+        //  $burger->setImage($image);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('image')->get('nom')->getData();
+            $image = new Image();
+
+            if ($imageFile) {
+                $imageFileName = $fileUploader->upload($imageFile);
+                $image->setNom($imageFileName);
+            }
+            $burger->setImage($image);
+            $manager->persist($burger);
+            $manager->flush();
+
+            return $this->redirectToRoute('list_burger');
+            $session->getFlashBag()->set('archive', 'Burger Num : ' . $burger->getId() . ' modifé avec succes');
+
+        }
+        return $this->render('burger/add.html.twig', [
+            'controller_name' => 'BurgerController',
+            'form' => $form->createView(),
+        ]);
+    }
+    #[Route('burger/desarchive/{id}', name: 'archive_burger')]
+    #[Route('burger/archive/{id}', name: 'desarchive_burger')]
+    public function changeEtat(Request $request, EntityManagerInterface $manager, Session $session, BurgerRepository $burgerRepository): Response
+    {
+        $action = $request->attributes->get('_route');
+        $id = $request->attributes->get('id');
+        $burger = $burgerRepository->find($id);
+        if (!$burger) {
+            ///not found
+        }
         $etat = $burger->getEtat();
-        
-        if ($etat == false) {
-            $burger->setEtat(true);
-            $session->getFlashBag()->set('archive', 'Burger archivé avec succes');
-        }else {
+
+        if ($action == 'archive_burger') {
+            if (count($burger->getMenus()) > 0) {
+                $session->getFlashBag()->set('errorArchive', 'Erreur : Ce burger est deja associé a un menu');
+            } else {
+                $burger->setEtat(true);
+                $session->getFlashBag()->set('archive', 'Burger archivé avec succes');
+            }
+        } else {
             $burger->setEtat(false);
             $session->getFlashBag()->set('desarchive', 'Burger desarchivé avec succes');
         }
@@ -163,11 +175,8 @@ class BurgerController extends AbstractController
         $manager->flush();
         if ($etat == false) {
             return $this->redirectToRoute('list_burger');
-        }else{
+        } else {
             return $this->redirectToRoute('list_burger_archive');
         }
-        
-        
     }
-
 }

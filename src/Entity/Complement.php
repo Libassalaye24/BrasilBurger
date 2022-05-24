@@ -30,10 +30,14 @@ class Complement
     #[ORM\Column(type: 'boolean')]
     private $etat;
 
+    #[ORM\ManyToMany(targetEntity: Commande::class, mappedBy: 'complement')]
+    private $commandes;
+
     public function __construct()
     {
         $this->menus = new ArrayCollection();
         $this->etat = false;
+        $this->commandes = new ArrayCollection();
     }
 
     public function __toString()
@@ -116,6 +120,33 @@ class Complement
     public function setEtat(bool $etat): self
     {
         $this->etat = $etat;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commande>
+     */
+    public function getCommandes(): Collection
+    {
+        return $this->commandes;
+    }
+
+    public function addCommande(Commande $commande): self
+    {
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes[] = $commande;
+            $commande->addComplement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommande(Commande $commande): self
+    {
+        if ($this->commandes->removeElement($commande)) {
+            $commande->removeComplement($this);
+        }
 
         return $this;
     }

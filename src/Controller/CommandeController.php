@@ -42,23 +42,22 @@ class CommandeController extends AbstractController
     public const VALIDER = 'valider';
     public const ANNULER = 'annuler';
     public const TERMINER = 'terminer';
+
     #[IsGranted('ROLE_GESTIONNAIRE')]
-    #[Route('/commande', name: 'list_commande')]
-    public function index(CommandeRepository $commandeRepository, Session $session, ClientRepository $clientRepository, PaginatorInterface $paginatorInterface, Request $request): Response
+    #[Route('/commande/list/{page?1}/{nbr?2}', name: 'list_commande')]
+    public function index($page, $nbr, CommandeRepository $commandeRepository, Session $session, ClientRepository $clientRepository, PaginatorInterface $paginatorInterface, Request $request): Response
     {
-        $data = $commandeRepository->findBy(['etat' => self::ENCOURS,'dateCommande' => new DateTime()]);
         $clients = $clientRepository->findAll();
-        $commandes = $paginatorInterface->paginate(
-            $data,
-            $request->query->getInt('page', 1),
-            5
-        );
+
+
         if ($session->has('clientSelected')) {
             $clientSelected = $session->get('clientSelected');
-            //dd($etatSelected);
+            $oneClient = $clientRepository->find((int)$clientSelected);
+            //  $etatSelected = $session->get('etatSelected');
             $commandes = $commandeRepository->findBy([
-                'client' => $clientSelected,
+                'client' => $oneClient,
             ]);
+            //dd($clientSelected);
             $session->remove('clientSelected');
             return $this->render('commande/list.html.twig', [
                 'controller_name' => 'CommandeController',
@@ -69,48 +68,62 @@ class CommandeController extends AbstractController
         }
         if ($session->has('etatSelected')) {
             $etatSelected = $session->get('etatSelected');
-            //dd($etatSelected);
+            // dd($etatSelected);
             if ($etatSelected == 'encours') {
                 $commandes = $commandeRepository->findBy([
                     'etat' => $etatSelected,
                     'dateCommande' => new DateTime()
-                ]);
+                ], ['id' => "DESC"]);
             } else {
                 $commandes = $commandeRepository->findBy([
                     'etat' => $etatSelected
-                ]);
+                ], ['id' => "DESC"]);
             }
 
             $session->remove('etatSelected');
+            //dd($commandes);
             return $this->render('commande/list.html.twig', [
                 'controller_name' => 'CommandeController',
                 'commandes' => $commandes,
                 'etatSelected' => $etatSelected,
+                'clients' => $clients,
+
             ]);
         }
+        $data = $commandeRepository->findBy(['etat' => self::ENCOURS, 'dateCommande' => new DateTime()]);
+        $commandes = $commandeRepository->findBy(['etat' => self::ENCOURS, 'dateCommande' => new DateTime()], ['id' => "DESC"], $nbr, ($page - 1) * $nbr);
+        $nbrComandes = count($data);
+        $nbrPage = ceil($nbrComandes / $nbr);
+        // dump($nbr);
         return $this->render('commande/list.html.twig', [
             'controller_name' => 'CommandeController',
             'commandes' => $commandes,
-            'clients' => $clients
+            'clients' => $clients,
+            'isPaginated'  => true,
+            'nbrPage'      => $nbrPage,
+            'page'         => $page,
+            'nbr'          => $nbr
+
         ]);
     }
 
     #[IsGranted('ROLE_CLIENT')]
     #[Route('/panier', name: 'list_panier')]
-    public function viewPanier(SessionInterface $session, HomeController $home, BurgerRepository $burgerRepository, MenuRepository $menuRepository): Response
+    public function viewPanier(SessionInterface $session, HomeController $home, BurgerRepository $burgerRepository, MenuRepository $menuRepository, ComplementRepository $complementRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_CLIENT');
         $panier = $session->get('panier', []);
-        $session->set('panierRestor',[]);
+        $session->set('panierRestor', []);
         $products = $home::getProducts($burgerRepository, $menuRepository);
         $panierWithData = [];
         foreach ($panier as $id => $quantite) {
             //dd($id);
             foreach ($products as $value) {
-                if (str_contains($id,'burger')) {
+                if (str_contains($id, 'burger')) {
                     if ($value->getId() == filter_var($id, FILTER_SANITIZE_NUMBER_INT)) {
                         $details = $burgerRepository->find(filter_var($id, FILTER_SANITIZE_NUMBER_INT));
                     }
-                }elseif (str_contains($id,'menu')) {
+                } elseif (str_contains($id, 'menu')) {
                     if ($value->getId() == filter_var($id, FILTER_SANITIZE_NUMBER_INT)) {
                         $details = $menuRepository->find(filter_var($id, FILTER_SANITIZE_NUMBER_INT));
                     }
@@ -120,9 +133,8 @@ class CommandeController extends AbstractController
                 'product' => $details,
                 'quantite' => $quantite
             ];
-            
         }
-       
+
         $total = $totalMenu = $montant = $totalBurger = 0;
         foreach ($panierWithData as $value) {
             if ($value['product']->getType() == 'burger') {
@@ -135,11 +147,12 @@ class CommandeController extends AbstractController
             }
         }
         $total = $totalBurger + $montant;
-       // dd($panierWithData);
-
+        // dd($panierWithData);
+        $complements = $complementRepository->findBy(['etat' => false]);
         return $this->render('commande/panier.html.twig', [
             'panierWithData' => $panierWithData,
             'total' => $total,
+            'complements' => $complements
         ]);
     }
 
@@ -187,7 +200,7 @@ class CommandeController extends AbstractController
     public function removePanier($id, SessionInterface $session): Response
     {
         $panier = $session->get('panier', []);
-       // dd($panier);
+        // dd($panier);
         if (!empty($panier[$id])) {
             unset($panier[$id]);
         }
@@ -209,7 +222,7 @@ class CommandeController extends AbstractController
     public function retirePanier($id, SessionInterface $session): Response
     {
         $panier = $session->get('panier', []);
-       // dd($panier);
+        // dd($panier);
         if (!empty($panier[$id])) {
             if ($panier[$id] > 1) {
                 $panier[$id]--;
@@ -226,7 +239,7 @@ class CommandeController extends AbstractController
     #[IsGranted('ROLE_CLIENT')]
     #[Route('/mes.commandes', name: 'mes_commandes')]
     public function mesCommandes(CommandeRepository $commandeRepository, PaginatorInterface $paginatorInterface, Request $request, SessionInterface $session): Response
-    {   
+    {
 
 
         $client = new Client();
@@ -235,13 +248,13 @@ class CommandeController extends AbstractController
         if ($client instanceof UserProviderInterface) {
              $repository->refreshUser($user);
         } */
-        $data = $commandeRepository->findBy(['client' => $client, 'etat' => self::ENCOURS,'dateCommande' => new DateTime()]);
+        $data = $commandeRepository->findBy(['client' => $client, 'etat' => self::ENCOURS, 'dateCommande' => new DateTime()]);
         $commandes = $paginatorInterface->paginate(
             $data,
             $request->query->getInt('page', 1),
             5
         );
-       
+
         //dd($data);
         if ($session->has('etatSelected')) {
             $etatSelected = $session->get('etatSelected');
@@ -266,8 +279,8 @@ class CommandeController extends AbstractController
     }
 
     #[IsGranted('ROLE_CLIENT')]
-    #[Route('/commande/add', name: 'checkOut')]
-    public function checkOut(SessionInterface $session, EntityManagerInterface $manager, HomeController $home, BurgerRepository $burgerRepository, MenuRepository $menuRepository, Validator $smsGenerate, TexterInterface $texter): Response
+    #[Route('/commande/add', name: 'checkOut',methods:['POST'])]
+    public function checkOut(SessionInterface $session, EntityManagerInterface $manager, HomeController $home, BurgerRepository $burgerRepository, MenuRepository $menuRepository, Validator $smsGenerate, TexterInterface $texter, Request $request, ComplementRepository $complementRepository): Response
     {
         if (!$this->getUser()) {
             return $this->redirectToRoute('login');
@@ -279,16 +292,15 @@ class CommandeController extends AbstractController
         $panierWithData = [];
         foreach ($panier as $id => $quantite) {
             foreach ($products as $value) {
-                if (str_contains($id,'burger')) {
+                if (str_contains($id, 'burger')) {
                     if ($value->getId() == filter_var($id, FILTER_SANITIZE_NUMBER_INT)) {
                         $details = $burgerRepository->find(filter_var($id, FILTER_SANITIZE_NUMBER_INT));
                     }
-                }elseif (str_contains($id,'menu')) {
+                } elseif (str_contains($id, 'menu')) {
                     if ($value->getId() == filter_var($id, FILTER_SANITIZE_NUMBER_INT)) {
                         $details = $menuRepository->find(filter_var($id, FILTER_SANITIZE_NUMBER_INT));
                     }
                 }
-                
             }
             $panierWithData[] = [
                 'product' => $details,
@@ -308,50 +320,60 @@ class CommandeController extends AbstractController
         }
         $total = $totalBurger + $montant;
         //dd($total);
-        $commandeBurger = new CommandesBurgers();
-        $commandeMenu = new CommandesMenus();
-        $commande->setClient($client)
-            ->setEtat(self::ENCOURS)
-            ->setNumero($smsGenerate->genereNumCommande())
-            ->setDateCommande(new DateTime())
-            ->setMontant($total);
-        foreach ($panierWithData as $value) {
-            if ($value['product']->getType() == 'menu') {
-               // dump($value);
-                $commandeMenu->setMenu($value['product'])
-                            ->setQuantity($value['quantite'])
-                            ->setCommande($commande);
-                $commande->addCommandesMenus($commandeMenu);
-            } else {
-                //dump($value);
-                $commandeBurger->setBurger($value['product'])
-                            ->setQuantity($value['quantite'])
-                            ->setCommande($commande);
-                $commande->addCommandesBurger($commandeBurger);
-                
-            }
-            $manager->persist($commande);
-            $manager->flush();
-        }
-        //die(true);
-      
+        $method = $request->getMethod();
+        if ($method == "POST") {
+            //dd($request->request);
+            $complement = $request->get('complement');
+            $commande->setClient($client)
+                ->setEtat(self::ENCOURS)
+                ->setNumero($smsGenerate->genereNumCommande())
+                ->setDateCommande(new DateTime());
+                $prix2complemts = 0;
+                if ($complement) {
+                    
+                    foreach ($complement as  $value) {
+                        $compl = $complementRepository->find($value);
+                        $prix2complemts = $prix2complemts + $compl->getPrix();  
+                        
+                        
+                        $commande->addComplement($complementRepository->find($value));
+                    }
+                }
+            $commande->setMontant($total+$prix2complemts);
+            foreach ($panierWithData as $value) {
+                if ($value['product']->getType() == 'menu') {
 
-        $panier = $session->set('panier', []);
-        $session2 = new Session();
-        $session2->getFlashBag()->add('add_commande', 'Commande Ajoutée avec succès');
-        return $this->redirectToRoute('mes_commandes');
+                    $commande->addMenu($value['product']);
+                } else {
+
+                    $commande->addBurger($value['product']);
+                }
+                $manager->persist($commande);
+                $manager->flush();
+            }
+            //die(true);
+
+
+            $panier = $session->set('panier', []);
+            $session2 = new Session();
+            $session2->getFlashBag()->add('add_commande', 'Commande Ajoutée avec succès');
+            return $this->redirectToRoute('mes_commandes');
+        }
     }
 
     #[Route('/commande/details/{id}', name: 'details_commande')]
-    public function detailsCommande(int $id, CommandeRepository $commandeRepository,SessionInterface $session): Response
+    public function detailsCommande(int $id, CommandeRepository $commandeRepository, SessionInterface $session): Response
     {
         $commande = $commandeRepository->find($id);
         if (!$commande) {
         }
+        $user = $this->getUser();
+        $role = $user->getRoles();
         $roles = $session->get('roles');
         return $this->render('commande/details.html.twig', [
             'details' => $commande,
             'roles' => $roles,
+            'role' => $role,
         ]);
     }
 
@@ -376,20 +398,27 @@ class CommandeController extends AbstractController
     }
 
     #[IsGranted('ROLE_GESTIONNAIRE')]
-    #[Route('/commande/updateEtat/{id}', name: 'valider_commande')]
-    public function validerCommande(int $id, CommandeRepository $commandeRepository, EntityManagerInterface $manager): Response
+    #[Route('/commande/valider/{id}', name: 'valider_commande')]
+    #[Route('/commande/annuler/{id}', name: 'annuler_commande')]
+    public function validerCommande(Request $request, CommandeRepository $commandeRepository, EntityManagerInterface $manager, Session $session): Response
     {
+        $action = $request->attributes->get('_route');
+        $id = $request->attributes->get('id');
+        ///   dd($action);
         $commande = $commandeRepository->find($id);
         if (!$commande) {
             throw $this->createNotFoundException(
                 'No product found for id ' . $id
             );
         }
-        if ($commande->getEtat() == 'encours') {
+        if ($action == 'valider_commande') {
             $commande->setEtat('valider');
-        } else {
-            $commande->setEtat('en cours');
+            $session->getFlashBag()->set('valideCommande', 'Commande ' . 'Num: ' . $commande->getNumero() . ' Validée avec succées');
+        } elseif ($action == 'annuler_commande') {
+            $session->getFlashBag()->set('valideCommande', 'Commande ' . 'Num: ' . $commande->getNumero() . ' annulée avec succées');
+            $commande->setEtat('annuler');
         }
+
         $manager->persist($commande);
         $manager->flush();
         return $this->redirectToRoute('list_commande');
@@ -404,15 +433,37 @@ class CommandeController extends AbstractController
     ): Response {
 
         $roles = $session->get('roles');
+        if ($request->isXmlHttpRequest()) {
+            $etat = $request->query->get('etat');
+            $session->set("etatSelected", $etat);
+        }
+        // dd($roles);
+        if ($roles[0] == 'ROLE_GESTIONNAIRE') {
+            return new JsonResponse($this->generateUrl('list_commande'));
+        } elseif ($roles[0] == 'ROLE_CLIENT') {
+            return new JsonResponse($this->generateUrl('mes_commandes'));
+        }
+    }
+
+    #[Route('/commande/checkOutComplements', name: 'checkOutComplements')]
+    public function complementsCheckOut(
+        CommandeRepository $repoComm,
+        SessionInterface $session,
+        Request $request
+    ): Response {
+
+        /* $roles = $session->get('roles');
         if ($request->query) {
             $etat = $request->query->get('etat');
             $session->set("etatSelected", $etat);
         }
+       // dd($roles);
         if ($roles[0] == 'ROLE_GESTIONNAIRE') {
             return new JsonResponse($this->generateUrl('list_commande'));
         } else {
             return new JsonResponse($this->generateUrl('mes_commandes'));
-        }
+        } */
+        return new JsonResponse($this->generateUrl('jjjjj'));
     }
 
 
@@ -422,16 +473,10 @@ class CommandeController extends AbstractController
         SessionInterface $session,
         Request $request
     ): Response {
-        // dd(  $request->query->get('id'));
-        if ($request->query) {
-            // dd(  $request->query->get('id'));
-            $id = $request->query->get('id');
-            //     $etat = $request->query->get('etat');
-            //  $session->set("commandes", $commandes);
-            $session->set("clientSelected", $id);
-            //  $session->set("etat2Selected", $etat);
-            //  dd( $session->set("etat2Selected", $id));
 
+        if ($request->query) {
+            $client = $request->query->get('client');
+            $session->set("clientSelected", $client);
         }
 
 
@@ -442,10 +487,10 @@ class CommandeController extends AbstractController
     #[Route('/commade/paiement', name: 'payer')]
     public function payer(Request $request, Session $session, CommandeRepository $commandeRepository, EntityManagerInterface $manager): Response
     {
-        $commande = $commandeRepository->findBy(['client' => $this->getUser(),'paiement' => null,'etat' => self::VALIDER]);
-      
+        $commande = $commandeRepository->findBy(['client' => $this->getUser(), 'paiement' => null, 'etat' => self::VALIDER]);
+
         $paiement = new Paiement();
-        $form = $this->createForm(PaiementType::class,$paiement);
+        $form = $this->createForm(PaiementType::class, $paiement);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -476,9 +521,8 @@ class CommandeController extends AbstractController
             $manager->flush();
             $session->getFlashBag()->add('paiement', 'Commande ( Num:' . $commandePaye->getNumero() . ') Payée avec succès');
             return $this->redirectToRoute('mes_commandes');
-           
         }
-      
+
         return $this->render('commande/paiement.html.twig', [
             'form' => $form->createView(),
             'commande' => $commande,

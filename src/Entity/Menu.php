@@ -34,15 +34,16 @@ class Menu
     #[ORM\Column(type: 'string', length: 255)]
     private $type;
 
-    #[ORM\OneToMany(mappedBy: 'menu', targetEntity: CommandesMenus::class)]
-    private $commandesMenuses;
+    #[ORM\ManyToMany(targetEntity: Commande::class, mappedBy: 'menu')]
+    private $commandes;
+
 
     public function __construct()
     {
         $this->complements = new ArrayCollection();
         $this->etat = false;
         $this->type = 'menu';
-        $this->commandesMenuses = new ArrayCollection();
+        $this->commandes = new ArrayCollection();
     }
 
 
@@ -139,37 +140,35 @@ class Menu
         return $this;
     }
 
+    /**
+     * @return Collection<int, Commande>
+     */
+    public function getCommandes(): Collection
+    {
+        return $this->commandes;
+    }
+
+    public function addCommande(Commande $commande): self
+    {
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes[] = $commande;
+            $commande->addMenu($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommande(Commande $commande): self
+    {
+        if ($this->commandes->removeElement($commande)) {
+            $commande->removeMenu($this);
+        }
+
+        return $this;
+    }
+
   
 
-    /**
-     * @return Collection<int, CommandesMenus>
-     */
-    public function getCommandesMenuses(): Collection
-    {
-        return $this->commandesMenuses;
-    }
-
-    public function addCommandesMenus(CommandesMenus $commandesMenus): self
-    {
-        if (!$this->commandesMenuses->contains($commandesMenus)) {
-            $this->commandesMenuses[] = $commandesMenus;
-            $commandesMenus->setMenu($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCommandesMenus(CommandesMenus $commandesMenus): self
-    {
-        if ($this->commandesMenuses->removeElement($commandesMenus)) {
-            // set the owning side to null (unless already changed)
-            if ($commandesMenus->getMenu() === $this) {
-                $commandesMenus->setMenu(null);
-            }
-        }
-
-        return $this;
-    }
 
    
 }

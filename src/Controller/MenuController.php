@@ -7,9 +7,9 @@ use App\Entity\Menu;
 use App\Entity\Image;
 use App\Entity\Commande;
 use App\Form\MenuFormType;
-use App\Repository\BurgerRepository;
 use App\Service\FileUploader;
 use App\Repository\MenuRepository;
+use App\Repository\BurgerRepository;
 use App\Repository\CommandeRepository;
 use App\Repository\ComplementRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\Date;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MenuController extends AbstractController
@@ -27,7 +28,7 @@ class MenuController extends AbstractController
     {
         $data = $menuRepository->findBy(['etat' => false]);
         $menus = $paginatorInterface->paginate(
-            $data,$request->query->getInt('page', 1),5
+            $data,$request->query->getInt('page', 1),4
         );
         return $this->render('menu/index.html.twig', [
             'controller_name' => 'MenuController',
@@ -75,7 +76,7 @@ class MenuController extends AbstractController
     {
         $data = $menuRepository->findBy(['etat' => true]);
         $menus = $paginatorInterface->paginate(
-            $data,$request->query->getInt('page', 1),5
+            $data,$request->query->getInt('page', 1),4
         );
         return $this->render('menu/archives.html.twig', [
             'controller_name' => 'MenuController',
@@ -85,11 +86,12 @@ class MenuController extends AbstractController
 
     #[Route('/menu/add', name: 'add_menu')]
     #[Route('/menu/edit/{id}', name: 'edit_menu')]
-    public function addMenu(Menu $menu=null,Request $request,EntityManagerInterface $manager, FileUploader $fileUploader,ComplementRepository $complementRepository): Response
+    public function addMenu(Menu $menu=null,Request $request,EntityManagerInterface $manager, FileUploader $fileUploader,ComplementRepository $complementRepository, Session $session): Response
     {
         if (!$menu) {
             $menu = new Menu();
         }
+        $action = $request->attributes->get('_route');
         $form = $this->createForm(MenuFormType::class,$menu);
         $form->handleRequest($request);
         $complements = $complementRepository->findBy(['etat' => false]);
@@ -119,6 +121,11 @@ class MenuController extends AbstractController
             $menu->setImage($image);
             $manager->persist($menu);
             $manager->flush();
+            if ($action == 'add_menu') {
+                $session->getFlashBag()->set('archiveM', 'Menu Num : ' . $menu->getId() . ' ajouté avec succes');
+            }else{
+                $session->getFlashBag()->set('archiveM', 'Menu Num : ' . $menu->getId() . ' modifé avec succes');
+            }
             return $this->redirectToRoute('list_menu');
         }
         return $this->render('menu/add.html.twig', [
@@ -126,20 +133,35 @@ class MenuController extends AbstractController
             'complements' => $complements
         ]);
     }
-    #[Route('menu/changeEtat/{id}',name:'change_etat_menu')]
-    public function changeEtat(Menu $menu,Request $request,EntityManagerInterface $manager):Response
+    #[Route('menu/desarchive/{id}', name: 'desarchive_menu')]
+    #[Route('menu/archive/{id}', name: 'archive_menu')]
+    public function changeEtat(Request $request, EntityManagerInterface $manager, Session $session, MenuRepository $menuRepository): Response
     {
+        $action = $request->attributes->get('_route');
+        $id = $request->attributes->get('id');
+        $menu = $menuRepository->find((int)$id);
+       
+        if (!$menu) {
+            ///not found
+        }
         $etat = $menu->getEtat();
-        if ($etat == false) {
+
+        if ($action == 'archive_menu') {
+           
             $menu->setEtat(true);
-        }else {
+            $session->getFlashBag()->set('archiveM', 'Succes : Menu archivé avec succes');
+            
+        } else {
             $menu->setEtat(false);
+            $session->getFlashBag()->set('desarchiveM', 'Succes : Menu desarchivé avec succes');
         }
         $manager->persist($menu);
         $manager->flush();
-        return $this->redirectToRoute('list_menu');
-        
+        if ($etat == false) {
+            return $this->redirectToRoute('list_menu');
+        } else {
+            return $this->redirectToRoute('list_menu_archive');
+        }
     }
-
   
 }

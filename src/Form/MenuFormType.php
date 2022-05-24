@@ -15,6 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 class MenuFormType extends AbstractType
 {
@@ -80,6 +81,13 @@ class MenuFormType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Menu::class,
             'required' => false,
+            'constraints' => [
+                new UniqueEntity(
+                    [
+                        'fields' => ['nom'],
+                        'message'=> 'Ce nom existe deja!'
+                    ])
+            ]
         ]);
     }
 }

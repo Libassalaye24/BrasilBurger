@@ -12,6 +12,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 class BurgerType extends AbstractType
 {
@@ -67,6 +68,13 @@ class BurgerType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Burger::class,
             'required' => false,
+            'constraints' => [
+                new UniqueEntity(
+                    [
+                        'fields' => ['nom'],
+                        'message'=> 'Ce nom existe deja!'
+                    ])
+            ]
         ]);
     }
 }
