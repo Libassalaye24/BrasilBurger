@@ -44,7 +44,7 @@ class CommandeController extends AbstractController
     public const TERMINER = 'terminer';
 
     #[IsGranted('ROLE_GESTIONNAIRE')]
-    #[Route('/commande/list/{page?1}/{nbr?2}', name: 'list_commande')]
+    #[Route('/commande/list/{page?1}/{nbr?5}', name: 'list_commande')]
     public function index($page, $nbr, CommandeRepository $commandeRepository, Session $session, ClientRepository $clientRepository, PaginatorInterface $paginatorInterface, Request $request): Response
     {
         $clients = $clientRepository->findAll();
@@ -238,16 +238,11 @@ class CommandeController extends AbstractController
 
     #[IsGranted('ROLE_CLIENT')]
     #[Route('/mes.commandes', name: 'mes_commandes')]
-    public function mesCommandes(CommandeRepository $commandeRepository, PaginatorInterface $paginatorInterface, Request $request, SessionInterface $session): Response
+    public function mesCommandes(CommandeRepository $commandeRepository, ClientRepository $clientRepository ,PaginatorInterface $paginatorInterface, Request $request, SessionInterface $session,Session $session2): Response
     {
 
-
-        $client = new Client();
-        $client = $this->getUser();
-        /*  
-        if ($client instanceof UserProviderInterface) {
-             $repository->refreshUser($user);
-        } */
+        $id = $session2->get('userConnect')->getId();
+        $client = $clientRepository->find($id);
         $data = $commandeRepository->findBy(['client' => $client, 'etat' => self::ENCOURS, 'dateCommande' => new DateTime()]);
         $commandes = $paginatorInterface->paginate(
             $data,
@@ -258,12 +253,27 @@ class CommandeController extends AbstractController
         //dd($data);
         if ($session->has('etatSelected')) {
             $etatSelected = $session->get('etatSelected');
-            //dd($etatSelected);
-            $commandes = $commandeRepository->findBy([
-                'client' => $client,
-                'etat' => $etatSelected,
-                'dateCommande' => new DateTime()
-            ]);
+            if ($etatSelected == 'encours') {
+                $commandes = $commandeRepository->findBy([
+                    'client' => $client,
+                    'etat' => $etatSelected,
+                    'dateCommande' => new DateTime(),
+                ]);
+            }elseif ($etatSelected == 'valider') {
+                $commandes = $commandeRepository->findBy([
+                    'client' => $client,
+                    'etat' => $etatSelected,
+                    'dateCommande' => new DateTime(),
+                ]);
+            }else {
+                $commandes = $commandeRepository->findBy([
+                    'client' => $client,
+                    'etat' => $etatSelected,
+
+                ]);
+            }
+
+          
             $session->remove('etatSelected');
             return $this->render('commande/mes.commande.html.twig', [
                 'controller_name' => 'CommandeController',
@@ -271,7 +281,40 @@ class CommandeController extends AbstractController
                 'etatSelected' => $etatSelected,
             ]);
         }
-        // dd($commandes);
+        $method = $request->getMethod();
+        if ($method == "POST") {
+           
+            if (!$request->get('tabChecks') && !$request->get('isTrue')) {
+                $session2->getFlashBag()->add('invalide_paye', 'Veillez selectionner d\'abord');
+                return $this->render('commande/mes.commande.html.twig', [
+                    'controller_name' => 'CommandeController',
+                    'commandes' => $data,
+                ]);
+            }
+            if ($request->get('tabChecks') && !$request->get('isTrue')) {
+                $session2->getFlashBag()->add('invalide_paye', 'Seule les commandes  valides sont autorisées a payer');
+                return $this->render('commande/mes.commande.html.twig', [
+                    'controller_name' => 'CommandeController',
+                    'commandes' => $data,
+                ]);
+            }
+            $allCommandes = [];
+            $tabsCheck = $request->get('tabChecks');
+           /*  if (!$tabsCheck) {
+                return $this->render('commande/mes.commande.html.twig', [
+                    'controller_name' => 'CommandeController',
+                    'commandes' => $data,
+                ]);
+            } */
+            foreach ($tabsCheck as $value) {
+                $OneCommande = $commandeRepository->find($value);
+                $allCommandes[] = $OneCommande;
+            }
+            // dd($allCommandes);
+            $session->set('allCommandes', $tabsCheck);
+
+            return $this->redirectToRoute('payer');
+        }
         return $this->render('commande/mes.commande.html.twig', [
             'controller_name' => 'CommandeController',
             'commandes' => $data,
@@ -279,7 +322,7 @@ class CommandeController extends AbstractController
     }
 
     #[IsGranted('ROLE_CLIENT')]
-    #[Route('/commande/add', name: 'checkOut',methods:['POST'])]
+    #[Route('/commande/add', name: 'checkOut', methods: ['POST'])]
     public function checkOut(SessionInterface $session, EntityManagerInterface $manager, HomeController $home, BurgerRepository $burgerRepository, MenuRepository $menuRepository, Validator $smsGenerate, TexterInterface $texter, Request $request, ComplementRepository $complementRepository): Response
     {
         if (!$this->getUser()) {
@@ -328,18 +371,18 @@ class CommandeController extends AbstractController
                 ->setEtat(self::ENCOURS)
                 ->setNumero($smsGenerate->genereNumCommande())
                 ->setDateCommande(new DateTime());
-                $prix2complemts = 0;
-                if ($complement) {
-                    
-                    foreach ($complement as  $value) {
-                        $compl = $complementRepository->find($value);
-                        $prix2complemts = $prix2complemts + $compl->getPrix();  
-                        
-                        
-                        $commande->addComplement($complementRepository->find($value));
-                    }
+            $prix2complemts = 0;
+            if ($complement) {
+
+                foreach ($complement as  $value) {
+                    $compl = $complementRepository->find($value);
+                    $prix2complemts = $prix2complemts + $compl->getPrix();
+
+
+                    $commande->addComplement($complementRepository->find($value));
                 }
-            $commande->setMontant($total+$prix2complemts);
+            }
+            $commande->setMontant($total + $prix2complemts);
             foreach ($panierWithData as $value) {
                 if ($value['product']->getType() == 'menu') {
 
@@ -362,18 +405,15 @@ class CommandeController extends AbstractController
     }
 
     #[Route('/commande/details/{id}', name: 'details_commande')]
-    public function detailsCommande(int $id, CommandeRepository $commandeRepository, SessionInterface $session): Response
+    public function detailsCommande(int $id, CommandeRepository $commandeRepository): Response
     {
         $commande = $commandeRepository->find($id);
         if (!$commande) {
         }
-        $user = $this->getUser();
-        $role = $user->getRoles();
-        $roles = $session->get('roles');
+
+        //   $roles = $session->get('roles');
         return $this->render('commande/details.html.twig', [
             'details' => $commande,
-            'roles' => $roles,
-            'role' => $role,
         ]);
     }
 
@@ -398,29 +438,31 @@ class CommandeController extends AbstractController
     }
 
     #[IsGranted('ROLE_GESTIONNAIRE')]
-    #[Route('/commande/valider/{id}', name: 'valider_commande')]
-    #[Route('/commande/annuler/{id}', name: 'annuler_commande')]
+    // #[Route('/commande/valider', name: 'valider_commande')]
+    #[Route('/commande/changeEtat', name: 'valider_commande')]
     public function validerCommande(Request $request, CommandeRepository $commandeRepository, EntityManagerInterface $manager, Session $session): Response
     {
-        $action = $request->attributes->get('_route');
-        $id = $request->attributes->get('id');
-        ///   dd($action);
-        $commande = $commandeRepository->find($id);
-        if (!$commande) {
-            throw $this->createNotFoundException(
-                'No product found for id ' . $id
-            );
-        }
-        if ($action == 'valider_commande') {
-            $commande->setEtat('valider');
-            $session->getFlashBag()->set('valideCommande', 'Commande ' . 'Num: ' . $commande->getNumero() . ' Validée avec succées');
-        } elseif ($action == 'annuler_commande') {
-            $session->getFlashBag()->set('valideCommande', 'Commande ' . 'Num: ' . $commande->getNumero() . ' annulée avec succées');
-            $commande->setEtat('annuler');
+        if ($request->getMethod() == 'POST') {
+
+            $allCommandes = $request->get('commandesAll');
+            if ($allCommandes) {
+                foreach ($allCommandes as $value) {
+                    $oneCommande = $commandeRepository->find($value);
+                    if ($request->get('changeEtat') == 'valider') {
+                        $oneCommande->setEtat('valider');
+                    } else {
+                        $oneCommande->setEtat('annuler');
+                    }
+                    // dd($oneCommande);
+                    $manager->persist($oneCommande);
+                    $manager->flush();
+                }
+                $session->getFlashBag()->set('valideCommande', 'Operation de validation reussi avec succées');
+            } else {
+                $session->getFlashBag()->set('invalideCommande', 'Pour effectuer une operation, veillez selectionner des champs d\'abord');
+            }
         }
 
-        $manager->persist($commande);
-        $manager->flush();
         return $this->redirectToRoute('list_commande');
     }
 
@@ -445,25 +487,18 @@ class CommandeController extends AbstractController
         }
     }
 
-    #[Route('/commande/checkOutComplements', name: 'checkOutComplements')]
+    #[Route('/commande/paiementAll', name: 'commande_paiement')]
     public function complementsCheckOut(
         CommandeRepository $repoComm,
         SessionInterface $session,
         Request $request
     ): Response {
 
-        /* $roles = $session->get('roles');
-        if ($request->query) {
-            $etat = $request->query->get('etat');
-            $session->set("etatSelected", $etat);
+        if ($request->isXmlHttpRequest()) {
+            dd($request);
         }
-       // dd($roles);
-        if ($roles[0] == 'ROLE_GESTIONNAIRE') {
-            return new JsonResponse($this->generateUrl('list_commande'));
-        } else {
-            return new JsonResponse($this->generateUrl('mes_commandes'));
-        } */
-        return new JsonResponse($this->generateUrl('jjjjj'));
+
+        return new JsonResponse($this->generateUrl('payer'));
     }
 
 
@@ -487,45 +522,34 @@ class CommandeController extends AbstractController
     #[Route('/commade/paiement', name: 'payer')]
     public function payer(Request $request, Session $session, CommandeRepository $commandeRepository, EntityManagerInterface $manager): Response
     {
-        $commande = $commandeRepository->findBy(['client' => $this->getUser(), 'paiement' => null, 'etat' => self::VALIDER]);
+        $method = $request->getMethod();
+        $tabsCheck = $session->get('allCommandes');
 
-        $paiement = new Paiement();
-        $form = $this->createForm(PaiementType::class, $paiement);
-        $form->handleRequest($request);
+        $allCommandes = [];
+        $montant = 0;
+        //dd($tabsCheck);
+        foreach ($tabsCheck as $value) {
+            $OneCommande = $commandeRepository->find($value);
+            $allCommandes[] = $OneCommande;
+        }
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $numero = $request->get('numero');
-            if ($numero == '0') {
-                return $this->render('commande/paiement.html.twig', [
-                    'error' => 'Champs obligatoire',
-                    'form' => $form->createView(),
-                    'commande' => $commande,
-                ]);
+        //dd($allCommandes);
+        if ($method == "POST") {
+            foreach ($allCommandes as $value) {
+                $paiement = new Paiement();
+                $value->setEtat(self::TERMINER);
+                $paiement->setCommande($value);
+                $paiement->setMontant($value->getMontant());
+                $manager->persist($paiement);
+                $manager->flush();
             }
-            $montant = $request->get('paiement')['montant'];
 
-            //die('l');
-            $commandePaye = $commandeRepository->find($numero);
-            if ($commandePaye->getMontant() != $montant) {
-                return $this->render('commande/paiement.html.twig', [
-                    'errorMontant' => 'Le montant saisie est different de la commande selectionee',
-                    'form' => $form->createView(),
-                    'commande' => $commande,
-                    'isSelected' => $numero,
-                ]);
-            }
-            $paiement->setMontant($commandePaye->getMontant());
-            $commandePaye->setPaiement($paiement);
-            $commandePaye->setEtat(self::TERMINER);
-            $manager->persist($paiement);
-            $manager->flush();
-            $session->getFlashBag()->add('paiement', 'Commande ( Num:' . $commandePaye->getNumero() . ') Payée avec succès');
+            $session->getFlashBag()->add('paiement', 'Paiement reussi avec succès');
             return $this->redirectToRoute('mes_commandes');
         }
 
         return $this->render('commande/paiement.html.twig', [
-            'form' => $form->createView(),
-            'commande' => $commande,
+            'allCommandes' => $allCommandes,
         ]);
     }
 }
