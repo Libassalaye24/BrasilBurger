@@ -172,3 +172,107 @@ nav .pagination{
 body{
     font-size: 18px;
 }
+
+.loader-spiner{
+  /*   opacity: 0;
+    display: flex;
+    position: fixed;
+    bottom: 50px;
+    transition: opacity 0.7s ease-in; */
+    display: flex;
+    background-color: $product-container-color;
+}
+
+.loader.show{
+    opacity: 1;
+}
+
+/* .circle{
+    background-color: red;
+    width: 10px;
+    height: 10px;
+    margin: 5px;
+    border-radius: 50%;
+}
+
+.circle:nth-of-type(2){
+    animation-delay:0.3s;
+}
+
+.circle:nth-of-type(3){
+    animation-delay:0.5s;
+}
+
+
+
+.circle:nth-child(1) {
+    background-color: #fff;
+  }
+  .circle:nth-child(2) {
+    background-color: #fff;
+  }
+  .circle:nth-child(3) {
+    background-color: #fff;
+  }
+
+  
+ 
+  
+
+   */
+  @keyframes animateLoader3 {
+    0% {
+      transform: scale(1);
+      width: 5px;
+        height: 5px;
+    }
+  
+    50%{
+        transform: scale(1.5);
+        width: 5px;
+        height: 5px;    
+    }
+    75% {
+      transform: scale(2);
+      width: 5px;
+        height: 5px;
+    }
+  
+    80%,
+    100% {
+      opacity: 0.5;
+      width: 5px;
+        height: 5px;
+    }
+  }
+  
+
+@keyframes animate{
+    0%,100%{
+        transform: translateY(0px);
+        background-color: red;
+        width: 5px;
+        height: 5px;
+        animation: animate__rotateIn;
+    }
+    30%{
+        transform: translateY(-1px);
+        background-color: rgb(169, 0, 0);
+        width: 10px;
+        height: 10px;
+    }
+    50%{
+        transform: translateY(-1px);
+        background-color: rgb(7, 9, 130);
+        width: 15px;
+        height: 15px;
+    }
+    80%{
+        transform: translateY(-1px);
+        background-color: rgb(0, 145, 24);
+        width: 10px;
+        height: 10px;
+    }
+    
+
+}

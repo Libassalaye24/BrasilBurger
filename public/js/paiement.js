@@ -1,5 +1,4 @@
-/* const form = document.getElementById('form');
- */ const form = document.querySelector("button");
+const form = document.getElementById('button');
  const montant = document.getElementById("paiement_montant");
  const select = document.getElementById("paiement_commande");
 
@@ -95,9 +94,8 @@
      showError(input2, "Passwords do not match!");
    }
  }
- alert(true);
  //Even listeners--------------------------------------------------------
- form.addEventListener("click", function (e) {
+ form.addEventListener("submit", function (e) {
    // var nb = CheckNumberMatch(nbrEtage);
    
      checkRequired([montant,select]);

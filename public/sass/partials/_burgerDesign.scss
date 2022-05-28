@@ -535,7 +535,7 @@ section {
   flex-wrap: wrap;
   align-items: center;
   gap: 2rem;
-  background: $light-bg;
+  background: $product-container-color;
 
   .image {
     flex: 1 1 40rem;
@@ -1132,3 +1132,47 @@ section {
     }
   }
 }
+
+
+  .content-table {
+    align-items: center;
+    justify-content: center;
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    min-width: 100%;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .content-table thead tr {
+    background-color: $product-container-color;
+    color: $colorPrimary;
+    text-align: left;
+    font-weight: bold;
+  }
+
+  .content-table th,
+  .content-table td {
+    padding: 15px 18px;
+  }
+
+  .content-table tbody tr {
+    border-bottom: 1px solid $colorPrimary;
+  }
+  .pay-check{
+    cursor: pointer;
+  }
+  .content-table tbody tr:nth-of-type(even) {
+    background-color: $product-container-color;
+  }
+
+  .content-table tbody tr:last-of-type {
+    border-bottom: 2px solid $colorPrimary;
+  }
+
+  .content-table tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+  }

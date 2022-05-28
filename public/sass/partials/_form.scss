@@ -227,10 +227,12 @@ form .row {
   @extend %displayBlock;
   display: flex;
   input {
+    
     margin-left: 1%;
     margin-top: 2px;
   }
   label {
+    width: 100%;
     margin-left: 1%;
   }
   margin-top: 2%;
