@@ -4,13 +4,13 @@
 {% endblock %}
 
 {% block body %}
- <style>
+	<style>
 		body {
 			background-image: url("https://st2.depositphotos.com/3300441/11588/i/950/depositphotos_115884046-stock-photo-complements-set-background.jpg");
 			background-size: cover;
 			background-repeat: no repeat;
 		}
-        ul {
+	{# 	ul {
 			list-style-type: none;
 		}
 
@@ -76,79 +76,66 @@
 			transform: scale(0.9);
 			box-shadow: 0 0 5px #333;
 			z-index: -1;
-		}
-	
-</style>
+		} #}
+	</style>
 
- <div class="body">
-        <div class="container c1">
-            {{ form_start(form) }}
-               <div id="form" class="form">
-                   {#  {% if chambreMode is defined %}
-                         <h2>Modifier Chambre</h2>
-                    {% else %}
-                        <h2>Ajout complement</h2>
-                    {% endif %}
-                #}
-                        <div class="form-control ">
-                            <label for="Nom_complement" class="q">Nom Menu</label>
-                            {{ form_widget(form.nom) }}
-                            <small> {{ form_errors(form.nom) }}</small>
-							 <div class="invalid-feedback"></div>
-                        </div>
-						<div class="form-control ">
-                            <label for="Prix" class="q">Burgers</label>
-                            {{ form_widget(form.burger) }}
-                            <small> {{ form_errors(form.burger) }}</small>
-							 <div class="invalid-feedback"></div>
-                        </div>
-                        {# <div class="form-control">
-                            <label for="Prix">Complements</label>
-                            {{ form_widget(form.complements) }}
-                            <small> {{ form_errors(form.complements) }}</small>
-							 <div class="invalid-feedback"></div>
-                        </div> #}
-						 {# <div class="checkbox" id="affecter" >
-						 <label for="Prix">Complements</label>
-                            <div class="check">
-                              
-                                <label for="" class="form-check"> 
-                                    {{form_widget(form.complements)}}
-                                </label>
-                              
-                            </div>
-                        </div> #}
-                        {% if complements|length > 0 %}
-                            <div class="form-control">
-                                <label for="description" class="q">complements</label>
-                            </div>
-                            <ul>
-                                {% for key, item in complements %}
-
-                                    <li>
-                                        <input type="checkbox" name="complement[]" value="{{item.id}}" id="cb{{key +1 }}"/>
-                                        <label for="cb{{key +1 }}">{{item.prix}}
-                                            fcfa<img src="{{asset('img/uploads/' ~ item.image.nom)}}"/></label>
-                                    </li>
-                                {% endfor %}
-
-                            </ul>
-                             <div class="invalid-feedback">{% if errorComplement is defined %} {{errorComplement}} {% endif %}
-                             </div>
-                        {% endif %}
-						<div class="form-control">
-                            <label for="description" lass="q">Image </label>
-                            {{ form_widget(form.image.nom) }}
-							 <small> </small>
-							  <div class="invalid-feedback">{{ form_errors(form.image.nom) }}</div>
-                        </div>
-                       {{ form_widget(form.Valider) }}
-               </div>
-            {{ form_end(form) }}
-        </div>
-    </div>
+	<div class="body">
+		<div class="container c1">
+			{{ form_start(form) }}
+			<div
+				id="form" class="form">
+				{#  {% if chambreMode is defined %}
+				                         <h2>Modifier Chambre</h2>
+				                    {% else %}
+				                        <h2>Ajout complement</h2>
+				                    {% endif %}
+				                #}
+				<div class="form-control ">
+					<label for="Nom_complement" class="q">Nom Menu</label>
+					{{ form_widget(form.nom) }}
+					<small>
+						{{ form_errors(form.nom) }}</small>
+					<div class="invalid-feedback"></div>
+				</div>
+				<div class="form-control ">
+					<label for="Prix" class="q">Burgers</label>
+					{{ form_widget(form.burger) }}
+					<small>
+						{{ form_errors(form.burger) }}</small>
+					<div class="invalid-feedback"></div>
+				</div>
+				 <div class="form-control">
+				    <label for="Prix">Complements</label>              
+				</div> 
+				 <div class="checkbox" id="affecter" >
+                    <div class="check">
+                        <label for="" class="form-check"> 
+                            {{form_widget(form.complements)}} <br>
+                        </label>
+                        
+                    </div>
+					<small>
+						{% if errorComplement is defined %}
+							{{ errorComplement }}
+						{% endif %}
+					</small>
+                </div>
+						
+			
+				<div class="form-control">
+					<label for="description" lass="q">Image
+					</label>
+					{{ form_widget(form.image.nom) }}
+					<small></small>
+					<div class="invalid-feedback">{{ form_errors(form.image.nom) }}</div>
+				</div>
+				{{ form_widget(form.Valider) }}
+			</div>
+			{{ form_end(form) }}
+		</div>
+	</div>
 {% endblock %}
 {% block javascripts %}
- {{parent()}}
+	{{parent()}}
 	<script src="{{asset('js/menuBurger.js')}}"></script>
 {% endblock %}

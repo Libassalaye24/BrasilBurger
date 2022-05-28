@@ -31,6 +31,7 @@
 								<th scope="col">#</th>
 								<th scope="col">Nom</th>
 								<th scope="col">Composants</th>
+								<th scope="col">Prix</th>
 								<th scope="col">Action</th>
 							</tr>
 						</thead>
@@ -41,10 +42,20 @@
 								</td>
 								<td class="thbottom">{{menu.nom}}</td>
 								<td class="thbottom">
-									<a href="{{path('edit_menu',{'id':menu.id})}}" class="btnajout">
-										<i class="fas fa-plus"></i>
-										voir
-									</a>
+								{{menu.burger.nom}} /
+									{% for item in menu.complements %}
+										{{item.nom}} /    
+									{% endfor %}
+									
+								</td>
+								<td class="thbottom">
+								{% set total = 0 %}
+								{% set montant = 0 %}
+									{% for item in menu.complements %}
+										 {% set montant = montant + item.prix %}        
+									{% endfor %}
+									{% set total = montant + menu.burger.prix  %}
+									{{total}} FCFA
 								</td>
 
 								<td class="thbottom">

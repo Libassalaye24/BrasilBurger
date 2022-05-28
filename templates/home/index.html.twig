@@ -12,7 +12,7 @@
 		.home {
 			margin-top: -2%;
 		}
-		</style>
+	</style>
 	<!-- home section starts  -->
 	{% for message in app.flashes('produit') %}
 		<div class="alert alert-danger" id="produit" style="background-color: #adeace;padding:10px;text-align:center;border-radius:5px;margin-bottom:5px;">
@@ -21,9 +21,9 @@
 	{% endfor %}
 	<section class="home" id="home">
 
-		<div class="content">
-			<span>Welcome to brasil Burger</span>
-			<h3>different spices for the different tastes 😋</h3>
+		<div class="content" data-aos="fade-up" data-aos-duration="3000">
+			<span>Bienvenue au Brasil Burger</span>
+			<h3>Différentes épices pour différents goûts 😋</h3>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis unde dolores temporibus hic quam debitis tenetur harum nemo.</p>
 			<a href="#popular" class="btn">Commander maintenant</a>
 		</div>
@@ -32,7 +32,7 @@
 			<img
 			src="{{asset('img/image/home-b-img.png')}}" alt="" class="home-img">
 		{#         <img src="{{asset('img/image/home-parallax-img.png')}}" alt="" class="home-parallax-img">
-																									 #}
+																											 #}
 		</div>
 
 	</section>
@@ -64,43 +64,43 @@
 	</section>
 	<section class="about" id="about">
 
-    <div class="image">
-        <img src="{{asset('img/burgerImages/i153782-burger-largejpg-removebg-preview.png')}}" alt="">
-    </div>
+		<div class="image" data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1400">
+			<img src="{{asset('img/burgerImages/i153782-burger-largejpg-removebg-preview.png')}}" alt="">
+		</div>
 
-    <div class="content">
-        <span>why choose us?</span>
-        <h3 class="title">what's make our food delicious!</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos ut explicabo, numquam iusto est a ipsum assumenda tempore esse corporis?</p>
-        <a href="#" class="btn">read more</a>
-        <div class="icons-container">
-            <div class="icons">
-                <img src="{{asset('img/image/serv-1.png')}}" alt="">
-                <h3>fast delivery</h3>
-            </div>  
-            <div class="icons">
-                <img src="{{asset('img/image/serv-2.png')}}" alt="">
-                <h3>fresh food</h3>
-            </div>   
-            <div class="icons">
-                <img src="{{asset('img/image/serv-3.png')}}" alt="">
-                <h3>best quality</h3>
-            </div>  
-            <div class="icons">
-                <img src="{{asset('img/image/serv-4.png')}}" alt="">
-                <h3>24/7 support</h3>
-            </div>           
-        </div>
-    </div>
+		<div class="content" data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1500">
+			<span>Pourquoi nous choisir?</span>
+			<h3 class="title">Qu'est-ce qui rend notre nourriture délicieuse!</h3>
+			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos ut explicabo, numquam iusto est a ipsum assumenda tempore esse corporis?</p>
+			<a href="#" class="btn">voir plus</a>
+			<div class="icons-container">
+				<div class="icons">
+					<img src="{{asset('img/image/serv-1.png')}}" alt="">
+					<h3>livraison rapide</h3>
+				</div>
+				<div class="icons">
+					<img src="{{asset('img/image/serv-2.png')}}" alt="">
+					<h3>nourriture fraîche</h3>
+				</div>
+				<div class="icons">
+					<img src="{{asset('img/image/serv-3.png')}}" alt="">
+					<h3>Meilleure Qualité</h3>
+				</div>
+				<div class="icons">
+					<img src="{{asset('img/image/serv-4.png')}}" alt="">
+					<h3>24/7 support</h3>
+				</div>
+			</div>
+		</div>
 
-</section>
+	</section>
 	<!-- popular section starts  -->
 
 	<section class="popular" id="popular">
 
 		<div class="heading">
-			<span>popular food</span>
-			<h3>our special dishes</h3>
+			<span>Nourriture populaire</span>
+			<h3>Nos menus spéciaux</h3>
 		</div>
 		<div class="form-filtre">
 			<form method="POST" action="{{path('catalogue_by_type')}}">
@@ -166,13 +166,7 @@
 			<div class="circle"></div>
 		</div>
 
-		{% if typeSelected is not defined %}
-			<div class="p" style="">
-				<div class="pagination">
-					{{ knp_pagination_render(products,'./pagination.twig') }}
-				</div>
-			</div>
-		{% endif %}
+		
 	</section>
 
 	<!-- popular section ends -->
@@ -198,7 +192,7 @@
 	<section class="order" id="order">
 
 		<div class="heading">
-			<span>order now</span>
+			<span>Commandez maintenant</span>
 			<h3>fastest home delivery</h3>
 		</div>
 
@@ -211,12 +205,12 @@
 
 			<div class="icons">
 				<img src="{{asset('img/image/icon-2.png')}}" alt="">
-				<h3>+123-456-7890</h3>
+				<h3>+221 77-809-86-33</h3>
 			</div>
 
 			<div class="icons">
 				<img src="{{asset('img/image/icon-3.png')}}" alt="">
-				<h3>mumbai, india - 400104</h3>
+				<h3>Dakar, Senegal - 400104</h3>
 			</div>
 
 		</div>
@@ -234,44 +228,42 @@
 		<div class="box-container">
 
 			<div class="box">
-				<h3>our menu</h3>
+				<h3>Nos Menus</h3>
 				<a href="#">
 					<i class="fas fa-arrow-right"></i>
-					pizza</a>
+					Boisson</a>
 				<a href="#">
 					<i class="fas fa-arrow-right"></i>
 					burger</a>
 				<a href="#">
 					<i class="fas fa-arrow-right"></i>
-					chicken</a>
+					frites</a>
 				<a href="#">
 					<i class="fas fa-arrow-right"></i>
-					pasta</a>
+					menus</a>
 				<a href="#">
 					<i class="fas fa-arrow-right"></i>
-					and more...</a>
+					et plus...</a>
 			</div>
 
 			<div class="box">
-				<h3>quick links</h3>
+				<h3>Liens rapides</h3>
 				<a href="#home">
 					<i class="fas fa-arrow-right"></i>
-					home</a>
+					Accueil</a>
 				<a href="#about">
 					<i class="fas fa-arrow-right"></i>
-					about</a>
+					Pourquoi?</a>
 				<a href="#popular">
 					<i class="fas fa-arrow-right"></i>
-					popular</a>
+					Nos Menus</a>
 				<a href="#menu">
 					<i class="fas fa-arrow-right"></i>
 					menu</a>
 				<a href="#order">
 					<i class="fas fa-arrow-right"></i>
-					order</a>
-				<a href="#blogs">
-					<i class="fas fa-arrow-right"></i>
-					blogs</a>
+					et plus</a>
+
 			</div>
 
 			<div class="box">
@@ -294,7 +286,7 @@
 			</div>
 
 			<div class="box">
-				<h3>opening hours</h3>
+				<h3>Heures d'ouvertures</h3>
 				<p>monday : 7:00am to 10:00pm</p>
 				<p>tuesday : 7:00am to 10:00pm</p>
 				<p>wednesday : 7:00am to 10:00pm</p>

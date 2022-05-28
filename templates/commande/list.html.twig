@@ -8,104 +8,116 @@
 		html {
 			font-size: 62.5%;
 		}
-	
 	</style>
-
+	{% for message in app.flashes('valideCommande') %}
+		<div class="alert alert-danger" id="valide" style="background-color: #adeace;padding:10px;text-align:center;border-radius:5px;margin-bottom:5px;">
+			{{ message }}
+		</div>
+	{% endfor %}
+	{% for message in app.flashes('invalideCommande') %}
+		<div class="alert alert-danger" id="valide" style="background-color: #e04218;padding:10px;text-align:center;border-radius:5px;margin-bottom:5px;color:#fff">
+			{{ message }}
+		</div>
+	{% endfor %}
 	<div class="container">
 		<div class="column">
 
 			<div class="card">
 				<div class="statistic">
-					<a href="#" class="btn" style="background-color: #fff;border:red 2px solid;color:red">
-						Commandes non validees & payees
-						<i class="fa fa-exclamation-circle c-primary" aria-hidden="true"></i>
-					</a>
-					<a href="#" class="btn" style="background-color: #fff;border:green 2px solid;color:green">
-						Commandes validees & payees
+					<a class="btn" id="check-all" style="background-color: #fff;border:green 2px solid;color:green">
+						tout cocher
 						<i class="fas fa-check-double  " style="color:green;"></i>
 					</a>
+					<a class="btn" id="decheck-all" style="background-color: #fff;border:red 2px solid;color:red">
+						tout decocher
+					</a>
 
 				</div>
-				<div class="form-filtre">
-					<div class="form-inline" >
-						<label for="email">Etat:</label>
-						<select class="form-select" id="select-etat" aria-label="Default select example">
-							<option value="encours" {% if etatSelected is defined %} {% if etatSelected == 'encours' %} selected="selected" {% endif %} {% endif %} data-path="{{ path('commande_filtre_by_etat',{etat:'encours'})}}">En cours</option>
-							<option value="valider" {% if etatSelected is defined %} {% if etatSelected == 'valider' %} selected="selected" {% endif %} {% endif %} data-path="{{ path('commande_filtre_by_etat',{etat:'valider'})}}">Valider</option>
-							<option value="annuler" {% if etatSelected is defined %} {% if etatSelected == 'annuler' %} selected="selected" {% endif %} {% endif %} data-path="{{ path('commande_filtre_by_etat',{etat:'annuler'})}}">Annuler</option>
-							<option value="terminer" {% if etatSelected is defined %} {% if etatSelected == 'terminer' %} selected="selected" {% endif %} {% endif %} data-path="{{ path('commande_filtre_by_etat',{etat:'terminer'})}}">Terminer</option>
-						</select>
-						<label for="pwd">Client:</label>
-						<select class="form-select" id="select-client" aria-label="Default select example">
-							<option value="0" >Selectionner</option>
-							{% for item in clients %}
-								<option value="{{item.id}}" {% if clientSelected is defined %} {% if clientSelected == item.id %} selected="selected" {% endif %} {% endif %} data-path="{{ path('commande_filtre_by_client',{client: item.id })}}">{{item.email}} </option>
+				<form method="POST" action="{{path('valider_commande')}}">
+					<div class="statistic" style="float:right;">
+						<button class="btn" name="changeEtat" value="valider" id="check-all" style="background-color: #fff;border:green 2px solid;color:green;padding:4px;">
+							Valider
+							<i class="fas fa-check-double  " style="color:green;"></i>
+						</button>
+						<button class="btn" name="changeEtat" value="annuler" id="decheck-all" style="background-color: #fff;border:red 2px solid;color:red;padding:4px;">
+							Annuler
+							<i class="fa-solid fa-xmark"></i>
+						</button>
+
+					</div>
+
+					<div class="form-filtre">
+						<div class="form-inline">
+							<label for="email">Etat:</label>
+							<select class="form-select" id="select-etat" aria-label="Default select example">
+								<option value="encours" {% if etatSelected is defined %} {% if etatSelected == 'encours' %} selected="selected" {% endif %} {% endif %} data-path="{{ path('commande_filtre_by_etat',{etat:'encours'})}}">En cours</option>
+								<option value="valider" {% if etatSelected is defined %} {% if etatSelected == 'valider' %} selected="selected" {% endif %} {% endif %} data-path="{{ path('commande_filtre_by_etat',{etat:'valider'})}}">Valider</option>
+								<option value="annuler" {% if etatSelected is defined %} {% if etatSelected == 'annuler' %} selected="selected" {% endif %} {% endif %} data-path="{{ path('commande_filtre_by_etat',{etat:'annuler'})}}">Annuler</option>
+								<option value="terminer" {% if etatSelected is defined %} {% if etatSelected == 'terminer' %} selected="selected" {% endif %} {% endif %} data-path="{{ path('commande_filtre_by_etat',{etat:'terminer'})}}">Terminer</option>
+							</select>
+							<label for="pwd">Client:</label>
+							<select class=" js-example form-select" id="select-client" aria-label="Default select example">
+								<option value="0">Selectionner</option>
+								{% for item in clients %}
+									<option value="{{item.id}}" {% if clientSelected is defined %} {% if clientSelected == item.id %} selected="selected" {% endif %} {% endif %} data-path="{{ path('commande_filtre_by_client',{client: item.id })}}">{{item.email}}
+									</option>
+								{% endfor %}
+							</select>
+
+
+						</div>
+
+					</div>
+
+
+					<div style="overflow-x:auto;">
+						<table>
+							<thead>
+								<tr>
+									<th scope="col"></th>
+									<th scope="col">Commande</th>
+									<th scope="col">details</th>
+									<th scope="col">Date</th>
+									<th scope="col">Etat</th>
+									<th scope="col">Montant</th>
+									<th scope="col">Payement</th>
+
+								</tr>
+							</thead>
+							{% for commande in commandes %}
+								<tr>
+									<td class="thbottom">
+										{% if commande.etat == 'encours' %}
+											<input type="checkbox" name="commandesAll[]" value="{{commande.id}}" class="item-check">
+										{% endif %}
+									</td>
+									<td class="thbottom">
+										N°
+										{{commande.numero}}
+									</td>
+									<td class="thbottom">
+										<a href="{{path('details_commande',{id:commande.id})}}" class="btnajout">
+											<i class="fas fa-plus"></i>
+											voir
+										</a>
+									</td>
+									<td class="thbottom">{{commande.date|date("d/m/Y")}}</td>
+									<td class="thbottom">{{commande.etat}}</td>
+									<td class="thbottom">{{commande.montant}}
+										FCFA</td>
+									<td class="thbottom">
+										{% if commande.paiement %}
+											<i class="fas fa-check-double  " style="color:green;"></i>
+										{% else %}
+											<i class="fa fa-exclamation-circle c-primary" aria-hidden="true"></i>
+										{% endif %}
+									</td>
+
+								</tr>
 							{% endfor %}
-						</select>
-					
-
+						</table>
 					</div>
-					
-				</div>
-
-				{% for message in app.flashes('valideCommande') %}
-					<div class="alert alert-danger" style="background-color: #adeace;padding:10px;text-align:center;border-radius:5px;margin-bottom:5px;">
-						{{ message }}
-					</div>
-				{% endfor %}
-
-				<div style="overflow-x:auto;">
-					<table>
-						<thead>
-							<tr>
-								<th scope="col">Commande</th>
-								<th scope="col">details</th>
-								<th scope="col">Date</th>
-								<th scope="col">Etat</th>
-								<th scope="col">Montant</th>
-								<th scope="col">Payement</th>
-
-								<th scope="col">Action</th>
-							</tr>
-						</thead>
-						{% for commande in commandes %}
-							<tr>
-
-								<td class="thbottom">
-									N°
-									{{commande.numero}}
-								</td>
-								<td class="thbottom">
-									<a href="{{path('details_commande',{id:commande.id})}}" class="btnajout">
-										<i class="fas fa-plus"></i>
-										voir
-									</a>
-								</td>
-								<td class="thbottom">{{commande.date|date("d/m/Y")}}</td>
-								<td class="thbottom">{{commande.etat}}</td>
-								<td class="thbottom">{{commande.montant}}
-									FCFA</td>
-								<td class="thbottom">
-									{% if commande.paiement %}
-										<i class="fas fa-check-double  " style="color:green;"></i>
-									{% else %}
-										<i class="fa fa-exclamation-circle c-primary" aria-hidden="true"></i>
-									{% endif %}
-								</td>
-								<td class="thbottom">
-									{% if commande.etat == 'encours' %}
-										<a href="{{path('valider_commande',{id:commande.id})}}" onclick="return confirm('Voulez-vous valider cette commande?');" class="btnSuccess">
-											valider
-										</a>
-										<a href="{{path('annuler_commande',{id:commande.id})}}" onclick="return confirm('Voulez-vous annuler cette commande?');" class="btnRed">
-											annuler
-										</a>
-									{% endif %}
-								</td>
-							</tr>
-						{% endfor %}
-					</table>
-				</div>
+				</form>
 				{% if isPaginated is defined and commandes %}
 					<div class="p">
 						<div class="pagination">
@@ -145,77 +157,57 @@
 	</div>
 {% endblock %}
 {% block javascripts %}
-			<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
+	{{parent()}}
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 	<script>
+		// In your Javascript (external .js resource or <script> tag)
+$(document).ready(function () {
+$('.js-example').select2();
+});
+setTimeout(function () {
+$('#valide').fadeOut('fast');
+}, 1110); // <-- time in milliseconds
+$(function () {
+$(document).on('change', '#select-etat', function () {
+const path = $(this).find(':selected').data('path');
+$.ajax({
+url: path, type: "GET", dataType: 'JSON', // or html or whatever you want
+success: function (data) {
+window.location.href = data
+}
+});
 
-		 $(function(){
-             $(document).on('change', '#select-etat', function(){
-                  const path = $(this).find(':selected').data('path');
-                 $.ajax({
-                   url:  path,
-                   type: "GET",
-                   dataType: 'JSON', //or html or whatever you want
-                   success:function(data) {
-                       window.location.href=data
-                   }
-                 });
-             
-            })
-           });
-		    $(function(){
-             $(document).on('change', '#select-client', function(){
-                  const path = $(this).find(':selected').data('path');
-                 $.ajax({
-                   url:  path,
-                   type: "GET",
-                   dataType: 'JSON', //or html or whatever you want
-                   success:function(data) {
-                       window.location.href=data
-                   }
-                 });
-             
-            })
-           });
-		{# const select = document.querySelector('#select-etat');
-			select.addEventListener("change", function (event) {
+})
+});
+$(function () {
+$(document).on('change', '#select-client', function () {
+const path = $(this).find(':selected').data('path');
+$.ajax({
+url: path, type: "GET", dataType: 'JSON', // or html or whatever you want
+success: function (data) {
+window.location.href = data
+}
+});
 
-			console.log('true');
-			const option = event.target.options[select.selectedIndex];
-			const path = option.getAttribute('data-path')
-			fetch(path, {
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json'
-
-				}
-
-			}).then(response => response.json())
-			  .then(promesse => {
-					window.location.href = promesse;
-			  }).catch(err => console.log(err))
-
-
-			}); #}
-			{# const select = document.querySelector('#select-client');
-			select.addEventListener("change", function (event) {
-				alert(true);
-			console.log('true');
-			const option = event.target.options[select.selectedIndex];
-			const path = option.getAttribute('data-path')
-			fetch(path, {
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json'
-
-				}
-
-			}).then(response => response.json())
-			  .then(promesse => {
-					window.location.href = promesse;
-			  }).catch(err => console.log(err))
-
-
-			}); #}
+})
+});
+$(function () { // button select all or cancel
+$("#check-all").click(function () {
+$(".item-check").each(function (index, item) { /*   var all = $("#check-all")[0];
+            all.checked = !all.checked
+            var checked = all.checked; */
+item.checked = true;
+});
+});
+});
+$(function () {
+$("#decheck-all").click(function (item) {
+$(".item-check").each(function (index, item) {
+item.checked = false;
+});
+});
+});
 	</script>
 {% endblock %}

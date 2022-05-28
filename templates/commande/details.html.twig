@@ -35,15 +35,13 @@
 	<!-- home section starts  -->
 
 	<section class="retour" id="">
-		{% if role[0] =="ROLE_CLIENT" %}
+	{# 	{% if role[0] =="ROLE_GESTIONNAIRE" %}
 			<a href="{{path('list_commande')}}">
 				<i class="fa-solid fa-reply fa-1x"></i>
 			</a>			
-		{% else %}
-			<a href="{{path('mes_commandes')}}">
-				<i class="fa-solid fa-reply fa-1x"></i>
-			</a>
+		
 		{% endif %}
+		 #}
 		
 	</section>
 
@@ -104,7 +102,7 @@
                         {% set montant = montant + item.prix %}                   
                     {% endfor %}
                     {{(montant + Cmenu.burger.prix)}} FCFA
-					{% set montantTotal = montant + Cmenu.burger.prix  %}
+					{% set montotal = montant + Cmenu.burger.prix  %}
                 </div>
             </div>
         </div>

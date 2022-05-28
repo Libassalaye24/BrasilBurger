@@ -48,7 +48,6 @@
 						<div class="number">{{totalMenu}}</div>
 
 					</div>
-					<i class="bx cart  bx-burger-fries"></i>
 					<i class='bx bx-cart-alt cart'></i>
 
 				</div>
@@ -130,31 +129,40 @@
 
 					</div>
 
+					{% if isPaginated is defined and commandeEncours %}
 					<div class="p">
 						<div class="pagination">
 							<nav aria-label="Page navigation example " class=" ">
 								<ul class="pagination float-end  d-flex gap-2">
-									<li class="page-item rounded-1 ">
-										<a class="page-link border active2 border-danger border-1 " href="" aria-label="Next">
-											<span aria-hidden="true">&laquo;</span>
-										</a>
-									</li>
+									{% if page != 1 %}
+										<li class="page-item rounded-1 ">
+											<a class="page-link border active2 border-danger border-1 " href="{{ path('dashboard', {page : page - 1 ,nbr : nbr }) }}" aria-label="Next">
+												<span aria-hidden="true">&laquo;</span>
+											</a>
+										</li>
+									{% endif %}
+									{% for i in range (1 , nbrPage) %}
+										{% if i != 0 %}
+											{# <a class="a" href="{{ path(route, query|merge({(pageParameterName): page})) }}">{{ page }}</a> #}
+											<li class="page-item rounded-1 ">
+												<a class="page-link border border-danger border-1 notactive" href="{{ path('dashboard', {page : i ,nbr : nbr }) }}">{{i}}</a>
+											</li>
 
-									{# <a class="a" href="{{ path(route, query|merge({(pageParameterName): page})) }}">{{ page }}</a> #}
-									<li class="page-item rounded-1 ">
-										<a class="page-link border border-danger border-1 notactive" href="">1</a>
-									</li>
-
-									<li class="page-item rounded-1 ">
-										<a class="page-link border border-danger border-1 active2" href="" aria-label="Previous">
-											<span aria-hidden="true">&raquo;</span>
-										</a>
-									</li>
+										{% endif %}
+									{% endfor %}
+									{% if page != nbrPage %}
+										<li class="page-item rounded-1 ">
+											<a class="page-link border border-danger border-1 active2" href="{{ path('dashboard', {page : page + 1 ,nbr : nbr }) }}" aria-label="Previous">
+												<span aria-hidden="true">&raquo;</span>
+											</a>
+										</li>
+									{% endif %}
 
 								</ul>
 							</nav>
 						</div>
 					</div>
+				{% endif %}
 				</div>
 				<div class="top-sales box">
 					<div class="title">Top Seling Product</div>

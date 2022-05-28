@@ -7,69 +7,128 @@
 	<style>
 		.retour {
 			margin-top: 1%;
-			padding : 5px;
+			padding: 5px;
 		}
-		section {
-			padding-right: 2rem;
-		}
+
 		.retour a,
 		.message {
 			color: #e04218;
 		}
 	</style>
 
+	<section class="menu" id="menu">
 
-	<div class="body">
-
-		<div class="container c1">
-			<div class="retour" id="">
-				<a href="{{path('mes_commandes')}}">
-					<i class="fa-solid fa-reply fa-1x"></i>
-					mes commandes
-				</a>
-			</div>
-			<div id="form" class="form">
-				{% if commande %}
-				<h2>Paiement Commande
-				</h2>
-			
-					{{form_start(form)}}
-					<div class="form-control">
-						<label for="Nom_complement">Numero de commande</label>
-						<select class="" name="numero" id="">
-							<option value="0">Veillez selectionner</option>
-							{% for item in commande %}
-								<option {% if isSelected is defined and isSelected == item.id %} selected {% endif %} value="{{item.id}}">{{item.numero}}</option>
-							{% endfor %}
-						</select>
-						<small></small>
-						<div class="invalid-feedback">
-							{% if error is defined %}
-								{{error}}
-							{% endif %}
-						</div>
-					</div>
-					<div class="form-control">
-						<label for="Nom_complement">Saiair Le montant</label>
-						{{form_widget(form.montant)}}
-						<small></small>
-						<div class="invalid-feedback">
-							{{form_errors(form.montant)}}
-							{% if errorMontant is defined %}
-								{{errorMontant}}
-							{% endif %}
-						</div>
-					</div>
-					<button type="submit" name="valider" value="ok" style="border:none" class="btn ">payer</button>
-					{{form_end(form)}}
-				{% else %}
-					<h2 class="message">Pour payer Veillez attendre que le gestionnaire valide votre commande</h2>
-				{% endif %}
-			</div>
+		<div class="heading">
+			<span>Paiement Commandes</span>
 		</div>
-	</div>
-{% endblock %}
-{% block javascripts %}
-	<script src="{{asset('js/paiement.js')}}"></script>
-	{{parent()}}
-{% endblock %}
+
+
+		<div class="div" style="overflow-x: auto;">
+			<table class="content-table">
+
+				<thead>
+					<tr>
+						<th>numero commande</th>
+						<th>Etat</th>
+						<th>Date</th>
+						<th>Montant(FCFA)</th>
+					</tr>
+				</thead>
+
+				<tbody {# data-aos="fade-up" data-aos-duration="2000" #}>
+					{% set total = 0 %}
+					{% for commande in allCommandes %}
+						<tr>
+							<td>N°
+								{{commande.numero}}</td>
+							<td>{{commande.etat}}</td>
+							<td>{{commande.date|date('d/m/Y')}}</td>
+							<td>
+								{{commande.montant}}
+								{% set total = total + commande.montant %}
+							</td>
+
+						</tr>
+					{% endfor %}
+					<tr>
+						<td></td>
+						<td></td>
+						<td>
+							Total :
+						</td>
+						<td>
+							{{total}}
+							FCFA
+						</td>
+
+					</tr>
+
+				</tbody>
+
+			</table>
+			<form method="POST" action="{{path('payer')}}">
+				<button type="submit" class="btn" name="value" style="float: right;margin-top:-1%;border:none;">
+					Valider Paiement
+				</button>
+			</form>
+
+		</div>
+
+
+	</section>
+
+	{# 	<div class="body">
+	
+			<div class="container c1">
+				<div class="retour" id="">
+					<a href="{{path('mes_commandes')}}">
+						<i class="fa-solid fa-reply fa-1x"></i>
+						mes commandes
+					</a>
+				</div>
+				<pre>
+					{{ dump(allCommandes) }}
+				</pre> #}
+	{# <div id="form" class="form">
+								{% if commande %}
+								<h2>Paiement Commande
+								</h2>
+							
+									{{form_start(form)}}
+									<div class="form-control">
+										<label for="Nom_complement">Numero de commande</label>
+										<select class="" name="numero" id="">
+											<option value="0">Veillez selectionner</option>
+											{% for item in commande %}
+												<option {% if isSelected is defined and isSelected == item.id %} selected {% endif %} value="{{item.id}}">{{item.numero}}</option>
+											{% endfor %}
+										</select>
+										<small></small>
+										<div class="invalid-feedback">
+											{% if error is defined %}
+												{{error}}
+											{% endif %}
+										</div>
+									</div>
+									<div class="form-control">
+										<label for="Nom_complement">Saiair Le montant</label>
+										{{form_widget(form.montant)}}
+										<small></small>
+										<div class="invalid-feedback">
+											{{form_errors(form.montant)}}
+											{% if errorMontant is defined %}
+												{{errorMontant}}
+											{% endif %}
+										</div>
+									</div>
+									<button type="submit" name="valider" value="ok" style="border:none" class="btn ">payer</button>
+									{{form_end(form)}}
+								{% else %}
+									<h2 class="message">Pour payer Veillez attendre que le gestionnaire valide votre commande</h2>
+								{% endif %}
+							</div>
+						</div>
+				 #}
+</div>{% endblock %}{% block javascripts %}
+<script src="{{asset('js/paiement.js')}}"></script>
+{{parent()}}{% endblock %}
