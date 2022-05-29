@@ -55,7 +55,7 @@ class MenuFormType extends AbstractType
                     ])
                 ],
             ])
-           /*  ->add('complements',EntityType::class,[
+            ->add('complements',EntityType::class,[
                 'class' => Complement::class,
                 'choice_label' => 'nom',
                 'multiple' => true,
@@ -67,7 +67,7 @@ class MenuFormType extends AbstractType
                     ])
                 ],
                 
-            ]) */
+            ])
             
             ->add('image',ImageType::class,[
                 

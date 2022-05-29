@@ -36,27 +36,48 @@ class MenuController extends AbstractController
         ]);
     }
 
-    #[Route('/dashboard', name: 'dashboard')]
-    public function dashboard(EntityManagerInterface $manager,Request $request,PaginatorInterface $paginatorInterface,CommandeRepository $commandeRepository,MenuRepository $menuRepository,ComplementRepository $complementRepository,BurgerRepository $burgerRepository): Response
+    #[Route('/dashboard/{page?1}/{nbr?5}', name: 'dashboard')]
+    public function dashboard($page,$nbr,EntityManagerInterface $manager,Request $request,PaginatorInterface $paginatorInterface,CommandeRepository $commandeRepository,MenuRepository $menuRepository,ComplementRepository $complementRepository,BurgerRepository $burgerRepository): Response
     {
-        /* $countCommande = $commandeRepository->findByExampleField();
-        dd($countCommande); */
-        
-        // 2. Setup repository of some entity
-        
-        // 3. Query how many rows are there in the Articles table
+       
         $now = new DateTime();
+        $totalMenu = $menuRepository->findBy(['etat' => false]);
         $totalCommande = $commandeRepository->createQueryBuilder('c')
             ->select('count(c.id)')
             ->getQuery()
             ->getSingleScalarResult();
+        //$topSelecting= $commandeRepository->findBy(['etat' => 'encours']);
+      /*   $tab = [];
+        foreach ($topSelecting as $value) {
+           $tab[] = $value->getMenu();
+        } */
+        /* $count = 0;
+        foreach ($topSelecting as $value) {
+           // dd($value->getMenu());
+            foreach ($value->getMenu() as $key ) {
+               
+                foreach ($totalMenu as $menu) {
+                    if ($key->getBurger() == $menu->getBurger()) {
+                       $count++;
+                    }
+                    if ($count == 4) {
+                        dd($key->getBurger());
+                     }
+                   
+                }
+               
+            }
+        } */
         $totalCommandeEncours = $commandeRepository->findBy(['etat' => 'encours','dateCommande' => $now]);
-        $totalCommandeAnnule = $commandeRepository->findBy(['etat' => 'annuler','dateCommande' => $now]);
+        $totalCommandeAnnule = $commandeRepository->findBy(['etat' => 'annuler']);
         $totalCommandeValider = $commandeRepository->findBy(['etat' => 'valider','dateCommande' => $now]);
-        $totalMenu = $menuRepository->findBy(['etat' => false]);
+       
         $totalBurger = $burgerRepository->findBy(['etat' => false]);
         $totalComplement = $complementRepository->findBy(['etat' => false]);
-        $commandeEncours = $totalCommandeEncours;
+        $data =$totalCommandeEncours;
+        $commandeEncours = $commandeRepository->findBy(['etat' => 'encours','dateCommande' => $now],['id' => 'DESC'], $nbr, ($page - 1) * $nbr);
+        $nbrComandes = count($data);
+        $nbrPage = ceil($nbrComandes / $nbr);
         return $this->render('menu/dashboard.html.twig', [
            'totalCommande' => $totalCommande,
            'totalCommandeEncours' => count($totalCommandeEncours),
@@ -66,6 +87,10 @@ class MenuController extends AbstractController
            'totalComplement' => count($totalComplement),
            'totalBurger' => count($totalBurger),
            'totalMenu' => count($totalMenu),
+           'isPaginated'  => true,
+           'nbrPage'      => $nbrPage,
+           'page'         => $page,
+           'nbr'          => $nbr
 
         ]);
     }
@@ -91,17 +116,20 @@ class MenuController extends AbstractController
         if (!$menu) {
             $menu = new Menu();
         }
+
         $action = $request->attributes->get('_route');
+        $restor = [];
+        if ($action == 'edit_menu') {
+           $restor []= $menu;
+        }
         $form = $this->createForm(MenuFormType::class,$menu);
         $form->handleRequest($request);
         $complements = $complementRepository->findBy(['etat' => false]);
         if ($form->isSubmitted() && $form->isValid()) {
-            if ( $request->get('complement')) {
-                $complementAdd = $request->get('complement');
-                foreach ($complementAdd as $value) {
-                    $oneComp = $complementRepository->find($value);
-                    $menu->addComplement($oneComp);
-                }
+            //dd($request->get('menu_form')['complement']);
+           // dd($form);
+            if ( $request->get('menu_form')['complement'] ) {
+               
             }else{
                 //errrorComplements
                 return $this->render('menu/add.html.twig', [
@@ -113,7 +141,7 @@ class MenuController extends AbstractController
            // dd(false);
             $imageFile = $form->get('image')->get('nom')->getData();
             $image = new Image();
-            
+          
             if ($imageFile) {
                 $imageFileName = $fileUploader->upload($imageFile);
                 $image->setNom($imageFileName);
@@ -130,7 +158,9 @@ class MenuController extends AbstractController
         }
         return $this->render('menu/add.html.twig', [
             'form' => $form->createView(),
-            'complements' => $complements
+            'complements' => $complements,
+            'restor' => $restor,
+            'action' => $action,
         ]);
     }
     #[Route('menu/desarchive/{id}', name: 'desarchive_menu')]

@@ -58,12 +58,14 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
             return $role;
         }, $roles);
         $session->set('roles',$token->getUser()->getRoles());
+        $session->set('userConnect',$token->getUser());
+
         if (in_array('ROLE_CLIENT', $rolesTab, true)) {
             // c'est un client : on le rediriger ses commandes
             $redirection = new RedirectResponse($this->urlGenerator->generate('mes_commandes'));
         } elseif(in_array('ROLE_GESTIONNAIRE', $rolesTab, true)) {
             // c'est un utilisaeur gestionnaire : on le rediriger vers l'espace admin
-            $redirection = new RedirectResponse($this->urlGenerator->generate('list_commande'));
+            $redirection = new RedirectResponse($this->urlGenerator->generate('dashboard'));
         }
         // For example:
         return $redirection;

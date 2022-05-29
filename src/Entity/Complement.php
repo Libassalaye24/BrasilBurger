@@ -33,11 +33,15 @@ class Complement
     #[ORM\ManyToMany(targetEntity: Commande::class, mappedBy: 'complement')]
     private $commandes;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private $type;
+
     public function __construct()
     {
         $this->menus = new ArrayCollection();
         $this->etat = false;
         $this->commandes = new ArrayCollection();
+        $this->type = 'complement';
     }
 
     public function __toString()
@@ -147,6 +151,18 @@ class Complement
         if ($this->commandes->removeElement($commande)) {
             $commande->removeComplement($this);
         }
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }

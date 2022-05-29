@@ -45,9 +45,11 @@
 						<a class="" href="{{path('mes_commandes')}}">Mes Commandes</a>
 					{% endif %}
 					{% if is_granted("ROLE_GESTIONNAIRE") %}
-						<a class="a" href="{{path('list_burger')}}">Burger</a>
-						<a class="a" href="{{path('list_menu')}}">Menu</a>
-						<a class="a" href="{{path('list_complement')}}">Complement</a>
+						<a class="a" href="{{path('list_food')}}">Food</a>
+						<a class="a" href="{{path('list_archive_food')}}">Liste des archives</a>
+						<a class="a" href="{{path('add_food')}}">Ajout food</a>
+						{# <a class="a" href="{{path('list_menu')}}">Menu</a>
+						<a class="a" href="{{path('list_complement')}}">Complement</a> #}
 						<a class="a" href="{{path('list_commande')}}">Commandes</a>
 						<a class="a" href="{{path('dashboard')}}">Tableau de bord</a>
 					{% endif %}

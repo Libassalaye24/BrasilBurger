@@ -24,7 +24,7 @@ class ImageType extends AbstractType
                 'label' => 'Avatar',
                 'data_class' => null,
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'input',
                     'type' => 'file'
                     
                 ],
@@ -42,6 +42,7 @@ class ImageType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Image::class,
+            'required' => false,
         ]);
     }
 }

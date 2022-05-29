@@ -26,10 +26,6 @@ class Commande
     #[ORM\ManyToOne(targetEntity: Client::class, inversedBy: 'commandes')]
     private $client;
 
-    #[ORM\OneToOne(targetEntity: Paiement::class, cascade: ['persist', 'remove'])]
-    private $paiement;
-
-
     #[ORM\Column(type: 'string', length: 255)]
     private $etat;
 
@@ -50,6 +46,12 @@ class Commande
     #[ORM\ManyToMany(targetEntity: Complement::class, inversedBy: 'commandes')]
     private $complement;
 
+    #[ORM\OneToOne(mappedBy: 'commande', targetEntity: Paiement::class, cascade: ['persist', 'remove'])]
+    private $paiement;
+
+ 
+
+
 
 
     public function __construct()
@@ -60,7 +62,10 @@ class Commande
         $this->complement = new ArrayCollection();
       
     }
-
+    public function __toString()
+    {
+        return $this->montant;
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -103,18 +108,7 @@ class Commande
         return $this;
     }
 
-    public function getPaiement(): ?Paiement
-    {
-        return $this->paiement;
-    }
-
-    public function setPaiement(?Paiement $paiement): self
-    {
-        $this->paiement = $paiement;
-
-        return $this;
-    }
-
+  
   
    
   
@@ -230,6 +224,32 @@ class Commande
 
         return $this;
     }
+
+    public function getPaiement(): ?Paiement
+    {
+        return $this->paiement;
+    }
+
+    public function setPaiement(?Paiement $paiement): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($paiement === null && $this->paiement !== null) {
+            $this->paiement->setCommande(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($paiement !== null && $paiement->getCommande() !== $this) {
+            $paiement->setCommande($this);
+        }
+
+        $this->paiement = $paiement;
+
+        return $this;
+    }
+
+  
+
+  
 
   
 }

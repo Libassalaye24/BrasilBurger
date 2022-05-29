@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\PaiementRepository;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\Date;
 
@@ -21,8 +23,13 @@ class Paiement
     #[ORM\Column(type: 'datetime')]
     private $date;
 
-    #[ORM\OneToOne(targetEntity: Commande::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(inversedBy: 'paiement', targetEntity: Commande::class, cascade: ['persist', 'remove'])]
     private $commande;
+
+    
+
+
+
 
     public function __construct()
     {
@@ -69,4 +76,8 @@ class Paiement
 
         return $this;
     }
+
+   
+
+  
 }

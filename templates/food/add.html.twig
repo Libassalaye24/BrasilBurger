@@ -1,0 +1,127 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello FoodController!
+{% endblock %}
+
+{% block body %}
+	<style>
+		body {
+			background: #f9f7ec;
+		}
+	</style>
+
+	<div class="body">
+		<div
+			class="container c1">
+			{# 	<form method="POST" action="{{path('add_food')}}"> #}
+			{{ form_start(form) }}
+			<div {# data-aos="fade-up" data-aos-duration="3000" #} id="form" class="form">
+
+				<div class="form-control">
+					<label for="email">nom</label>
+					<input type="text" value="{% if restor is defined %} {{restor.nom}} {% endif %}" class="input" name="nomFood" id="nom" aria-describedby="helpId" placeholder="">
+					<small></small>
+					<div class="invalid-feedback"></div>
+				</div>
+				<div class="form-control">
+					<label for="">Type de food</label>
+					<select class="form-control" name="type" id="type" onclick="handleClick(this);">
+						<option value="">Veillez selectionner</option>
+						<option {% if restor is defined and restor.type == "menu" %} selected {% endif %}
+						 value="menu">menu</option>
+						<option value="burger">burger</option>
+						<option value="complement">complement</option>
+					</select>
+					<small></small>
+					<div class="invalid-feedback"></div>
+				</div>
+				<div class="form-control" id="burger_champs"
+				 {% if restor is defined and restor.type == "menu" %}
+				 	style="display:block;" 
+				{% else %}
+					style="display:none;"
+				{% endif %} >
+					<label for="">Burger</label>
+					<select class="form-control" name="burger" id="burger">
+						<option value="">Veillez selectionner</option>
+						{% for item in burgers %}
+							<option
+							 {% if restor is defined and restor.type == "menu" and restor.burger == item %}
+								selected
+							 {% endif %}
+							 value="{{item.id}}">{{item.nom}}</option>
+						{% endfor %}
+					</select>
+					<small></small>
+					<div class="invalid-feedback"></div>
+				</div>
+				<pre>
+					{{ dump(complements) }}
+				</pre>
+				{# <div class="checkbox" id="checkbox_champs" style="display:none;">
+				{% for item in complements %}
+					<div class="check">
+							<label for="" class="form-check">
+								<input type="checkbox" class="complement" name="complements[]" id="" value="{{item.id}}">
+								{{item.nom}}
+							</label>
+					</div>
+					{% endfor %}
+					<small id="smallC"></small>
+					<div class="invalid-feedback"></div>
+				</div> #}
+				{% if restor is defined and restor.type == 'menu' %}
+				
+					<div class="checkbox" id="checkbox_champs">
+						{% for item in restor.complements %}
+							<div class="check">
+									<label for="" class="form-check">
+										<input type="checkbox" class="complement" checked name="complementsRestor[]" id="" value="{{item.id}}">
+										{{item.nom}}
+									</label>
+							</div>
+						{% endfor %}
+					<small id="smallC"></small>
+					<div class="invalid-feedback"></div>
+					</div>
+
+				{% endif %}
+				<div class="form-control" id="prix_champs" style="display:none;">
+					<label for="email">Prix</label>
+					<input type="text" class="input" name="prix" id="prix" aria-describedby="helpId" placeholder="">
+					<small></small>
+					<div class="invalid-feedback"></div>
+				</div>
+				<div class="form-control" id="description_champs" style="display:none;">
+					<label for="email">description</label>
+					<input type="text" class="input" name="description" id="description" aria-describedby="helpId" placeholder="">
+					<small></small>
+					<div class="invalid-feedback"></div>
+				</div>
+
+				<div class="form-control">
+					<label for="description">Image
+					</label>
+					{{ form_widget(form.nom) }}
+					<small></small>
+					<div class="invalid-feedback">{{ form_errors(form.nom) }}</div>
+				</div>
+
+				<button type="submit" name="ajout" value="ok" class="btn ">
+					{% if mode is defined %}
+						Modifier
+					{% else %}
+						Ajouter
+					{% endif %}
+				</button>
+
+			</div>
+			{{ form_end(form) }}
+			{# </form> #}
+		</div>
+	</div>
+{% endblock %}
+{% block javascripts %}
+	{{parent()}}
+	<script src="{{asset('js/complement.js')}}"></script>
+{% endblock %}

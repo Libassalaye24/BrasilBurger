@@ -1,23 +1,33 @@
 /* const form = document.getElementById('form');
  */ const form = document.querySelector("form");
-const nom = document.getElementById("complement_nom");
-const prix = document.getElementById("complement_prix");
-const image = document.getElementById("complement_image_nom");
+const nom = document.getElementById("nom");
+const prix = document.getElementById("prix");
+const image = document.getElementById("image_nom");
+const burger = document.getElementById("burger");
+const type = document.getElementById("type");
+const description = document.getElementById("description");
+const complement = document.getElementsByClassName(".complement")
+
+//filter ajax
+
+
+//
+
 let isValid = [];
 //Functions-------------------------------------------------------------
-function showError(input, message) {//Afficher les messages d'erreur
-    const formControl = input.parentElement;
-    formControl.className = 'form-control error';
-    const small = formControl.querySelector('small');
-    small.innerText = message;
-    isValid.push(false);
+function showError(input, message) {
+  //Afficher les messages d'erreur
+  const formControl = input.parentElement;
+  formControl.className = "form-control error";
+  const small = formControl.querySelector("small");
+  small.innerText = message;
+  isValid.push(false);
 }
 //
 function showSuccess(input) {
-    const formControl = input.parentElement;
-    formControl.className = 'form-control success';
-   
-    isValid.push(true);
+  const formControl = input.parentElement;
+  formControl.className = "form-control success";
+  isValid.push(true);
 }
 //
 /* function checknbrEtage(input) {//Tester si l'nbrEtage est valide :  javascript : valid nbrEtage
@@ -40,7 +50,6 @@ function checkRequired(inputArray) {
       showError(input, `${getFieldName(input)} est obligatoire`);
     } else {
       showSuccess(input);
-      isValid = true;
     }
   });
 }
@@ -65,7 +74,6 @@ function checkLength(input, min, max) {
     console.log(input.value.length);
   } else {
     showSuccess(input);
-    isValid = true;
   }
 }
 //
@@ -86,10 +94,9 @@ function CheckNumberMatch(input) {
   if (input.value.trim() === "") {
     showError(input, "Champs obligatoire!!");
   } else if (!rg.test(input.value.trim())) {
-    showError(input, "le Numero est invalide!!");
+    showError(input, "Veillez saisir des entiers !!");
   } else {
     showSuccess(input);
-    isValid = true;
   }
 }
 //
@@ -99,19 +106,65 @@ function checkPasswordMatch(input1, input2) {
   }
 }
 
+function handleClick(type) {
+  if (type.value === "menu") {
+    document.getElementById("checkbox_champs").style.display = "block";
+    document.getElementById("burger_champs").style.display = "block";
+    document.getElementById("description_champs").style.display = "none";
+    document.getElementById("prix_champs").style.display = "none";
+  } else if (type.value === "burger") {
+    document.getElementById("checkbox_champs").style.display = "none";
+    document.getElementById("burger_champs").style.display = "none";
+    document.getElementById("description_champs").style.display = "block";
+    document.getElementById("prix_champs").style.display = "block";
+  } else if (type.value === "complement") {
+    document.getElementById("checkbox_champs").style.display = "none";
+    document.getElementById("burger_champs").style.display = "none";
+    document.getElementById("description_champs").style.display = "none";
+    document.getElementById("prix_champs").style.display = "block";
+  }
+}
+
+
 //Even listeners--------------------------------------------------------
+//type.addEventListener("click", handleClick(type));
 form.addEventListener("submit", function (e) {
   // var nb = CheckNumberMatch(nbrEtage);
-  
-    checkRequired([nom, prix, image]);
-    checkLength(nom, 3, 30);
-  
-  for (let i = 0; i < isValid.length; i++) {
-    if (isValid[i]  == false) {
-       e.preventDefault();
-    }
+  //e.preventDefault();
+ 
+  checkRequired([type]);
+
+  if (type.value === 'menu') {
+    checkRequired([nom,burger,image]);
+  }else if (type.value === 'burger') {
+    checkRequired([nom,prix,description,image]);
+   /*  checkLength(description,3,30); */
+    CheckNumberMatch(prix);
     
+  }else if (type.value === 'complement') {
+    checkRequired([nom,prix,image]);
+    /* checkLength(nom,3,30); */
+   /// CheckNumberMatch(prix);
+   /*  e.preventDefault();
+    console.log(isValid); */
+  } 
+  
+
+  
+  console.log(isValid); 
+  for (let i = 0; i < isValid.length; i++) {
+    if (isValid[i] == false) {
+      e.preventDefault();
+    }
   }
+
+  /* for (let i = 0; i < isValid.length; i++) {
+    if (isValid[i] == true) {
+      this.submit();
+    }
+  } */
+  
+
   //  var str = checkNameStringMatch(nomPavillon);
   //  var lg = checkLength(nomPavillon,4,20);
 
