@@ -24,7 +24,7 @@ class BurgerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom',TextType::class,[
+            /* ->add('nom',TextType::class,[
                 'attr' => [
                      'class' => 'input',
                 ],
@@ -53,13 +53,13 @@ class BurgerType extends AbstractType
                         'message'=>$this->translator->trans('burger.blank')
                     ])
                 ],
-            ])
+            ]) */
             ->add('image',ImageType::class,[
                 'attr' => [
                     'class' => 'input',
                ],
             ])
-            ->add('Valider', SubmitType::class)
+           /*  ->add('Valider', SubmitType::class) */
         ;
     }
 

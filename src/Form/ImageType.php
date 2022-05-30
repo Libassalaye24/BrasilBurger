@@ -27,13 +27,13 @@ class ImageType extends AbstractType
                     'class' => 'input',
                     'type' => 'file'
                     
-                ],
+                ]/* ,
                 "constraints"=>[
                     new NotBlank([
                         'message'=>$this->translator->trans('burger.blank')
                     ]),
                     
-                ]
+                ] */
             ])
         ;
     }

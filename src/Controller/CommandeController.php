@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use DateTime;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use App\Entity\Client;
 use App\Entity\Panier;
 use App\Entity\Commande;
@@ -19,10 +21,12 @@ use App\Repository\ClientRepository;
 use App\Repository\PanierRepository;
 use App\Repository\CommandeRepository;
 use App\Repository\ComplementRepository;
+use App\Service\pdf\PdfService;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
+use function PHPUnit\Framework\throwException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Notifier\TexterInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -32,6 +36,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Notifier\Notification\Notification;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -238,11 +243,12 @@ class CommandeController extends AbstractController
 
     #[IsGranted('ROLE_CLIENT')]
     #[Route('/mes.commandes', name: 'mes_commandes')]
-    public function mesCommandes(CommandeRepository $commandeRepository, ClientRepository $clientRepository ,PaginatorInterface $paginatorInterface, Request $request, SessionInterface $session,Session $session2): Response
+    public function mesCommandes(CommandeRepository $commandeRepository, ClientRepository $clientRepository ,PaginatorInterface $paginatorInterface, Request $request, SessionInterface $session,Session $session2, EntityManagerInterface $manager): Response
     {
 
         $id = $session2->get('userConnect')->getId();
-        $client = $clientRepository->find($id);
+        $client = $this->getUser();
+       // $manager->refresh($client);
         $data = $commandeRepository->findBy(['client' => $client, 'etat' => self::ENCOURS, 'dateCommande' => new DateTime()]);
         $commandes = $paginatorInterface->paginate(
             $data,
@@ -405,17 +411,21 @@ class CommandeController extends AbstractController
     }
 
     #[Route('/commande/details/{id}', name: 'details_commande')]
-    public function detailsCommande(int $id, CommandeRepository $commandeRepository): Response
+    public function detailsCommande($id, CommandeRepository $commandeRepository,Session $session): Response
     {
         $commande = $commandeRepository->find($id);
         if (!$commande) {
+            
         }
 
-        //   $roles = $session->get('roles');
+        $roles = $session->get('roles');
         return $this->render('commande/details.html.twig', [
             'details' => $commande,
+            'roles' => $roles
         ]);
     }
+
+    
 
     #[IsGranted('ROLE_CLIENT')]
     #[Route('/commande/delete/{id}', name: 'delete_commande')]
@@ -457,7 +467,7 @@ class CommandeController extends AbstractController
                     $manager->persist($oneCommande);
                     $manager->flush();
                 }
-                $session->getFlashBag()->set('valideCommande', 'Operation de validation reussi avec succées');
+                $session->getFlashBag()->set('valideCommande', 'Traitement reussi avec succées');
             } else {
                 $session->getFlashBag()->set('invalideCommande', 'Pour effectuer une operation, veillez selectionner des champs d\'abord');
             }
@@ -520,7 +530,7 @@ class CommandeController extends AbstractController
 
     #[IsGranted('ROLE_CLIENT')]
     #[Route('/commade/paiement', name: 'payer')]
-    public function payer(Request $request, Session $session, CommandeRepository $commandeRepository, EntityManagerInterface $manager): Response
+    public function payer(Request $request, Session $session, CommandeRepository $commandeRepository, EntityManagerInterface $manager, PdfService $pdfService): Response
     {
         $method = $request->getMethod();
         $tabsCheck = $session->get('allCommandes');
@@ -533,23 +543,53 @@ class CommandeController extends AbstractController
             $allCommandes[] = $OneCommande;
         }
 
+        $session->set('factureClient',$tabsCheck);
         //dd($allCommandes);
         if ($method == "POST") {
-            foreach ($allCommandes as $value) {
-                $paiement = new Paiement();
-                $value->setEtat(self::TERMINER);
-                $paiement->setCommande($value);
-                $paiement->setMontant($value->getMontant());
-                $manager->persist($paiement);
-                $manager->flush();
+            if (count($allCommandes) > 0) {
+                
+                foreach ($allCommandes as $value) {
+                    $paiement = new Paiement();
+                    $value->setEtat(self::TERMINER);
+                    $paiement->setCommande($value);
+                    $paiement->setMontant($value->getMontant());
+                    $manager->persist($paiement);
+                    $manager->flush();
+                }
+               
+               $session->set('allCommandes',[]);
+               $session->getFlashBag()->add('paiement', 'Commande(s) payée(s) avec succès ');
+               return $this->redirectToRoute('mes_commandes');
+               
             }
-
-            $session->getFlashBag()->add('paiement', 'Paiement reussi avec succès');
-            return $this->redirectToRoute('mes_commandes');
+            
         }
 
+
         return $this->render('commande/paiement.html.twig', [
-            'allCommandes' => $allCommandes,
+            'allCommandes' =>  $allCommandes
         ]);
+    }
+
+    #[Route('/commade/factureClient', name: 'facture')]
+    public function factureClient(PdfService $pdfService , Session $session , Request $request, CommandeRepository $commandeRepository): Response
+    {
+       
+        $tabsCheck = $session->get('factureClient');
+        $allCommandes = [];
+        foreach ($tabsCheck as $value) {
+            $OneCommande = $commandeRepository->find($value);
+            $allCommandes[] = $OneCommande;
+        }
+       // dd($allCommandes[0]->getBurger());
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('commande/facturepdf.html.twig', [
+            'title' => "Facture Brasil Burger",
+            'commandes' => $allCommandes,
+            'date' => new DateTime(),
+        ]);
+        
+        $pdfService->showPdfFile($html);
+        return $this->redirectToRoute('mes_commandes');
     }
 }

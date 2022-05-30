@@ -18,6 +18,7 @@ use App\Repository\CommandeRepository;
 use App\Repository\ComplementRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,6 +27,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+#[Security("is_granted('ROLE_GESTIONNAIRE')")]
 class FoodController extends AbstractController
 {
     private $manager;
@@ -74,7 +76,7 @@ class FoodController extends AbstractController
         ]);
     }
     #[Route('/food/archives', name: 'list_archive_food')]
-    public function allArchiveFoods(Request $request, PaginatorInterface $paginator): Response
+    public function allArchiveFoods(Request $request, PaginatorInterface $paginator , SessionInterface $session): Response
     {
         $menus = $this->menuRepository->findBy(['etat' => true]);
         $burgers = $this->burgerRepository->findBy(['etat' => true]);
@@ -85,123 +87,148 @@ class FoodController extends AbstractController
             $request->query->getInt('page', 1),
             4
         );
+        if ($session->has('typeSelectedArchive')) {
+            $typeSelectedArchive = $session->get('typeSelectedArchive');
+            if ($typeSelectedArchive  == 'menu') {
+                $allFoods = $menus;
+            } elseif ($typeSelectedArchive == 'burger') {
+                $allFoods = $burgers;
+            } elseif ($typeSelectedArchive == 'complement') {
+                $allFoods = $complements;
+            }
+            $session->remove('typeSelectedArchive');
+            return $this->render('food/archive.html.twig', [
+                'allFoods' => $allFoods,
+                'typeSelectedArchive' => $typeSelectedArchive,
+            ]);
+        }
         return $this->render('food/archive.html.twig', [
             'allFoods' => $allFoods
         ]);
     }
 
     #[Route('/food/add', name: 'add_food')]
-    public function addFood(Request $request, EntityManagerInterface $manager, FileUploader $fileUploader, Session $session): Response
+    #[Route('/food/edit/{id}', name: 'edit_food')]
+    public function addFood(Burger $burger = null, Menu $menu = null, Complement $complement = null, Request $request, EntityManagerInterface $manager, FileUploader $fileUploader, Session $session): Response
     {
         $burgers = $this->burgerRepository->findBy(['etat' => false]);
         $complements = $this->complementRepository->findBy(['etat' => false]);
+        $method = $request->getMethod();
+        $datas = $request->request->all();
+        $form = $this->createForm(BurgerType::class, $burger);
+        $form->handleRequest($request);
+        extract($datas);
         //burger type
-        $burger = new Burger();
+        if (!$burger) {
+            $burger = new Burger();
+        }
         //
         //menu type
-        $menu = new Menu();
+        if (!$menu) {
+            $menu = new Menu();
+        }
         //
         //complement 
-        $complement = new Complement();
+        if (!$complement) {
+            $complement = new Complement();
+        }
         //
-        //image form
+        //image 
         $image = new Image();
-        $form = $this->createForm(ImageType::class, $image);
-        $form->handleRequest($request);
-        //
-        if ($request->getMethod() == "POST") {
-            // dd($request);
-            $type = $request->get('type');
-            if ($type == 'menu') {
-                $typeAdd = "menu";
-                $nomFood = $request->get('nomFood');
-                $tabComplement = $request->get('complements');
-                $menu->setNom($nomFood);
-                $menu->setBurger($this->burgerRepository->find($request->get('burger')));
-                foreach ($tabComplement as $value) {
+        $session2 = $request->getSession();
+        $url = array_values(explode("/", $request->getrequestUri()));
+       // dd($url);
+        if ($method == "GET" && $url[2] == "edit") {
+          //  dd($complementNom);
+            $id  = $url[3];
+            $Allburgers = $this->burgerRepository->findBy(['etat' => false]);
+            $Allmenus = $this->menuRepository->findBy(['etat' => false]);
+            $Allcomplement = $this->complementRepository->findBy(['etat' => false]);
+            $newId =  (int) filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+            $element = [];
+            $catalogue = array_merge($Allburgers, $Allmenus, $Allcomplement);
+            foreach ($catalogue as $value) {
+                if ($value->getId() == $newId) {
+                    if (str_contains($id, "menu")) {
+                        $element = $this->menuRepository->find($newId);
+                        $complement =  $element->getComplements()->toArray();
+                    } elseif (str_contains($id, "burger")) {
+                        $element = $this->burgerRepository->find($newId);
+                    } elseif (str_contains($id, "complement")) {
+                        $element = $this->complementRepository->find($newId);
+                    }
+                }
+            }
+           // dd($element);
+            return $this->render('food/add.html.twig', [
+                'controller_name' => 'FoodController',
+                'burgers' => $burgers,
+                'complements' => $complements,
+                'form' => $form->createView(),
+                'element'       => $element,
+                'complement'    => $complement
+            ]);
+        }
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $session->set("type", $type);
+            $session->set("nomFood", $nomFood);
+            $session->set("prix", $prix);
+
+
+            $imageFile = $form->get('image')->get('nom')->getData();
+            if ($imageFile) {
+                $imageFileName = $fileUploader->upload($imageFile);
+                $image->setNom($imageFileName);
+            }
+
+            if ($type == 'burger') {
+
+                $form->getData()->setNom($nomFood)
+                    ->setPrix($prix)
+                    ->setDescription('description')
+                    ->setImage($image);
+                $manager->persist($form->getData());
+            } elseif ($type == 'menu') {
+                $oneBurger = $this->burgerRepository->find($burgerNom);
+               /*  foreach ($complementNom as $value) {
+                    $oneComplement = $this->complementRepository->find($value);
+                    $sumPrixComplement[] = $oneComplement->getPrix();
+                }
+                $prixComp = array_sum($sumPrixComplement);
+                $prixMenu = $oneBurger->getPrix() + $prixComp; */
+
+                $menu->setNom($nomFood)
+                    ->setBurger($oneBurger)
+                    ->setImage($image);
+              //  dd($complementNom);
+                foreach ($complementNom as $value) {
                     $menu->addComplement($this->complementRepository->find($value));
                 }
-
-                $imageFile = $form->get('nom')->getData();
-                if ($imageFile) {
-                    $imageFileName = $fileUploader->upload($imageFile);
-                    $image->setNom($imageFileName);
-                }
-                $menu->setImage($image);
-                $manager->persist($menu);
-                $manager->flush();
-            } elseif ($type == "burger") {
-                $typeAdd = "burger";
-                $nomFood = $request->get('nomFood');
-                $burger->setNom($nomFood)
-                    ->setPrix($request->get('prix'))
-                    ->setDescription($request->get('description'));
-                $imageFile = $form->get('nom')->getData();
-                if ($imageFile) {
-                    $imageFileName = $fileUploader->upload($imageFile);
-                    $image->setNom($imageFileName);
-                }
-                $burger->setImage($image);
-                $manager->persist($burger);
-                $manager->flush();
-            } elseif ($type == "complement") {
                
-                $typeAdd = "complement";
-                $nomFood = $request->get('nomFood');
+                $manager->persist($menu);
+            } elseif ($type == 'complement') {
                 $complement->setNom($nomFood)
-                    ->setPrix($request->get('prix'));
-                $imageFile = $form->get('nom')->getData();
-                if ($imageFile) {
-                    $imageFileName = $fileUploader->upload($imageFile);
-                    $image->setNom($imageFileName);
-                }
-                $complement->setImage($image);
+                    ->setPrix($prix)
+                    ->setImage($image);
                 $manager->persist($complement);
-                $manager->flush();
             }
-            $session->getFlashBag()->set('archiveFood', $typeAdd . ' ajouté avec succes');
+
+            $manager->persist($image);
+            $manager->flush();
+            //$session->getFlashBag()->set('archiveFood', $type . ' ajouté avec succes');
             return $this->redirectToRoute('list_food');
         }
-        return $this->render('food/add.html.twig', [
-            'controller_name' => 'FoodController',
-            'burgers' => $burgers,
-            'complements' => $complements,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    #[Route('/food/edit/{id}', name: 'edit_food')]
-    public function editFood(Request $request, EntityManagerInterface $manager, FileUploader $fileUploader, Session $session): Response
-    {
-        $typeId = $request->attributes->get('id');
-        $id = filter_var($typeId,FILTER_SANITIZE_NUMBER_INT);
-        if (str_contains($typeId , 'menu')) {
-            $restor = $this->menuRepository->find($id);
-        }elseif (str_contains($typeId , 'burger')){
-            $restor = $this->burgerRepository->find($id);
-        }elseif (str_contains($typeId , 'complement')){
-            $restor = $this->complementRepository->find($id);
-        }
         
-       // dd($restor);
-        $burgers = $this->burgerRepository->findBy(['etat' => false]);
-        $complements = $this->complementRepository->findBy(['etat' => false]);
-
-        $image = new Image();
-        $form = $this->createForm(ImageType::class, $image);
-        $form->handleRequest($request);
-
         return $this->render('food/add.html.twig', [
             'controller_name' => 'FoodController',
             'burgers' => $burgers,
             'complements' => $complements,
             'form' => $form->createView(),
-            'restor' => $restor,
-            'mode' => 'update'
         ]);
     }
 
-
+   
     #[Route('/food/archive', name: 'archive_food')]
     #[Route('/food/desarchive', name: 'desarchive_food')]
     public function archiveOrDesarchiveFood(Request $request, Session $session): Response
@@ -278,7 +305,7 @@ class FoodController extends AbstractController
     }
 
     #[Route('/food/byType', name: 'food_filtre_by_type')]
-    public function showCommandeByClient(
+    public function showFoodByEtat(
         CommandeRepository $repoComm,
         SessionInterface $session,
         Request $request
@@ -292,4 +319,21 @@ class FoodController extends AbstractController
 
         return new JsonResponse($this->generateUrl('list_food'));
     }
+
+    #[Route('/food/byType1', name: 'food_filtre_by_type1')]
+    public function showFoodByEtat1(
+        CommandeRepository $repoComm,
+        SessionInterface $session,
+        Request $request
+    ): Response {
+
+        if ($request->isXmlHttpRequest()) {
+            $type = $request->query->get('type');
+            $session->set("typeSelectedArchive", $type);
+        }
+
+
+        return new JsonResponse($this->generateUrl('list_archive_food'));
+    }
+    
 }
