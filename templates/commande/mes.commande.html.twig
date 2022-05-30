@@ -39,6 +39,7 @@
 	{% for message in app.flashes('paiement') %}
 		<div class="alert alert-danger" id="add_commande" style="background-color: #adeace;padding:10px;text-align:center;border-radius:5px;margin-bottom:5px;">
 			{{ message }}
+			<a href="{{path('facture')}}"> (Cliquer pour telecharger le facture) </a>
 		</div>
 	{% endfor %}
 	{% for message in app.flashes('invalide_paye') %}
@@ -130,7 +131,7 @@
 
 							</tr>
 						{% endfor %}
-
+						
 					</tbody>
 
 
