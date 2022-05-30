@@ -42,4 +42,4 @@ $(function () {
 });
 setTimeout(function () {
   $("#add_commande").fadeOut("fast");
-}, 1110); // <-- time in milliseconds
+}, 2000); // <-- time in milliseconds

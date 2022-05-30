@@ -2,7 +2,7 @@
  */ const form = document.querySelector("form");
 const nom = document.getElementById("nom");
 const prix = document.getElementById("prix");
-const image = document.getElementById("image_nom");
+const image = document.getElementById("burger_image_nom");
 const burger = document.getElementById("burger");
 const type = document.getElementById("type");
 const description = document.getElementById("description");
@@ -45,9 +45,9 @@ function checkRequired(inputArray) {
   var bool = false;
   inputArray.forEach((input) => {
     if (input.value.trim() === "") {
-      showError(input, `${getFieldName(input)} est obligatoire`);
+      showError(input, `ce champs est obligatoire`);
     } else if (input.value === "0") {
-      showError(input, `${getFieldName(input)} est obligatoire`);
+      showError(input, `ce champs est obligatoire`);
     } else {
       showSuccess(input);
     }
@@ -108,21 +108,15 @@ function checkPasswordMatch(input1, input2) {
 
 function handleClick(type) {
   if (type.value === "menu") {
-    document.getElementById("checkbox_champs").style.display = "block";
-    document.getElementById("burger_champs").style.display = "block";
-    document.getElementById("description_champs").style.display = "none";
+    document.getElementById("menuAdd").style.display = "block";
     document.getElementById("prix_champs").style.display = "none";
-  } else if (type.value === "burger") {
-    document.getElementById("checkbox_champs").style.display = "none";
-    document.getElementById("burger_champs").style.display = "none";
-    document.getElementById("description_champs").style.display = "block";
+  } else if (type.value === "burger" || type.value === "complement") {
+    document.getElementById("menuAdd").style.display = "none";
     document.getElementById("prix_champs").style.display = "block";
-  } else if (type.value === "complement") {
-    document.getElementById("checkbox_champs").style.display = "none";
-    document.getElementById("burger_champs").style.display = "none";
-    document.getElementById("description_champs").style.display = "none";
+  }/*  else if (type.value === "complement") {
+    document.getElementById("menuAdd").style.display = "none";
     document.getElementById("prix_champs").style.display = "block";
-  }
+  } */
 }
 
 
@@ -131,27 +125,23 @@ function handleClick(type) {
 form.addEventListener("submit", function (e) {
   // var nb = CheckNumberMatch(nbrEtage);
   //e.preventDefault();
- 
-  checkRequired([type]);
+  isValid = [];
+  checkRequired([type,nom,image]);
+  checkLength(nom,3,30);
 
   if (type.value === 'menu') {
-    checkRequired([nom,burger,image]);
-  }else if (type.value === 'burger') {
-    checkRequired([nom,prix,description,image]);
-   /*  checkLength(description,3,30); */
+    checkRequired([burger]);
+  }
+
+  if (type.value === 'burger' || type.value === 'complement') {
+    checkRequired([prix]);
     CheckNumberMatch(prix);
-    
-  }else if (type.value === 'complement') {
-    checkRequired([nom,prix,image]);
-    /* checkLength(nom,3,30); */
-   /// CheckNumberMatch(prix);
-   /*  e.preventDefault();
-    console.log(isValid); */
-  } 
+    checkLength(prix , 3 , 6);
+  }
   
 
   
-  console.log(isValid); 
+  //console.log(isValid); 
   for (let i = 0; i < isValid.length; i++) {
     if (isValid[i] == false) {
       e.preventDefault();
