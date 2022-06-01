@@ -70,8 +70,12 @@ class Client extends User
         return $this;
     }
 
-    public function serialize() {
+   /*  public function serialize() {
         return serialize($this->id);
     }
+    
+    public function unserialize($data) {
+        $this->id = unserialize($data);
+    } */
     
 }

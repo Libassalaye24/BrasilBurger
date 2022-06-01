@@ -261,7 +261,12 @@ class FoodController extends AbstractController
                 }
             } else {
                 $session->getFlashBag()->set('archiveErrorFood', 'Veillez selectionner d\'abord');
-                return $this->redirectToRoute('list_food');
+                if ($action == 'archive_food') {
+                    return $this->redirectToRoute('list_food');
+                }else{
+                    return $this->redirectToRoute('list_archive_food');
+                }
+                
             }
         }
 

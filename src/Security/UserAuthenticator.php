@@ -52,7 +52,7 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
-        $session = new Session();
+       /*  $session = new Session();
         $roles = $token->getRoleNames();
         $rolesTab = array_map(function ($role) {
             return $role;
@@ -61,14 +61,12 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
         $session->set('userConnect',$token->getUser());
 
         if (in_array('ROLE_CLIENT', $rolesTab, true)) {
-            // c'est un client : on le rediriger ses commandes
             $redirection = new RedirectResponse($this->urlGenerator->generate('mes_commandes'));
         } elseif(in_array('ROLE_GESTIONNAIRE', $rolesTab, true)) {
-            // c'est un utilisaeur gestionnaire : on le rediriger vers l'espace admin
             $redirection = new RedirectResponse($this->urlGenerator->generate('dashboard'));
-        }
+        } */
         // For example:
-        return $redirection;
+        return new RedirectResponse($this->urlGenerator->generate('rediriger'));
         //throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 

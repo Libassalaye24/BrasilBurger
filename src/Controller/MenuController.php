@@ -18,7 +18,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\Date;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MenuController extends AbstractController
@@ -36,8 +38,9 @@ class MenuController extends AbstractController
         ]);
     }
 
+  
     #[Route('/dashboard/{page?1}/{nbr?5}', name: 'dashboard')]
-    public function dashboard($page,$nbr,EntityManagerInterface $manager,Request $request,PaginatorInterface $paginatorInterface,CommandeRepository $commandeRepository,MenuRepository $menuRepository,ComplementRepository $complementRepository,BurgerRepository $burgerRepository): Response
+    public function dashboard($page,$nbr,EntityManagerInterface $manager,Request $request,PaginatorInterface $paginatorInterface,CommandeRepository $commandeRepository,MenuRepository $menuRepository,ComplementRepository $complementRepository,BurgerRepository $burgerRepository,Session $session): Response
     {
        
         $now = new DateTime();
@@ -78,6 +81,32 @@ class MenuController extends AbstractController
         $commandeEncours = $commandeRepository->findBy(['etat' => 'encours','dateCommande' => $now],['id' => 'DESC'], $nbr, ($page - 1) * $nbr);
         $nbrComandes = count($data);
         $nbrPage = ceil($nbrComandes / $nbr);
+
+        //filter
+        if ($session->has('selectEtat')) {
+            $etatSelected = $session->get('selectEtat');
+            //dd($etatSelected);
+            $commandeEncours = $commandeRepository->findBy(['etat' => $etatSelected,'dateCommande' => $now],['id' => 'DESC']);
+            $session->remove('selectEtat');
+            return $this->render('menu/dashboard.html.twig', [
+                'totalCommande' => $totalCommande,
+                'totalCommandeEncours' => count($totalCommandeEncours),
+                'commandeEncours' => $commandeEncours,
+                'totalCommandeAnnuler' => count($totalCommandeAnnule),
+                'totalCommandeValider' => count($totalCommandeValider),
+                'totalComplement' => count($totalComplement),
+                'totalBurger' => count($totalBurger),
+                'totalMenu' => count($totalMenu),
+                'isPaginated'  => false,
+                'nbrPage'      => $nbrPage,
+                'page'         => $page,
+                'nbr'          => $nbr,
+                'etatSelected' => $etatSelected,
+     
+             ]);
+         }
+ 
+         //
         return $this->render('menu/dashboard.html.twig', [
            'totalCommande' => $totalCommande,
            'totalCommandeEncours' => count($totalCommandeEncours),
@@ -95,7 +124,22 @@ class MenuController extends AbstractController
         ]);
     }
 
+    #[Route('/menu/dashboard/etat', name: 'commande_dashboard_by_etat')]
+    public function CommandeByEtat(
+        CommandeRepository $repoComm,
+        SessionInterface $session,
+        Request $request
+    ): Response {
 
+      //  dd( $request->query->get('etat'));
+        if ($request->isXmlHttpRequest()) {
+            $etat = $request->query->get('etat');
+            $session->set("selectEtat", $etat);
+        }
+        
+        return new JsonResponse($this->generateUrl('dashboard'));
+        
+    }
     #[Route('/menu/archives', name: 'list_menu_archive')]
     public function archives(MenuRepository $menuRepository,Request $request,PaginatorInterface $paginatorInterface): Response
     {

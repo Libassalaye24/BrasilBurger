@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserController extends AbstractController
@@ -41,8 +42,10 @@ class UserController extends AbstractController
             $encoded = $encoder->hashPassword($client,$client->getPassword());
             $client->setPassword($encoded);
             $client->setRoles(['ROLE_CLIENT']);
-            $manager->persist($client);
-            $manager->flush();
+           /*  $manager->persist($client);
+            $manager->flush(); */
+            $session = new Session();
+            $session->getFlashBag()->set('SuccessIscri','Inscription reussi avec succes');
            return $this->redirectToRoute('login');
         }
         return $this->render('user/index.html.twig', [
