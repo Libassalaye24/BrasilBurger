@@ -5,42 +5,14 @@
 
 {% block body %}
 	<section class="home-section2">
-
-		<div class="home-content">
-			<div class="overview-boxes">
-				<div class="box">
-					<div class="right-side">
-						<div class="box-topic">Total Commandes</div>
-						<div class="number">{{totalCommande}}</div>
-
-					</div>
-					<i class='bx bx-cart-alt cart'></i>
-				</div>
-				<div class="box">
-					<div class="right-side">
-						<div class="box-topic">commandes Encours</div>
-						<div class="number">{{totalCommandeEncours}}</div>
-
-					</div>
-					<i class='bx bxs-cart-add cart two'></i>
-				</div>
-				<div class="box">
-					<div class="right-side">
-						<div class="box-topic">Commandes Validees</div>
-						<div class="number">{{totalCommandeValider}}</div>
-
-					</div>
-					<i class='bx bx-cart cart three'></i>
-				</div>
-				<div class="box">
-					<div class="right-side">
-						<div class="box-topic">Commandes annulees</div>
-						<div class="number">{{totalCommandeAnnuler}}</div>
-
-					</div>
-					<i class='bx bxs-cart-download cart four'></i>
-				</div>
+			<div class="statistic" style="margin-bottom: 2px;margin-left:1%;">
+				<a class="btn" href="{{path('recette')}}"  style="padding:8px;">
+					Recettes Journalières 
+					<i class="fa-solid fa-download"></i>
+				</a>
 			</div>
+		<div class="home-content">
+			
 			<div class="overview-boxes">
 				<div class="box">
 					<div class="right-side">
@@ -69,178 +41,139 @@
 				</div>
 				<div class="box">
 					<div class="right-side">
-						<div class="box-topic">Total Return</div>
-						<div class="number">11,086</div>
-
+						<div class="box-topic">Commandes Encours</div>
+						<div class="number">{{totalCommandeEncours}}</div>
 					</div>
-					<i class='bx bxs-cart-download cart four'></i>
+					<i class='bx bx-cart cart three'></i>
 				</div>
 			</div>
 
 			<div class="sales-boxes">
 				<div class="recent-sales box">
-					<div class="title">Commande Encours de la journée</div>
-
-
-					<div class="sales-details">
-						<ul class="details">
-							<li class="topic">Date</li>
-							{% for item in commandeEncours %}
-								<li>
-									<a href="#">{{item.dateCommande|date('d-m-Y')}}</a>
-								</li>
-							{% endfor %}
-
-						</ul>
-						<ul class="details">
-							<li class="topic">Client</li>
-							{% for item in commandeEncours %}
-								<li>
-									<a href="#">{{item.client.nom}}</a>
-								</li>
-							{% endfor %}
-
-						</ul>
-						<ul class="details">
-							<li class="topic">Commandes</li>
-							{% for item in commandeEncours %}
-								<li>
-									<a href="#">
-                    {% for burger in item.burger %}
-                          {{burger.nom}} +
-                    {% endfor %}
-                    
-                    {% for menu in item.menu %}
-                          {{menu.nom}} +
-                    {% endfor %}
-                  </a>
-								</li>
-							{% endfor %}
-
-						</ul>
-						<ul class="details">
-							<li class="topic">Montant</li>
-							{% for item in commandeEncours %}
-								<li>
-									<a href="#">{{item.montant}} FCFA</a>
-								</li>
-							{% endfor %}
-						</ul>
+					<div class="statistic" style="margin-bottom: 8px;">
+						<button class="btn " id="select" value="encours" name="ok" data-path="{{ path('commande_dashboard_by_etat',{etat:'encours'})}}" style="background-color: #fff;border:#ffd43b 2px solid;color:#ffd43b;padding:4px;">
+							Commande encours de la journée
+							<i class="fa-solid fa-spinner" style="color:#ffd43b;"></i>
+						</button>
+						<button class="btn " id="select" value="valider" name="ok" data-path="{{ path('commande_dashboard_by_etat',{etat:'valider'})}}" style="background-color: #fff;border:green 2px solid;color:green;padding:4px;">
+							Commande valider de la journée
+							<i class="fa-solid fa-check-double"></i>
+						</button>
+						<button class="btn select1" id="select" value="annuler" name="ok" data-path="{{ path('commande_dashboard_by_etat',{etat:'annuler'})}}" style="background-color: #fff;border:red 2px solid;color:red;padding:4px;">
+							Commande annuler de la journée
+							<i class="fa-solid fa-xmark"></i>
+						</button>
 
 					</div>
+					<div class="title">Commande
+						{% if etatSelected is defined %}
+							{{etatSelected}}
+						{% else %}
+							encours
+						{% endif %}
+						de la journée</div>
+					{% if commandeEncours|length > 0 %}
 
-					{% if isPaginated is defined and commandeEncours %}
-					<div class="p">
-						<div class="pagination">
-							<nav aria-label="Page navigation example " class=" ">
-								<ul class="pagination float-end  d-flex gap-2">
-									{% if page != 1 %}
-										<li class="page-item rounded-1 ">
-											<a class="page-link border active2 border-danger border-1 " href="{{ path('dashboard', {page : page - 1 ,nbr : nbr }) }}" aria-label="Next">
-												<span aria-hidden="true">&laquo;</span>
-											</a>
-										</li>
-									{% endif %}
-									{% for i in range (1 , nbrPage) %}
-										{% if i != 0 %}
-											{# <a class="a" href="{{ path(route, query|merge({(pageParameterName): page})) }}">{{ page }}</a> #}
-											<li class="page-item rounded-1 ">
-												<a class="page-link border border-danger border-1 notactive" href="{{ path('dashboard', {page : i ,nbr : nbr }) }}">{{i}}</a>
-											</li>
+						<div class="sales-details">
 
-										{% endif %}
-									{% endfor %}
-									{% if page != nbrPage %}
-										<li class="page-item rounded-1 ">
-											<a class="page-link border border-danger border-1 active2" href="{{ path('dashboard', {page : page + 1 ,nbr : nbr }) }}" aria-label="Previous">
-												<span aria-hidden="true">&raquo;</span>
-											</a>
-										</li>
-									{% endif %}
+							<ul class="details">
+								<li class="topic">Commandes</li>
 
-								</ul>
-							</nav>
+								{% for item in commandeEncours %}
+									<li>
+										<a href="#">
+											{% for burger in item.burger %}
+												{{burger.nom}}
+												+
+											{% endfor %}
+
+											{% for menu in item.menu %}
+												{{menu.nom}}
+												+
+											{% endfor %}
+										</a>
+									</li>
+								{% endfor %}
+
+							</ul>
+							<ul class="details">
+								<li class="topic">Date</li>
+								{% for item in commandeEncours %}
+									<li>
+										<a href="#">{{item.dateCommande|date('d-m-Y')}}</a>
+									</li>
+								{% endfor %}
+
+							</ul>
+							<ul class="details">
+								<li class="topic">Client</li>
+								{% for item in commandeEncours %}
+									<li>
+										<a href="#">{{item.client.nom}}</a>
+									</li>
+								{% endfor %}
+
+							</ul>
+
+							<ul class="details">
+								<li class="topic">Montant</li>
+								{% for item in commandeEncours %}
+									<li>
+										<a href="#">{{item.montant}}
+											FCFA</a>
+									</li>
+								{% endfor %}
+							</ul>
+
 						</div>
-					</div>
-				{% endif %}
+					{% else %}
+						<p style="padding:5px;">Tableau Vide ......</p>
+					{% endif %}
+
+					{% if isPaginated == true and commandeEncours %}
+						<div class="p">
+							<div class="pagination">
+								<nav aria-label="Page navigation example " class=" ">
+									<ul class="pagination float-end  d-flex gap-2">
+										{% if page != 1 %}
+											<li class="page-item rounded-1 ">
+												<a class="page-link border active2 border-danger border-1 " href="{{ path('dashboard', {page : page - 1 ,nbr : nbr }) }}" aria-label="Next">
+													<span aria-hidden="true">&laquo;</span>
+												</a>
+											</li>
+										{% endif %}
+										{% for i in range (1 , nbrPage) %}
+											{% if i != 0 %}
+												{# <a class="a" href="{{ path(route, query|merge({(pageParameterName): page})) }}">{{ page }}</a> #}
+												<li class="page-item rounded-1 ">
+													<a class="page-link border border-danger border-1 notactive" href="{{ path('dashboard', {page : i ,nbr : nbr }) }}">{{i}}</a>
+												</li>
+
+											{% endif %}
+										{% endfor %}
+										{% if page != nbrPage %}
+											<li class="page-item rounded-1 ">
+												<a class="page-link border border-danger border-1 active2" href="{{ path('dashboard', {page : page + 1 ,nbr : nbr }) }}" aria-label="Previous">
+													<span aria-hidden="true">&raquo;</span>
+												</a>
+											</li>
+										{% endif %}
+
+									</ul>
+								</nav>
+							</div>
+						</div>
+					{% endif %}
 				</div>
-				<div class="top-sales box">
-					<div class="title">Top Seling Product</div>
-					<ul class="top-sales-details">
-						<li>
-							<a
-								href="#">
-								<!--<img src="images/sunglasses.jpg" alt="">-->
-								<span class="product">Vuitton Sunglasses</span>
-							</a>
-							<span class="price">$1107</span>
-						</li>
-						<li>
-							<a
-								href="#">
-								<!--<img src="images/jeans.jpg" alt="">-->
-								<span class="product">Hourglass Jeans
-								</span>
-							</a>
-							<span class="price">$1567</span>
-						</li>
-						<li>
-							<a
-								href="#">
-								<!-- <img src="images/nike.jpg" alt="">-->
-								<span class="product">Nike Sport Shoe</span>
-							</a>
-							<span class="price">$1234</span>
-						</li>
-						<li>
-							<a
-								href="#">
-								<!--<img src="images/scarves.jpg" alt="">-->
-								<span class="product">Hermes Silk Scarves.</span>
-							</a>
-							<span class="price">$2312</span>
-						</li>
-						<li>
-							<a
-								href="#">
-								<!--<img src="images/blueBag.jpg" alt="">-->
-								<span class="product">Succi Ladies Bag</span>
-							</a>
-							<span class="price">$1456</span>
-						</li>
-						<li>
-							<a
-								href="#">
-								<!--<img src="images/bag.jpg" alt="">-->
-								<span class="product">Gucci Womens's Bags</span>
-							</a>
-							<span class="price">$2345</span>
-						</li>
-						<li>
-							<a
-								href="#">
-								<!--<img src="images/addidas.jpg" alt="">-->
-								<span class="product">Addidas Running Shoe</span>
-							</a>
-							<span class="price">$2345</span>
-						</li>
-						<li>
-							<a
-								href="#">
-								<!--<img src="images/shirt.jpg" alt="">-->
-								<span class="product">Bilack Wear's Shirt</span>
-							</a>
-							<span class="price">$1245</span>
-						</li>
-					</ul>
-				</div>
+
 			</div>
 		</div>
 	</section>
 
 {% endblock %}
 {% block javascripts %}
-
+	{{parent()}}
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<style>
 		/* Googlefont Poppins CDN Link */
 		@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
@@ -250,6 +183,7 @@
 			box-sizing: border-box;
 			font-family: 'Poppins', sans-serif;
 		}
+		
 		.p {
 			margin-top: 18%;
 		}
@@ -342,15 +276,17 @@
 		.home-content .sales-boxes {
 			display: flex;
 			justify-content: space-between;
+
 			/* padding: 0 20px; */
 
 		}
 
 		/* left box */
 		.home-content .sales-boxes .recent-sales {
-			width: 65%;
+			width: 100%;
 			background: rgba(249, 247, 236, 1);
 			padding: 20px 30px;
+			height: auto;
 			margin: 0 20px;
 			border-radius: 12px;
 			box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
@@ -489,7 +425,7 @@
 				min-width: 40px;
 			}
 			.home-content .sales-boxes .sales-details {
-				width: 560px;
+				width: 1000px;
 			}
 		}
 		@media(max-width: 550px) {
@@ -527,18 +463,32 @@
 		}
 	</style>
 	<script>
-		let sidebar = document.querySelector(".sidebar");
+		$(function () {
+$(document).on("click", "#select", function () {
+const path = $(this).data("path");
+$.ajax({
+url: path, type: "GET", dataType: "JSON", // or html or whatever you want
+success: function (data) {
+window.location.href = data;
+}
+});
+});
+});
+let sidebar = document.querySelector(".sidebar");
 let sidebarBtn = document.querySelector(".sidebarBtn");
 sidebarBtn.onclick = function () {
+
 
 sidebar.classList.toggle("active");
 if (sidebar.classList.contains("active")) {
 
+
 sidebarBtn.classList.replace("bx-menu", "bx-menu-alt-right");
 
-}
-else 
+
+} else 
 sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+
 
 
 }

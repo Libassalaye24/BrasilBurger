@@ -56,10 +56,11 @@
 		<form method="POST" action="{{path('mes_commandes')}}">
 			<input type="hidden" name="isTrue" value="{% if etatSelected is defined %}{% if etatSelected == 'valider' %}true{% endif %}{% endif %}"> 
 			
-			<button type="submit" style="border:none;" class="payer btn" id="payer-commandes" name="valider" {# href="{{path('payer')}}" #}>
+			<button type="submit" style="border:none;" class="payer btn" id="payer-commandes" name="payer" value="pay" {# href="{{path('payer')}}" #}>
 				Payer
 				<i class="fa-solid fa-money-bill-transfer"></i>
 			</button>
+		
 		</section>
 
 		<section class="popular" id="popular">
@@ -109,10 +110,13 @@
 										 name="tabChecks[]" value="{{commande.id}}" class="pay-check check-one">
 									
 								</td>
-								<td>N°
+								<td>{# N°
 									<a href="{{path('details_commande',{id:commande.id})}}" disabled class="">
 										{{commande.numero}}
-									</a>
+									</a> #}
+									{# <form method="POST" action="{{path('details_commande',{id:commande.id})}}"> #}
+										 <button type="submit" name="details" value="{{commande.id}}" style="background:none;border:none;cursor:pointer;color:blue;" class="">{{commande.numero}} <i class="fa-solid fa-eye"></i></button>
+									{# </form> #}
 								</td>
 								<td>{{commande.date|date('d/m/Y')}}</td>
 								<td>
@@ -137,8 +141,8 @@
 
 				</table>
 			</div>
-
-		</form>
+	</form>
+		
 	</section>
 
 	<!-- popular section ends -->

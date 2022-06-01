@@ -11,79 +11,21 @@
 			background-repeat: no repeat;
 		}
 	</style>
-	{# <section>
-				    
-				<form method="post">
-				   
-				    <div class="card w-50 position-relative shadow boreder-none" style="top: 25vh;margin:auto;">
-				       
-				        <div class="card-body">
-				             {% if error %}
-				             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-				            {% endif %}
-				              <h1 class="h3 mb-3 font-weight-normal text-center">Formulaire de Connexion</h1>
-				                <div class="form-group">
-				                    <label for="inputEmail" class="mb-2">Email</label>
-				                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control hif" autocomplete="email" required autofocus>
-				                </div>
-				                <div class="form-group">
-				                        <label for="inputPassword" class="mb-2">Password</label>
-				                        <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-				                </div>
-				        </div>
-				        <div class="form-group">
-				                <input type="hidden" name="_csrf_token"
-				            value="{{ csrf_token('authenticate') }}">
-				    
-				            <button class="btn btn-lg btn-primary float-right mr-2" type="submit">
-				                Connexion
-				            </button>
-				        </div>
-				    </div>
-				 
-				</form>
-				</section> #}
-	{# <div class="container  justify-content-center">
-			<div class="card w-50 position-relative shadow " style="top: 15vh;margin:auto;">
-				<div class="card-body ">
-					{% if error %}
-						<div class="alert alert-danger" role="alert">
-							{{ error.messageKey|trans(error.messageData, 'security') }}
-						</div>
-					{% endif %}
-					<h4 class="card-title justify-content-center">Se connecter</h4>
-					<form method="POST">
-						<div class="mb-3">
-							<label for="exampleInputEmail1" class="form-label">Email address</label>
-							<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control hif" autocomplete="email" required autofocus>
-						</div>
-						<div class="mb-3">
-							<label for="exampleInputPassword1" class="form-label">Password</label>
-							<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-						</div>
-						<div class="mb-3 form-check">
-							<input type="checkbox" class="form-check-input" id="exampleCheck1">
-							<label class="form-check-label" for="exampleCheck1">Check me out</label>
-						</div>
-						<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-	                       <a class="" href="{{path('register')}}">
-	                            Disabled link
-	                       </a>
-						<button type="submit" class="btn btn-primary float-end">Submit</button>
-					</form>
-				</div>
-			</div>
-		</div> #}
+	
 	<div class="body">
 		<div class="container-login">
-			<div class="line">
-				<a href="{{path('register')}}">S'inscrire? <i class="fa-solid fa-circle-arrow-right"></i></a>
+			<div class="" style="margin-rigth:auto;padding:5px;">
+				<a href="{{path('catalogue')}}" style="color:#e04218;"> 	<i class="fa-solid fa-reply fa-1x"></i> Catalogue</a>
 			</div>
+			
 			<form method="post" class="form">
 				{% if error %}
 					<div class="alert alert-danger" style="background-color: #e35d6a;padding:10px;text-align:center;border-radius:5px;margin-bottom:5px">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 				{% endif %}
-
+				{% for message in app.flashes('SuccessIscri') %}
+					<div class="alert alert-danger" id="SuccessIscri" style="background-color: green;padding:10px;text-align:center;border-radius:5px;margin-bottom:5px;color:#fff;">{{message}}</div>
+				{% endfor %}
+				
 				{% if app.user %}
 					<div class="mb-3">
 						You are logged in as
@@ -108,18 +50,22 @@
 
 				<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-				<div class="checkbox mb-3">
+			{# 	<div class="checkbox mb-3">
 					<label>
 						<input type="checkbox" name="_remember_me">
 						Remember me
 					</label>
-				</div>
+				</div> #}
 
 
 				<button class="btn-login" type="submit">
 					Se Connecter
 				</button>
+				
 			</form>
+			<div class=""  style="padding: 4px;margin-right:auto;margin-bottom:4px;margin-top:-1%">
+				<a href="{{path('register')}}" style="text-align:center;color:#e04218;">Vous n'avez pas de compte ? S'inscrire</a>
+			</div>
 		</div>
 	</div>
 
@@ -127,4 +73,12 @@
 {% block javascripts %}
 	{{parent()}}
 	<script src="{{asset('js/connexion.js')}}"></script>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+	<script>
+				setTimeout(function () {
+				$('#SuccessIscri').fadeOut('fast');
+				}, 2000); // <-- time in milliseconds
+				
+			</script>
 {% endblock %}

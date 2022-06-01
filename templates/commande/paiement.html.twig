@@ -5,19 +5,20 @@
 
 {% block body %}
 	<style>
-		.retour {
-			margin-top: 1%;
-			padding: 5px;
-		}
+		
 
-		.retour a,
+		.retour ,
 		.message {
 			color: #e04218;
 		}
 	</style>
 
-	<section class="menu" id="menu">
 
+	<section class="menu" id="menu">
+		<a href="{{path('mes_commandes')}}" class="retour">
+			<i class="fa-solid fa-reply fa-1x"></i>
+			mes commandes
+		</a>
 		<div class="heading">
 			<span>Paiement Commandes</span>
 		</div>

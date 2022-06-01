@@ -35,14 +35,14 @@
 	<!-- home section starts  -->
 
 	<section class="retour" id="">
-		{% if roles[0] == "ROLE_GESTIONNAIRE" %}
+		{% if roles == "ROLE_GESTIONNAIRE" %}
 			<a href="{{path('list_commande')}}">
-				<i class="fa-solid fa-reply fa-1x"></i>
+				<i class="fa-solid fa-reply fa-1x"></i> Liste commandes
 			</a>			
 		{% endif %}
-		{% if roles[0] == "ROLE_CLIENT" %}
-			<a href="{{path('catalogue')}}">
-				<i class="fa-solid fa-reply fa-1x"></i>
+		{% if roles == "ROLE_CLIENT" %}
+			<a href="{{path('mes_commandes')}}">
+				<i class="fa-solid fa-reply fa-1x"></i> mes commandes
 			</a>			
 		{% endif %}
 		

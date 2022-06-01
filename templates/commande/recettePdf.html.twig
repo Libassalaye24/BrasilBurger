@@ -71,31 +71,13 @@
 
 		</div>
 		<p style="text-align:right;margin-top:-4%;">
-			<strong>Date Facture :</strong>
+			<strong>Date :</strong>
 			{{date|date('d/m/Y')}}
 		</p>
-		<h2 class="factureTitle">Facture
+		<h2 class="factureTitle">Recettes
 			<strong style="color: #e04218">Brasil</strong>
 			Burger</h2>
-		<div class="div" style="float: right;">
-			<div class="col1">
-				<p style="color: #e04218">Client Details</p>
-				<p>
-					<strong>Client :</strong>
-					{{commandes[0].client.nom}}
-					{{commandes[0].client.prenom}}
-				</p>
-				<p>
-					<strong>Telephone :
-						{{commandes[0].client.telephone}}</strong>
-				</p>
-				<p>
-					<strong>Email :
-						{{commandes[0].client.email}}</strong>
-				</p>
-			</div>
-
-		</div>
+	
 		<div class="div">
 			<div class="col1">
 				<p style="color: #e04218">Brasil Burger</p>
@@ -119,10 +101,7 @@
 
 				<thead>
 					<tr>
-						<th>Numero</th>
 						<th>Commande</th>
-						<th>Date</th>
-						<th>Quantite</th>
 						<th>Montant</th>
 					</tr>
 				</thead>
@@ -135,29 +114,19 @@
 
 							<tr>
 								<td>
-									{{commande.numero}}
-								</td>
-								<td>
 									{{item.type}}
 									{{item.nom}}
 								</td>
-								<td>{{commande.date|date('d/m/Y')}}</td>
-								<td>1</td>
 								<td>{{item.prix}}</td>
 							</tr>
 						{% endfor %}
 						{% for item in commande.menu %}
 
 							<tr>
-							<td>
-									{{commande.numero}}
-								</td>
 								<td>
 									{{item.type}}
 									{{item.nom}}
 								</td>
-								<td>{{commande.date|date('d/m/Y')}}</td>
-								<td>1</td>
 								{% set var = 0 %}
 								<td>
 									{% for comp in item.complements %}
@@ -170,13 +139,10 @@
 						{% set total = total + commande.montant %}
 					{% endfor %}
 					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td>
-							Total :
+						<td style="color:#e04218;font-size:17px;">
+							Total Recettes :
 						</td>
-						<td>
+						<td style="color:#e04218;font-size:17px;">
 							{{total}}
 							FCFA
 						</td>
@@ -190,21 +156,6 @@
 			</p>
 			Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nisi repellendus libero quisquam quis officiis, nihil porro corporis tenetur laboriosam optio fuga minima quo veritatis! Voluptatem eos enim nam modi expedita!
 		</div>
-		{# <div class="footer">
-				<div class="col1">
-					<p style="color: #e04218">Brasil Burger</p>
-					<p>
-						<strong>Adresse : Dakar-Plateau</strong>
-					</p>
-					<p>
-						<strong>Contact :</strong>
-						33-810-80-33
-					</p>
-					<p>
-						<strong>Email : BrasilBurger@gmail.com</strong>
-					</p>
-
-				</div>
-		</div> #}
+		
 	</body>
 </html>
