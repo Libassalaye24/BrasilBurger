@@ -16,6 +16,11 @@
 			{# 	<form method="POST" action="{{path('add_food')}}"> #}
 			{{ form_start(form) }}
 			<div {# data-aos="fade-up" data-aos-duration="3000" #} id="form" class="form">
+				{% if foodMode is defined %}
+					<h2>Ajout Food</h2>
+				{% else %}
+					<h2>Modifier Food</h2>
+				{% endif %}
 				<div class="form-control">
 					<label for="">Que voulez vous ajouter</label>
 					<select class="form-control" name="type" id="type" onclick="handleClick(this);">
@@ -42,7 +47,7 @@
 				<div id="menuAdd" {% if element is defined %} {% if element.type == 'menu' %} style="display:block;" {% endif %} {% endif %} style="display:none;">
 					<div class="form-control" id="burger_champs">
 						<label for="">Ajouter un burger au menu</label>
-						<select class="form-control" name="burgerNom" id="burger">
+						<select class="form-control select2" name="burgerNom" id="burger">
 							<option value="">Veillez selectionner</option>
 							{% for item in burgers %}
 								<option {% if element is defined %} {% if element.type == 'menu' and element.burger == item %} selected {% endif %} {% endif %} value="{{item.id}}">{{item.nom}}</option>
@@ -51,17 +56,29 @@
 						<small></small>
 						<div class="invalid-feedback"></div>
 					</div>
-					<div class="checkbox" id="checkbox_champs">
+					{# <div class="checkbox" id="checkbox_champs">
 						<label for="">Ajouter des complements au menu</label>
 						<div class="check">
 							{% for item in complements %}
 								<label for="" class="form-check">
-									<input type="checkbox" class="complement" name="complementNom[]" id="" value="{{item.id}}">
+									<input type="checkbox" class="complement" name="complementNom[]" id="complementNom" value="{{item.id}}">
 									{{item.nom}}
 								</label>
 							{% endfor %}
 						</div>
 						<small id="smallC"></small>
+						<div class="invalid-feedback"></div>
+					</div> #}
+					
+					<div class="form-control" id="checkbox_champs">
+						<label for="">Ajouter un burger au menu</label>
+						<select class="selectG" name="complementNom[]" id="complementNom" multiple="multiple">
+							
+							{% for item in complements %}
+								<option value="{{item.id}}">{{item.nom}}</option>
+							{% endfor %}
+						</select>
+						<small></small>
 						<div class="invalid-feedback"></div>
 					</div>
 				</div>
@@ -82,10 +99,10 @@
 				</div>
 
 				<button type="submit" name="ajout" value="ok" class="btn ">
-					{% if mode is defined %}
-						Modifier
-					{% else %}
+					{% if foodMode is defined %}
 						Ajouter
+					{% else %}
+						Modifier
 					{% endif %}
 				</button>
 
@@ -98,4 +115,10 @@
 {% block javascripts %}
 	{{parent()}}
 	<script src="{{asset('js/complement.js')}}"></script>
+	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.selectG').select2();
+        });
+    </script>
 {% endblock %}

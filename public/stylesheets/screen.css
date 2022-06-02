@@ -1339,7 +1339,25 @@ section {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
-/* line 1149, ../sass/partials/_burgerDesign.scss */
+/* line 1148, ../sass/partials/_burgerDesign.scss */
+.div-content {
+  scroll-padding-top: 6.5rem;
+}
+/* line 1151, ../sass/partials/_burgerDesign.scss */
+.div-content::-webkit-scrollbar {
+  width: 1rem;
+}
+/* line 1155, ../sass/partials/_burgerDesign.scss */
+.div-content::-webkit-scrollbar-track {
+  background: #fff;
+}
+/* line 1159, ../sass/partials/_burgerDesign.scss */
+.div-content::-webkit-scrollbar-thumb {
+  background: #e04218;
+  border-radius: 5rem;
+}
+
+/* line 1164, ../sass/partials/_burgerDesign.scss */
 .content-table thead tr {
   background-color: #f9f7ec;
   color: #e04218;
@@ -1347,33 +1365,33 @@ section {
   font-weight: bold;
 }
 
-/* line 1156, ../sass/partials/_burgerDesign.scss */
+/* line 1171, ../sass/partials/_burgerDesign.scss */
 .content-table th,
 .content-table td {
   padding: 15px 18px;
 }
 
-/* line 1161, ../sass/partials/_burgerDesign.scss */
+/* line 1176, ../sass/partials/_burgerDesign.scss */
 .content-table tbody tr {
   border-bottom: 1px solid #e04218;
 }
 
-/* line 1164, ../sass/partials/_burgerDesign.scss */
+/* line 1179, ../sass/partials/_burgerDesign.scss */
 .pay-check {
   cursor: pointer;
 }
 
-/* line 1167, ../sass/partials/_burgerDesign.scss */
+/* line 1182, ../sass/partials/_burgerDesign.scss */
 .content-table tbody tr:nth-of-type(even) {
   background-color: #f9f7ec;
 }
 
-/* line 1171, ../sass/partials/_burgerDesign.scss */
+/* line 1186, ../sass/partials/_burgerDesign.scss */
 .content-table tbody tr:last-of-type {
   border-bottom: 2px solid #e04218;
 }
 
-/* line 1175, ../sass/partials/_burgerDesign.scss */
+/* line 1190, ../sass/partials/_burgerDesign.scss */
 .content-table tbody tr.active-row {
   font-weight: bold;
   color: #009879;

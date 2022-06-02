@@ -83,7 +83,7 @@
 				</div>
 				{# </form> #}
 			</div>
-			<div class="div" style="overflow-x: auto;">
+			<div class="div-content" style="overflow-x: auto;">
 				<table class="content-table">
 					<a disabled class="btn" id="check-all">Tout cocher
 						<i class="fa fa-check" aria-hidden="true"></i>
@@ -115,7 +115,7 @@
 										{{commande.numero}}
 									</a> #}
 									{# <form method="POST" action="{{path('details_commande',{id:commande.id})}}"> #}
-										 <button type="submit" name="details" value="{{commande.id}}" style="background:none;border:none;cursor:pointer;color:blue;" class="">{{commande.numero}} <i class="fa-solid fa-eye"></i></button>
+										 <button type="submit" name="details" value="{{commande.id}}" style="background:none;border:none;cursor:pointer;color:blue;" class="">{{commande.numero}} {# <i class="fa-solid fa-eye"></i> #}</button>
 									{# </form> #}
 								</td>
 								<td>{{commande.date|date('d/m/Y')}}</td>

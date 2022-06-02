@@ -191,17 +191,9 @@ class FoodController extends AbstractController
                 $manager->persist($form->getData());
             } elseif ($type == 'menu') {
                 $oneBurger = $this->burgerRepository->find($burgerNom);
-               /*  foreach ($complementNom as $value) {
-                    $oneComplement = $this->complementRepository->find($value);
-                    $sumPrixComplement[] = $oneComplement->getPrix();
-                }
-                $prixComp = array_sum($sumPrixComplement);
-                $prixMenu = $oneBurger->getPrix() + $prixComp; */
-
                 $menu->setNom($nomFood)
                     ->setBurger($oneBurger)
                     ->setImage($image);
-              //  dd($complementNom);
                 foreach ($complementNom as $value) {
                     $menu->addComplement($this->complementRepository->find($value));
                 }
@@ -225,6 +217,7 @@ class FoodController extends AbstractController
             'burgers' => $burgers,
             'complements' => $complements,
             'form' => $form->createView(),
+            'foodMode' => true,
         ]);
     }
 

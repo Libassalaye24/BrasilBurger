@@ -6,7 +6,7 @@ const image = document.getElementById("burger_image_nom");
 const burger = document.getElementById("burger");
 const type = document.getElementById("type");
 const description = document.getElementById("description");
-const complement = document.getElementsByClassName(".complement")
+const complement = document.getElementById("complementNom")
 
 //filter ajax
 
@@ -125,12 +125,16 @@ function handleClick(type) {
 form.addEventListener("submit", function (e) {
   // var nb = CheckNumberMatch(nbrEtage);
   //e.preventDefault();
+  
   isValid = [];
   checkRequired([type,nom,image]);
   checkLength(nom,3,30);
 
   if (type.value === 'menu') {
     checkRequired([burger]);
+    
+      checkRequired([complement]);
+    
   }
 
   if (type.value === 'burger' || type.value === 'complement') {
