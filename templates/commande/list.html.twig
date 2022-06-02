@@ -84,10 +84,12 @@
 
 								</tr>
 							</thead>
+							
 							{% for commande in commandes %}
 								<tr>
 									<td class="thbottom">
-										{% if commande.etat == 'encours' and commande.dateCommande == now %}
+									
+										{% if commande.etat == 'encours' and commande.dateCommande|date("d/m/Y") == now|date("d/m/Y") %}
 											<input type="checkbox" name="commandesAll[]" value="{{commande.id}}" class="item-check">
 										{% endif %}
 									</td>
