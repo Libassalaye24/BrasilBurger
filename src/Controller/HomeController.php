@@ -64,6 +64,7 @@ class HomeController extends AbstractController
     #[Route('/', name: 'catalogue')]
     public function catalogue(Request $request,BurgerRepository $burgerRepository,MenuRepository $menuRepository,SessionInterface $session,PaginatorInterface $paginatorInterface): Response
     {
+       // $this->denyAccessUnlessGranted("ROLE_CLIENT");
         $burgers = $burgerRepository->findBy(['etat' => false]);
         $menus = $menuRepository->findBy(['etat' => false]);
         $data = $this->getProducts($burgerRepository,$menuRepository);

@@ -327,24 +327,24 @@
 	<script>
 
 		const select = document.querySelector('#select-type');
-select.addEventListener("change", function (event) {
-console.log('true');
-const option = event.target.options[select.selectedIndex];
-const path = option.getAttribute('data-path')
-fetch(path, {
-method: 'GET',
-headers: {
-'Content-Type': 'application/json'
-}
-}).then(response => response.json()).then(promesse => {
-window.location.href = promesse;
-}).catch(err => console.log(err))
+		select.addEventListener("change", function (event) {
+			console.log('true');
+			const option = event.target.options[select.selectedIndex];
+			const path = option.getAttribute('data-path')
+			fetch(path, {
+				method: 'GET',
+				headers: {
+				'Content-Type': 'application/json'
+				}
+			}).then(response => response.json()).then(promesse => {
+				window.location.href = promesse;
+			}).catch(err => console.log(err))
 
 
-});
-setTimeout(function () {
-$('#produit').fadeOut('fast');
-}, 1000);
+		});
+	setTimeout(function () {
+		$('#produit').fadeOut('fast');
+	}, 1000);
 	</script>
 
 {% endblock %}

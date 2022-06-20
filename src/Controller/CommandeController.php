@@ -41,6 +41,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class CommandeController extends AbstractController
 {
@@ -155,7 +156,7 @@ class CommandeController extends AbstractController
             }
         }
         $total = $totalBurger + $montant;
-        // dd($panierWithData);
+        
         $complements = $complementRepository->findBy(['etat' => false]);
         return $this->render('commande/panier.html.twig', [
             'panierWithData' => $panierWithData,
@@ -248,13 +249,12 @@ class CommandeController extends AbstractController
     #[Route('/commande/mescommandes', name: 'mes_commandes')]
     public function mesCommandes(CommandeRepository $commandeRepository, ClientRepository $clientRepository, PaginatorInterface $paginatorInterface, Request $request, SessionInterface $session, Session $session2, EntityManagerInterface $manager): Response
     {
-
+        $this->denyAccessUnlessGranted("ROLE_CLIENT");
         $user = $request->getSession()->get('idUser');
         $email = $request->getSession()->get('email');
 
         $client = $clientRepository->findOneBy(['email' => $email]);
-        //dd($client);
-        // $manager->refresh($client);
+     //   dd($request->getSession()->get('idUser'));
         $data = $commandeRepository->findBy(['client' => $client, 'etat' => self::ENCOURS, 'dateCommande' => new DateTime()]);
         $commandes = $paginatorInterface->paginate(
             $data,
@@ -338,6 +338,7 @@ class CommandeController extends AbstractController
                     'details' => $commande,
                     'roles' => $roles
                 ]);
+              //  return $this->redirectToRoute("details_commande",["id" => $id]);
             }
         }
         return $this->render('commande/mes.commande.html.twig', [
@@ -353,6 +354,7 @@ class CommandeController extends AbstractController
         if (!$this->getUser()) {
             return $this->redirectToRoute('login');
         }
+        
         $commande = new Commande();
         $client = $this->getUser();
         $panier = $session->get('panier', []);
@@ -376,6 +378,8 @@ class CommandeController extends AbstractController
             ];
         }
         $total = $totalMenu = $montant = $totalBurger = 0;
+       // dd($panierWithData);
+
         foreach ($panierWithData as $value) {
             if ($value['product']->getType() == 'burger') {
                 $totalBurger += $value['product']->getPrix() * $value['quantite'];
@@ -416,6 +420,7 @@ class CommandeController extends AbstractController
 
                     $commande->addBurger($value['product']);
                 }
+                
                 $manager->persist($commande);
                 $manager->flush();
             }
@@ -434,6 +439,9 @@ class CommandeController extends AbstractController
     {
         $commande = $commandeRepository->find($id);
         if (!$commande) {
+            throw $this->createNotFoundException(
+                'No commande found for id ' . $id
+            );
         }
 
         $roles = $session->get('roles');

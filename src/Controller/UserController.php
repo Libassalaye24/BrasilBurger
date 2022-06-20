@@ -42,8 +42,8 @@ class UserController extends AbstractController
             $encoded = $encoder->hashPassword($client,$client->getPassword());
             $client->setPassword($encoded);
             $client->setRoles(['ROLE_CLIENT']);
-           /*  $manager->persist($client);
-            $manager->flush(); */
+            $manager->persist($client);
+            $manager->flush();
             $session = new Session();
             $session->getFlashBag()->set('SuccessIscri','Inscription reussi avec succes');
            return $this->redirectToRoute('login');

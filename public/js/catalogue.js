@@ -1,11 +1,9 @@
 
-const loader = document.querySelector('.loader');
-
-function showLoader() {
-    loader.classList.add('show');
-   
-}
-new window.Flash
+const btnAdd = document.querySelectorAll('.btn-add');
+console.log(btnAdd);
+btnAdd.forEach(element => {
+    alert(element);
+});
 
 /* function page() {
     
@@ -43,12 +41,11 @@ async function getPosts() {
      return post;
        
 } */
-window.addEventListener('scroll',function () {
+/* window.addEventListener('scroll',function () {
     const {clientHeight,scrollTop,scrollHeight} = document.documentElement;
   
     if (scrollTop + clientHeight >= scrollHeight - 1510) {
-      /*   this.showLoader();
-        this.alert(true) */
+      
     }
    
-})
+}) */
