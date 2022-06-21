@@ -48,7 +48,7 @@ class SecurityController extends AbstractController
             $role = $this->getUser()->getRoles();
             $idUser = array_values((array)$this->getUser())[0];
             $email =  array_values((array)$this->getUser())[1];
-
+           //dd($this->getUser());
             $session    = $request->getSession();
             $session->set('idUser', $idUser);
             $session->set('roles', $role[0]);
@@ -61,6 +61,7 @@ class SecurityController extends AbstractController
             }elseif($role[0] == "ROLE_CLIENT" && $targetPath == null){
                 return $this->redirectToRoute('mes_commandes');
             }else{
+                dd(true);
                 return new RedirectResponse($targetPath);
             }
         }  

@@ -35,16 +35,25 @@ class HomeController extends AbstractController
 
    
     #[Route('/catalogue/details/{id}',name: 'details')]
-    public function viewDetails(int $id,BurgerRepository $burgerRepository,MenuRepository $menuRepository):Response
+    public function viewDetails($id,BurgerRepository $burgerRepository,MenuRepository $menuRepository):Response
     {
         if (!$id) {
             throw $this->createNotFoundException(
                 'No product found for id '.$id
             );
         }
-       
+        $newId =  (int) filter_var($id, FILTER_SANITIZE_NUMBER_INT);
         $products = $this->getProducts($burgerRepository,$menuRepository);
         foreach ($products as $value) {
+            if ($value->getId() == $newId) {
+                if (str_contains($id, "menu")) {
+                    $details = $menuRepository->find($newId);
+                } elseif (str_contains($id, "burger")) {
+                    $details = $burgerRepository->find($newId);
+                }
+            }
+        }
+      /*   foreach ($products as $value) {
             if($value->getId() == $id){
                 
                 if ($value->getType() == 'menu') {
@@ -53,7 +62,7 @@ class HomeController extends AbstractController
                     $details = $burgerRepository->find($id);
                 }
             }
-        }
+        } */
         //$details = $burgerRepository->find($id);
         return $this->render('home/showDetails.html.twig', [
             'details' => $details,

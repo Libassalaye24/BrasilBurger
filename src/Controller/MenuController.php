@@ -85,7 +85,7 @@ class MenuController extends AbstractController
         //filter
         if ($session->has('selectEtat')) {
             $etatSelected = $session->get('selectEtat');
-            //dd($etatSelected);
+           
             $commandeEncours = $commandeRepository->findBy(['etat' => $etatSelected,'dateCommande' => $now],['id' => 'DESC']);
             $session->remove('selectEtat');
             return $this->render('menu/dashboard.html.twig', [
