@@ -43,6 +43,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
+#[Security("is_granted('ROLE_CLIENT') or is_granted('ROLE_GESTIONNAIRE') or is_granted('ROLE_USER')")]
 class CommandeController extends AbstractController
 {
     public const ENCOURS = 'encours';
@@ -50,7 +51,6 @@ class CommandeController extends AbstractController
     public const ANNULER = 'annuler';
     public const TERMINER = 'terminer';
 
-    #[IsGranted('ROLE_GESTIONNAIRE')]
     #[Route('/commande/list/{page?1}/{nbr?5}', name: 'list_commande')]
     public function index($page, $nbr, CommandeRepository $commandeRepository, Session $session, ClientRepository $clientRepository, PaginatorInterface $paginatorInterface, Request $request): Response
     {
@@ -116,11 +116,10 @@ class CommandeController extends AbstractController
         ]);
     }
 
-    #[IsGranted('ROLE_CLIENT')]
     #[Route('/panier', name: 'list_panier')]
     public function viewPanier(SessionInterface $session, HomeController $home, BurgerRepository $burgerRepository, MenuRepository $menuRepository, ComplementRepository $complementRepository): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_CLIENT');
+       /*  $this->denyAccessUnlessGranted('ROLE_CLIENT'); */
         $panier = $session->get('panier', []);
         $session->set('panierRestor', []);
         $products = $home::getProducts($burgerRepository, $menuRepository);
@@ -189,7 +188,6 @@ class CommandeController extends AbstractController
         return $this->redirectToRoute('catalogue');
     }
 
-    #[IsGranted('ROLE_CLIENT')]
     #[Route('/panier/add2/{id}', name: 'add_panier2')]
     public function panieradd($id, SessionInterface $session): Response
     {
@@ -226,7 +224,7 @@ class CommandeController extends AbstractController
         $session2->getFlashBag()->set('produitremove', 'Le produit a été retiré du panier');
         return $this->redirectToRoute('list_panier');
     }
-    #[IsGranted('ROLE_CLIENT')]
+
     #[Route('/panier/retire/{id}', name: 'retire_panier')]
     public function retirePanier($id, SessionInterface $session): Response
     {
@@ -245,7 +243,6 @@ class CommandeController extends AbstractController
         return $this->redirectToRoute('list_panier');
     }
 
-    #[IsGranted('ROLE_CLIENT')]
     #[Route('/commande/mescommandes', name: 'mes_commandes')]
     public function mesCommandes(CommandeRepository $commandeRepository, ClientRepository $clientRepository, PaginatorInterface $paginatorInterface, Request $request, SessionInterface $session, Session $session2, EntityManagerInterface $manager): Response
     {
@@ -255,7 +252,7 @@ class CommandeController extends AbstractController
 
         $client = $clientRepository->findOneBy(['email' => $email]);
      //   dd($request->getSession()->get('idUser'));
-        $data = $commandeRepository->findBy(['client' => $client, 'etat' => self::ENCOURS, 'dateCommande' => new DateTime()]);
+        $data = $commandeRepository->findBy(['client' => $client, 'etat' => self::ENCOURS, 'dateCommande' => new DateTime()], ['id' => 'DESC']);
         $commandes = $paginatorInterface->paginate(
             $data,
             $request->query->getInt('page', 1),
@@ -347,16 +344,14 @@ class CommandeController extends AbstractController
         ]);
     }
 
-    #[IsGranted('ROLE_CLIENT')]
-    #[Route('/commande/add', name: 'checkOut', methods: ['POST'])]
-    public function checkOut(SessionInterface $session, EntityManagerInterface $manager, HomeController $home, BurgerRepository $burgerRepository, MenuRepository $menuRepository, Validator $smsGenerate, TexterInterface $texter, Request $request, ComplementRepository $complementRepository): Response
+    #[Route('/commande/add', name: 'checkOut', methods: ['GET'])]
+    public function checkOut(SessionInterface $session,EntityManagerInterface $manager, HomeController $home, BurgerRepository $burgerRepository, MenuRepository $menuRepository, Validator $smsGenerate, TexterInterface $texter, Request $request, ComplementRepository $complementRepository, ClientRepository $clientRepository): Response
     {
-        if (!$this->getUser()) {
-            return $this->redirectToRoute('login');
-        }
-        
+      
         $commande = new Commande();
-        $client = $this->getUser();
+      //  $session = $request->getSession();
+        $client = $clientRepository->find($session->get('idUser'));
+      //  dd($client);
         $panier = $session->get('panier', []);
         $products = $home::getProducts($burgerRepository, $menuRepository);
         $panierWithData = [];
@@ -392,8 +387,8 @@ class CommandeController extends AbstractController
         }
         $total = $totalBurger + $montant;
         //dd($total);
-        $method = $request->getMethod();
-        if ($method == "POST") {
+       /*  $method = $request->getMethod();
+        if ($method == "POST") { */
             //dd($request->request);
             $complement = $request->get('complement');
             $commande->setClient($client)
@@ -431,7 +426,7 @@ class CommandeController extends AbstractController
             $session2 = new Session();
             $session2->getFlashBag()->add('add_commande', 'Commande Ajoutée avec succès');
             return $this->redirectToRoute('mes_commandes');
-        }
+        /* } */
     }
 
     #[Route('/commande/details/{id}', name: 'details_commande')]
@@ -453,7 +448,6 @@ class CommandeController extends AbstractController
 
 
 
-    #[IsGranted('ROLE_CLIENT')]
     #[Route('/commande/delete/{id}', name: 'delete_commande')]
     public function delete(int $id, CommandeRepository $commandeRepository, EntityManagerInterface $manager): Response
     {
@@ -473,7 +467,7 @@ class CommandeController extends AbstractController
         return $this->redirectToRoute('mes_commandes');
     }
 
-    #[IsGranted('ROLE_GESTIONNAIRE')]
+
     // #[Route('/commande/valider', name: 'valider_commande')]
     #[Route('/commande/changeEtat', name: 'valider_commande')]
     public function validerCommande(Request $request, CommandeRepository $commandeRepository, EntityManagerInterface $manager, Session $session): Response
@@ -554,7 +548,6 @@ class CommandeController extends AbstractController
         return new JsonResponse($this->generateUrl('list_commande'));
     }
 
-    #[IsGranted('ROLE_CLIENT')]
     #[Route('/commade/paiement', name: 'payer')]
     public function payer(Request $request, Session $session, CommandeRepository $commandeRepository, EntityManagerInterface $manager, PdfService $pdfService): Response
     {
@@ -605,6 +598,7 @@ class CommandeController extends AbstractController
             $OneCommande = $commandeRepository->find($value);
             $allCommandes[] = $OneCommande;
         }
+        $session->remove('factureClient');
         // dd($allCommandes[0]->getBurger());
         // Retrieve the HTML generated in our twig file
         $html = $this->renderView('commande/facturepdf.html.twig', [

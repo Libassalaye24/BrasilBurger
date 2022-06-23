@@ -48,24 +48,17 @@ class HomeController extends AbstractController
             if ($value->getId() == $newId) {
                 if (str_contains($id, "menu")) {
                     $details = $menuRepository->find($newId);
+                    $similaires = $menuRepository->findBy(['etat' => false]);
                 } elseif (str_contains($id, "burger")) {
+                    $similaires = $burgerRepository->findBy(['etat' => false]);
                     $details = $burgerRepository->find($newId);
                 }
             }
         }
-      /*   foreach ($products as $value) {
-            if($value->getId() == $id){
-                
-                if ($value->getType() == 'menu') {
-                    $details = $menuRepository->find($id);
-                }elseif ($value->getType() == 'burger') {
-                    $details = $burgerRepository->find($id);
-                }
-            }
-        } */
-        //$details = $burgerRepository->find($id);
+    
         return $this->render('home/showDetails.html.twig', [
             'details' => $details,
+            'similaires' => $similaires,
         ]);
         
     }
