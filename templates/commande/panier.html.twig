@@ -103,13 +103,13 @@
 			</div>
 		{% endfor %}
 		<div class="products-container">
-			{% if app.user %}
+		{# 	{% if app.user %}
 				{% else %}
 					{% set panierWithData = "<script>localStorage.getItem('panierData');</script>" %}
 					<script>
 						localStorage.removeItem('panierData');
 					</script>
-			{% endif %}
+			{% endif %} #}
 			<h3 class="title">Votre Panier
 				{% if panierWithData|length == 0  %}
 					est vide!
@@ -164,7 +164,7 @@
 
 				</div>
 				
-				<form method="POST" action="{{path('checkOut')}}">
+				{# <form method="POST" action="{{path('checkOut')}}"> #}
 				{# <ul>
 					{% for key, item in complements %}
 
@@ -195,10 +195,10 @@
 								FCFA</span>
 						</h3>
 
-						<button type="submit" name="commander"  class="btn " style="border:none">Finalise ta commande</a>
+						<a href="{{path('checkOut')}}"  class="btn " style="border:none">Finalise ta commande</a>
 
 					</div>
-					</form>
+					{# </form> #}
 
 				</div>
 			{% endif %}

@@ -34,7 +34,7 @@
 
 	</div>
 	<div class="content">
-		<span>welcome foodies</span>
+		<span>{{details.type}} food</span>
 		<h3>{{details.nom}}
 			😋</h3>
 		<p>
@@ -52,7 +52,9 @@
 			{% endif %}
 
 
+			Omnis unde dolores temporibus hic quam debitis tenetur harum nemo.
 			Omnis unde dolores temporibus hic quam debitis tenetur harum nemo.</p>
+			
 
 		<div class="stars">
 			<i class="fas fa-star"></i>
@@ -62,13 +64,7 @@
 			<i class="fas fa-star-half-alt"></i>
 
 		</div>
-		<div class="stars">
-			<i class="fas fa-star"></i>
-			<i class="fas fa-star"></i>
-			<i class="fas fa-star"></i>
-			<i class="fas fa-star-half-alt"></i>
-
-		</div>
+	
 		<a href="{{path('add_panier',{id: details.id ~ details.type})}}" class="btn panier">
 			<i class="fa-solid fa-cart-plus"></i>
 			ajouter
@@ -77,6 +73,69 @@
 
 
 </section>
+<section class="popular" id="popular">
+
+	<div class="heading">
+		<span>Nourriture similaire</span>
+		<h3>Nos menus spéciaux</h3>
+	</div>
+
+	<div class="box-container">
+		{% for product in similaires %}
+			{% if details.id != product.id %}
+				<div class="box" data-aos="fade-up" data-aos-duration="3000">
+					<div class="image">
+						<img src="{{asset('img/uploads/' ~ product.image.nom)}}" class="animate__backInUp" alt="">
+					</div>
+					<div class="content">
+
+						<h3>{{product.nom}}</h3>
+
+						<div class="stars">
+							<i class="fas fa-star"></i>
+							<i class="fas fa-star"></i>
+							<i class="fas fa-star"></i>
+							<i class="fas fa-star"></i>
+							<i class="fas fa-star-half-alt"></i>
+							<span>
+								(50)
+							</span>
+						</div>
+						<div class="price">
+							{% if product.type == 'burger' %}
+								{{product.prix}}
+							{% else %}
+								{% set montant = product.burger.prix %}
+								{% set montantC = 0 %}
+								{% for comp in product.complements %}
+									{% set montantC = montantC + comp.prix %}
+								{% endfor %}
+								{{montant + montantC}}
+							{% endif %}
+							FCFA
+						</div>
+
+						<a href="{{path('details',{id: product.id ~ product.type})}}" class="btn">voir details</a>
+						<a href="{{path('add_panier',{id: product.id ~ product.type})}}" id="{{product.id ~ product.type}}" class="btn ">
+							<i class="fa-solid fa-cart-plus"></i>
+							ajouter
+						</a>
+					</div>
+				</div>
+			{% endif %}
+		{% endfor %}
+
+
+	</div>
+	<div class="loader-spiner">
+		<div class="circle"></div>
+		<div class="circle"></div>
+		<div class="circle"></div>
+	</div>
+
+
+</section>
+
 <!-- banner section starts  -->
 
 <section class="banner">
