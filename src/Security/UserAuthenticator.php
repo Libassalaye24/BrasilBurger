@@ -58,9 +58,7 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
             $session->set('idUser', $idUser);
             $session->set('roles', $role[0]);
             $session->set('email', $email);
-           /*  dump($email);
-            dump($idUser);
-            die(true); */
+            
             return new RedirectResponse($targetPath);
         }
        /*  $session = new Session();

@@ -61,7 +61,7 @@ class SecurityController extends AbstractController
             }elseif($role[0] == "ROLE_CLIENT" && $targetPath == null){
                 return $this->redirectToRoute('mes_commandes');
             }else{
-                dd(true);
+              //  dd(true);
                 return new RedirectResponse($targetPath);
             }
         }  
