@@ -16,7 +16,7 @@ class UserFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        $roles=["ROLE_USER","ROLE_GESTIONNAIRE"];
+        $roles=["ROLE_GESTIONNAIRE"];
        
          $plainPassword = 'passer@123';
         for ($i = 1; $i <=2; $i++) {
@@ -24,10 +24,10 @@ class UserFixtures extends Fixture
             $pos= rand(0,1);
             $user->setNom('Nom '.$i);
             $user->setPrenom('Prenom '.$i);
-            $user->setEmail(strtolower($roles[$pos])."@gmail.com".$i);
+            $user->setEmail(strtolower($roles[0])."@gmail.com");
             $encoded = $this->encoder->hashPassword($user, $plainPassword);
             $user->setPassword($encoded);
-            $user->setRoles([$roles[$pos]]);  
+            $user->setRoles([$roles[0]]);  
             $manager->persist($user);
             $this->addReference("User".$i, $user);
         }
