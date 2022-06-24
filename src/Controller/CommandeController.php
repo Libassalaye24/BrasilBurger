@@ -116,11 +116,11 @@ class CommandeController extends AbstractController
         ]);
     }
 
-    #[IsGranted('ROLE_CLIENT')]
+   /*  #[IsGranted('ROLE_CLIENT')] */
     #[Route('/panier', name: 'list_panier')]
     public function viewPanier(SessionInterface $session, HomeController $home, BurgerRepository $burgerRepository, MenuRepository $menuRepository, ComplementRepository $complementRepository): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_CLIENT');
+      //  $this->denyAccessUnlessGranted('ROLE_CLIENT');
         $panier = $session->get('panier', []);
         $session->set('panierRestor', []);
         $products = $home::getProducts($burgerRepository, $menuRepository);
