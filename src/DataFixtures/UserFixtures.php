@@ -24,7 +24,7 @@ class UserFixtures extends Fixture
             $pos= rand(0,1);
             $user->setNom('Nom '.$i);
             $user->setPrenom('Prenom '.$i);
-            $user->setEmail(strtolower($roles[0])."@gmail.com");
+            $user->setEmail("role_admin".$i."@gmail.com");
             $encoded = $this->encoder->hashPassword($user, $plainPassword);
             $user->setPassword($encoded);
             $user->setRoles([$roles[0]]);  
