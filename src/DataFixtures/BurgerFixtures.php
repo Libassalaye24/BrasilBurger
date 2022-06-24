@@ -11,9 +11,7 @@ class BurgerFixtures extends Fixture
     {
         // $product = new Product();
         // $manager->persist($product);
-        for ($i=1; $i <=8 ; $i++) { 
-           
-        }
+       
         $manager->flush();
     }
 }
