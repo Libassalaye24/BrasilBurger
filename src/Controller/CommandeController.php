@@ -43,6 +43,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
+
 class CommandeController extends AbstractController
 {
     public const ENCOURS = 'encours';
@@ -189,8 +190,8 @@ class CommandeController extends AbstractController
         return $this->redirectToRoute('catalogue');
     }
 
-    #[IsGranted('ROLE_CLIENT')]
-    #[Route('/panier/add2/{id}', name: 'add_panier2')]
+  /*   #[IsGranted('ROLE_CLIENT')] */
+    #[Route('/panier/addition/{id}', name: 'add_panier2')]
     public function panieradd($id, SessionInterface $session): Response
     {
         $panier = $session->get('panier', []);
@@ -226,7 +227,7 @@ class CommandeController extends AbstractController
         $session2->getFlashBag()->set('produitremove', 'Le produit a été retiré du panier');
         return $this->redirectToRoute('list_panier');
     }
-    #[IsGranted('ROLE_CLIENT')]
+   /*  #[IsGranted('ROLE_CLIENT')] */
     #[Route('/panier/retire/{id}', name: 'retire_panier')]
     public function retirePanier($id, SessionInterface $session): Response
     {
@@ -245,7 +246,7 @@ class CommandeController extends AbstractController
         return $this->redirectToRoute('list_panier');
     }
 
-    #[IsGranted('ROLE_CLIENT')]
+    #[Security("is_granted('ROLE_GESTIONNAIRE')")]
     #[Route('/commande/mescommandes', name: 'mes_commandes')]
     public function mesCommandes(CommandeRepository $commandeRepository, ClientRepository $clientRepository, PaginatorInterface $paginatorInterface, Request $request, SessionInterface $session, Session $session2, EntityManagerInterface $manager): Response
     {

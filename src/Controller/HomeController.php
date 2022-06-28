@@ -21,6 +21,10 @@ class HomeController extends AbstractController
         $burgers = self::getBurgers($burgerRepository);
         return array_merge($menus,$burgers);
     }
+    public function all(BurgerRepository $burgerRepository,MenuRepository $menuRepository):Response
+    {
+        return new JsonResponse(self::getProducts($burgerRepository,$menuRepository));
+    }
     public static function getBurgers(BurgerRepository $burgerRepository):array
     {
         $burgers = $burgerRepository->findBy(['etat' => false]);
