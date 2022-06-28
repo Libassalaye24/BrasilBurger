@@ -1,9 +1,49 @@
 
-const btnAdd = document.querySelectorAll('.btn-add');
-console.log(btnAdd);
-btnAdd.forEach(element => {
-    alert(element);
+const elements = document.querySelectorAll('.add-panier');
+let panier = [];
+Array.from(elements).forEach(element => {
+    element.addEventListener("click", (e) => {
+        //  e.preventDefault()
+        // addPanier(element.getAttribute("id"))
+        //addPanier();
+
+        panier.push(
+            {
+                id: element.getAttribute("data-id"),
+                idType: element.getAttribute("data-id")+element.getAttribute("data-type"),
+                nom: element.getAttribute("data-nom"),
+                prix: element.getAttribute("data-prix"),
+                image: element.getAttribute("data-image"),
+                type: element.getAttribute("data-type"),
+                quantity: 1,
+            }
+        )
+       
+        localStorage.setItem('panier', JSON.stringify(panier));
+
+        // console.log(element.getAttribute("data-nom"));
+        // 
+        // alert(true);
+    })
+
 });
+
+
+function addPanier() {
+    panierData = localStorage.getItem("panier");
+    panierData.forEach(element => {
+        console.log(element);
+    });
+
+
+}
+//addPanier();
+function diminuer() {
+
+}
+function additionner() {
+
+}
 
 /* function page() {
     
