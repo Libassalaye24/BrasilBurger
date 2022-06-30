@@ -89,6 +89,7 @@
 			box-shadow: 0 0 5px #333;
 			z-index: -1;
 		}
+
 	</style>
 	<section class="retour" id="">
 		<a href="{{path('mes_commandes')}}">
@@ -102,14 +103,15 @@
 				{{ message }}
 			</div>
 		{% endfor %}
-		<div class="products-container">
-		{# 	{% if app.user %}
-				{% else %}
-					{% set panierWithData = "<script>localStorage.getItem('panierData');</script>" %}
-					<script>
-						localStorage.removeItem('panierData');
-					</script>
-			{% endif %} #}
+		<div
+			class="products-container">
+			{# 	{% if app.user %}
+							{% else %}
+								{% set panierWithData = "<script>localStorage.getItem('panierData');</script>" %}
+								<script>
+									localStorage.removeItem('panierData');
+								</script>
+						{% endif %} #}
 			<h3 class="title">Votre Panier
 				{% if panierWithData|length == 0  %}
 					est vide!
@@ -143,6 +145,7 @@
 									<span>
 										prix :
 									</span>
+
 									<span class="price">
 										{% if item['product'].type == 'menu' %}
 											{% set montant = 0 %}
@@ -154,6 +157,14 @@
 											{{item['product'].prix * item['quantite']}}
 										{% endif %}
 									</span>
+								
+								{# 	{% if item['product'].type == 'burger' %}
+										<button id="myBtn" style="cursor:pointer">complements</button>
+									{% endif %}
+									{% if item['product'].type == 'menu' %}
+										<input type="text" style="width:50%;text-align:center;visibility:hidden" disabled value="complements"/>
+									{% endif %} #}
+
 								</div>
 							</div>
 
@@ -163,19 +174,19 @@
 					</div>
 
 				</div>
-				
+
 				{# <form method="POST" action="{{path('checkOut')}}"> #}
 				{# <ul>
-					{% for key, item in complements %}
-
-						<li>
-							<input type="checkbox" name="complement[]" class="checked" data-path="{{ path('checkOutComplements',{prix: item.prix})}}" value="{{item.id}}" id="cb{{key +1 }}"/>
-							<label for="cb{{key +1 }}">{{item.prix}}
-								fcfa<img src="{{asset('img/uploads/' ~ item.image.nom)}}"/></label>
-						</li>
-					{% endfor %}
-
-				</ul> #}
+									{% for key, item in complements %}
+				
+										<li>
+											<input type="checkbox" name="complement[]" class="checked" data-path="{{ path('checkOutComplements',{prix: item.prix})}}" value="{{item.id}}" id="cb{{key +1 }}"/>
+											<label for="cb{{key +1 }}">{{item.prix}}
+												fcfa<img src="{{asset('img/uploads/' ~ item.image.nom)}}"/></label>
+										</li>
+									{% endfor %}
+				
+								</ul> #}
 				<div class="cart-total">
 
 					<h3 class="title">
@@ -195,7 +206,7 @@
 								FCFA</span>
 						</h3>
 
-						<a href="{{path('checkOut')}}"  class="btn " style="border:none">Finalise ta commande</a>
+						<a href="{{path('checkOut')}}" class="btn " style="border:none">Finalise ta commande</a>
 
 					</div>
 					{# </form> #}
@@ -221,8 +232,7 @@ localStorage.setItem('panierData', panier)
 // or with jQuery
 // var isAuthenticated = $('.js-user-rating').data('isAuthenticated');
 });
-
-
+// Get the modal
 
 		</script>
 

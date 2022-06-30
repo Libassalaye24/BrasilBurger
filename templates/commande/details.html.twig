@@ -54,6 +54,7 @@
     <div class="heading">
         <span>Details Commande</span>
     </div>
+	
 
      <div class="box-container">
 
@@ -63,19 +64,20 @@
                 <h3>Commande Num: {{details.numero}}</h3>
                 <h4>Date : {{details.date|date('d/m/Y')}}</h4>
                 <h4>Etat : {{details.etat}}</h4>
+				{# {{details.commandes_burger}} #}
                 <div class="price">Montant : {{details.montant}} FCFA</div>
             </div>
            {#  <a href="" class="btn annuler">annuler</a> #}
         </div>
     </div>						
-    {% for Cburger in details.burger %}
+    {% for Cburger in details.commandesBurgers %}
     <div class="box-container">
 
         <div href="" class="box">
-            <img src="{{asset('img/uploads/' ~ Cburger.image.nom)}}" alt="">
+            <img src="{{asset('img/uploads/' ~ Cburger.burger.image.nom)}}" alt="">
             <div class="content">
-                <h3>{# {{Cburger.quantity}} #}x {{Cburger.nom}}</h3>
-                <div class="price">{{Cburger.prix}} FCFA</div>
+                <h3>{{Cburger.quantity}}x {{Cburger.burger.nom}}</h3>
+                <div class="price">{{Cburger.burger.prix * Cburger.quantity}} FCFA</div>
             </div>
         </div>
     </div>
@@ -92,21 +94,21 @@
         </div>
     </div>
     {% endfor %}
-    {% for Cmenu in details.menu %}
+    {% for Cmenu in details.CommandesMenus %}
      <div class="box-container">
-
+		
         <div  class="box">
-            <img src="{{asset('img/uploads/' ~ Cmenu.image.nom)}}" alt="">
+            <img src="{{asset('img/uploads/' ~ Cmenu.menu.image.nom)}}" alt="">
             <div class="content">
-                <h3> {# {{Cmenu.quantity}} #}x {{Cmenu.nom}}</h3>
+                <h3> {{Cmenu.quantity}}x {{Cmenu.menu.nom}}</h3>
                 <div class="price">
                     {% set montant = 0 %}
 					{% set montantTotal = 0 %}
-                    {% for item in Cmenu.complements %}
+                    {% for item in Cmenu.menu.complements %}
                         {% set montant = montant + item.prix %}                   
                     {% endfor %}
-                    {{(montant + Cmenu.burger.prix)}} FCFA
-					{% set montotal = montant + Cmenu.burger.prix  %}
+                    {{(montant + Cmenu.menu.burger.prix)}} FCFA
+					{% set montotal = montant + Cmenu.menu.burger.prix  %}
                 </div>
             </div>
         </div>
@@ -256,9 +258,9 @@
 			</div>
 
 			<div class="credit">
-				creer par
-				<span>mr. Libasse Laye Mbaye</span>
-				| all rights reserved!
+					Créé par 
+				<span>M. Libasse Laye Mbaye </span>
+				| Tous les droits sont réservés!
 			</div>
 
 		</div>
