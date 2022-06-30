@@ -458,7 +458,7 @@ class CommandeController extends AbstractController
                 'No commande found for id ' . $id
             );
         }
-        dd($commande);
+     //   dd($commande);
 
         $roles = $session->get('roles');
         return $this->render('commande/details.html.twig', [
