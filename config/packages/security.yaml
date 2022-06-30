@@ -24,7 +24,7 @@ security:
             logout:
                 path: logout
                 # where to redirect after logout
-                target: catalogue
+                #target: catalogue
               # ...
             remember_me:
                 secret:   '%kernel.secret%' # required
@@ -47,6 +47,7 @@ security:
          - { path: ^/burger/add, roles: [ROLE_GESTIONNAIRE] }
          - { path: ^/complement, roles: [ROLE_USER,ROLE_GESTIONNAIRE] }
          - { path: ^/menu, roles: [ROLE_USER,ROLE_GESTIONNAIRE] }
+         - { path: ^/commande/mescommandes, roles: ROLE_CLIENT }
 
 when@test:
     security:
