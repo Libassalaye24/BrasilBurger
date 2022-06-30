@@ -49,6 +49,13 @@ class Commande
     #[ORM\OneToOne(mappedBy: 'commande', targetEntity: Paiement::class, cascade: ['persist', 'remove'])]
     private $paiement;
 
+    #[ORM\OneToMany(mappedBy: 'commande', targetEntity: CommandesBurger::class)]
+    private $commandesBurgers;
+
+    #[ORM\OneToMany(mappedBy: 'commande', targetEntity: CommandesMenu::class)]
+    private $commandesMenus;
+
+    
  
 
 
@@ -60,6 +67,8 @@ class Commande
         $this->burger = new ArrayCollection();
         $this->menu = new ArrayCollection();
         $this->complement = new ArrayCollection();
+        $this->commandesBurgers = new ArrayCollection();
+        $this->commandesMenus = new ArrayCollection();
       
     }
     public function __toString()
@@ -246,6 +255,68 @@ class Commande
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, CommandesBurger>
+     */
+    public function getCommandesBurgers(): Collection
+    {
+        return $this->commandesBurgers;
+    }
+
+    public function addCommandesBurger(CommandesBurger $commandesBurger): self
+    {
+        if (!$this->commandesBurgers->contains($commandesBurger)) {
+            $this->commandesBurgers[] = $commandesBurger;
+            $commandesBurger->setCommande($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommandesBurger(CommandesBurger $commandesBurger): self
+    {
+        if ($this->commandesBurgers->removeElement($commandesBurger)) {
+            // set the owning side to null (unless already changed)
+            if ($commandesBurger->getCommande() === $this) {
+                $commandesBurger->setCommande(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CommandesMenu>
+     */
+    public function getCommandesMenus(): Collection
+    {
+        return $this->commandesMenus;
+    }
+
+    public function addCommandesMenu(CommandesMenu $commandesMenu): self
+    {
+        if (!$this->commandesMenus->contains($commandesMenu)) {
+            $this->commandesMenus[] = $commandesMenu;
+            $commandesMenu->setCommande($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommandesMenu(CommandesMenu $commandesMenu): self
+    {
+        if ($this->commandesMenus->removeElement($commandesMenu)) {
+            // set the owning side to null (unless already changed)
+            if ($commandesMenu->getCommande() === $this) {
+                $commandesMenu->setCommande(null);
+            }
+        }
+
+        return $this;
+    }
+
+  
 
   
 

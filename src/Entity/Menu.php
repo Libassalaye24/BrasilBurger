@@ -37,6 +37,9 @@ class Menu
     #[ORM\ManyToMany(targetEntity: Commande::class, mappedBy: 'menu')]
     private $commandes;
 
+    #[ORM\OneToMany(mappedBy: 'menu', targetEntity: CommandesMenu::class)]
+    private $commandesMenus;
+
 
     public function __construct()
     {
@@ -44,6 +47,7 @@ class Menu
         $this->etat = false;
         $this->type = 'menu';
         $this->commandes = new ArrayCollection();
+        $this->commandesMenus = new ArrayCollection();
     }
 
 
@@ -162,6 +166,36 @@ class Menu
     {
         if ($this->commandes->removeElement($commande)) {
             $commande->removeMenu($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CommandesMenu>
+     */
+    public function getCommandesMenus(): Collection
+    {
+        return $this->commandesMenus;
+    }
+
+    public function addCommandesMenu(CommandesMenu $commandesMenu): self
+    {
+        if (!$this->commandesMenus->contains($commandesMenu)) {
+            $this->commandesMenus[] = $commandesMenu;
+            $commandesMenu->setMenu($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommandesMenu(CommandesMenu $commandesMenu): self
+    {
+        if ($this->commandesMenus->removeElement($commandesMenu)) {
+            // set the owning side to null (unless already changed)
+            if ($commandesMenu->getMenu() === $this) {
+                $commandesMenu->setMenu(null);
+            }
         }
 
         return $this;

@@ -45,6 +45,9 @@ class Burger
     #[ORM\ManyToMany(targetEntity: Commande::class, mappedBy: 'burger')]
     private $commandes;
 
+    #[ORM\OneToMany(mappedBy: 'burger', targetEntity: CommandesBurger::class)]
+    private $commandesBurgers;
+
 
    
 
@@ -55,6 +58,7 @@ class Burger
         $this->complements = new ArrayCollection();
         $this->type = 'burger';
         $this->commandes = new ArrayCollection();
+        $this->commandesBurgers = new ArrayCollection();
     }
     public function __toString()
     {
@@ -218,6 +222,36 @@ class Burger
     {
         if ($this->commandes->removeElement($commande)) {
             $commande->removeBurger($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CommandesBurger>
+     */
+    public function getCommandesBurgers(): Collection
+    {
+        return $this->commandesBurgers;
+    }
+
+    public function addCommandesBurger(CommandesBurger $commandesBurger): self
+    {
+        if (!$this->commandesBurgers->contains($commandesBurger)) {
+            $this->commandesBurgers[] = $commandesBurger;
+            $commandesBurger->setBurger($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommandesBurger(CommandesBurger $commandesBurger): self
+    {
+        if ($this->commandesBurgers->removeElement($commandesBurger)) {
+            // set the owning side to null (unless already changed)
+            if ($commandesBurger->getBurger() === $this) {
+                $commandesBurger->setBurger(null);
+            }
         }
 
         return $this;
